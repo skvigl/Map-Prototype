@@ -51,7 +51,7 @@ export default class AbstractPinStrategy {
         let marker = document.createElement( 'button' );
         marker.type = 'button';
         marker.innerHTML = pin.text;
-        marker.className = 'marker';
+        marker.className = 'marker js-marker';
         marker.setAttribute('data-id', pin.id);
         pin.marker = marker;
 

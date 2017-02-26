@@ -7,6 +7,7 @@ import Mediator from 'mediator';
 import LevelSelect from './levelSelect';
 import TabSelect from 'tabSelect';
 import AjaxHandler from 'ajaxHandler';
+import PinFactory from './pinsStrategies/pinsFactory';
 
 export default class Map {
     constructor() {
@@ -26,6 +27,12 @@ export default class Map {
             level.tabs = level.strategy.getTabs();
         });
 
+        Config.instance.pinStrategies = {
+            [ PinNames.airport ]: PinFactory.getPinStrategy( PinNames.airport ),
+            [ PinNames.destination ]: PinFactory.getPinStrategy( PinNames.destination ),
+            [ PinNames.poi ]: PinFactory.getPinStrategy( PinNames.poi ),
+            [ PinNames.hotel ]: PinFactory.getPinStrategy( PinNames.hotel )
+        };
 
 
         this.initMapAtLevel( 0, 'overview' );
@@ -87,7 +94,7 @@ export default class Map {
     }
 
     _drawPins( strategy ) {
-        let pins = strategy.generateMultiplePins( Config.instance.pinsArray );
+        let pins = Config.instance.pinStrategies[ strategy ].generateMultiplePins();
         pins.forEach( pin => {
             Config.instance.map.append( pin );
         })
@@ -95,7 +102,7 @@ export default class Map {
 
     _bindEvents() {
         Config.instance.map.addEventListener('click', event => this._onPinClickHandler(event));
-        Config.instance.map.addEventListener('mouseover', event => this._onPinMouseOverHandler(event));
+        //Config.instance.map.addEventListener('mouseover', event => this._onPinMouseOverHandler(event));
     }
 
     _unbindEvents() {
@@ -107,10 +114,11 @@ export default class Map {
         let target = event.target;
         let id = null;
         //console.log( event.target );
-        console.log('pin clicked');
+
 
         while( !target.classList.contains( 'js-map' ) ) {
             if ( target.classList.contains( 'js-marker' ) ) {
+                console.log('pin clicked');
                 //console.log(target);
                 id = target.getAttribute('data-id');
                 break;
@@ -119,30 +127,41 @@ export default class Map {
         }
 
         let pin = this._findMarker( id );
+        console.log( pin );
 
         //Config.instance.currentTab.
     }
 
     _onPinMouseOverHandler( event ) {
         let target = event.target;
+        let id = null;
         //console.log( event.target );
-        //console.log('pin mouse over');
+
 
         while( !target.classList.contains( 'js-map' ) ) {
             if ( target.classList.contains( 'js-marker' ) ) {
-                //console.log(target);
+                console.log('pin mouse over');
+                console.log(target);
+                id = target.getAttribute('data-id');
                 break;
             }
             target = target.parentNode;
         }
+
+        let pin = this._findMarker( id );
+        console.log( pin );
     }
 
     _findMarker( id ) {
-        Config.instance.pinsArray.forEach( pin => {
-            if ( pin.id === id ) {
-                return pin;
+        let pins = Config.instance.pinsArray;
+
+        for( let i = 0, imax = pins.length; i < imax; i++ ) {
+            if ( pins[i].id === id ) {
+                return pins[i];
             }
-        })
+        }
+
+        return null;
     }
 }
 

@@ -2,7 +2,6 @@
 
 import Config from '../config';
 import AbstractTabStrategy from './abstractTabStrategy';
-import PinFactory from '../pinsStrategies/pinsFactory';
 import PinNames from '../enums/pinNames';
 import TabContent from '../tabContent';
 
@@ -15,15 +14,23 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
             case 1:
             case 2:
                 allowedPinStratagies = [
-                    PinFactory.getPinStrategy( PinNames.airport ),
-                    PinFactory.getPinStrategy( PinNames.destination )
+                    PinNames.airport,
+                    PinNames.destination
                 ];
+                //
+                //
+                //     PinFactory.getPinStrategy( PinNames.airport ),
+                //     PinFactory.getPinStrategy( PinNames.destination )
+                // ];
                 break;
             case 3:
                 allowedPinStratagies = [
-                    PinFactory.getPinStrategy( PinNames.airport ),
-                    PinFactory.getPinStrategy( PinNames.poi ),
-                    PinFactory.getPinStrategy( PinNames.hotel ),
+                    PinNames.airport,
+                    PinNames.poi,
+                    PinNames.hotel
+                    //PinFactory.getPinStrategy( PinNames.airport ),
+                    //PinFactory.getPinStrategy( PinNames.poi ),
+                    //PinFactory.getPinStrategy( PinNames.hotel ),
                 ];
                 break;
         }

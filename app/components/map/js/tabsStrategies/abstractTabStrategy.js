@@ -1,5 +1,7 @@
 "use strict";
 
+import Config from '../config';
+
 export default class AbstractTabStrategy {
     constructor( pinStrategies, name ) {
         this._name = name;
@@ -21,7 +23,7 @@ export default class AbstractTabStrategy {
         let cards = [];
 
         this._pinStrategies.forEach( strategy => {
-            cards = cards.concat( strategy.generateMultipleContent() );
+            cards = cards.concat( Config.instance.pinStrategies[ strategy ].generateMultipleContent() );
         });
 
         return cards;

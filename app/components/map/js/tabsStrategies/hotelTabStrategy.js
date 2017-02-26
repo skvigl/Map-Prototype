@@ -2,14 +2,14 @@
 
 import Config from '../config';
 import AbstractTabStrategy from './abstractTabStrategy';
-import PinFactory from '../pinsStrategies/pinsFactory';
 import PinNames from '../enums/pinNames';
 import TabContent from '../tabContent';
 
 export default class HotelTabStrategy extends AbstractTabStrategy {
     constructor( name ) {
         let allowedPinTypes = [
-            PinFactory.getPinStrategy( PinNames.hotel )
+            PinNames.hotel
+            //PinFactory.getPinStrategy( PinNames.hotel )
         ];
         super( allowedPinTypes, name );
     }
