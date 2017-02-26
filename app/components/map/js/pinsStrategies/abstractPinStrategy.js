@@ -68,7 +68,27 @@ export default class AbstractPinStrategy {
         return view;
     }
 
-    hover() {
-        console.log( 'base pin hover' );
+    onPinClick() {
+        console.log( 'base pin click' );
+    }
+
+    onPinMouseover( pin ) {
+        if ( pin.marker ) {
+            pin.marker.classList.add('is-hover');
+        }
+
+        if ( pin.view ) {
+            pin.view.classList.add('is-hover');
+        }
+    }
+
+    onPinMouseout( pin ) {
+        if ( pin.marker ) {
+            pin.marker.classList.remove('is-hover');
+        }
+
+        if ( pin.view ) {
+            pin.view.classList.remove('is-hover');
+        }
     }
 }

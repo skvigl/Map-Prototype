@@ -16,6 +16,10 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
         return null;
     }
 
+    onPinClick( pin ) {
+        
+    }
+
     hover() {
         console.log( 'airport pin hover' );
     }

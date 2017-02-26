@@ -14,8 +14,8 @@ export default class Map {
     }
 
     init() {
-
-        Config.instance.map = document.querySelector('.js-map');
+        Config.instance.map = this;
+        Config.instance.map.elem = document.querySelector('.js-map');
         Config.instance.levelSelect = new LevelSelect();
         Config.instance.tabSelect = new TabSelect();
         Config.instance.ajaxHandler = new AjaxHandler();
@@ -40,9 +40,10 @@ export default class Map {
         Config.instance.levelSelect.init();
         Config.instance.tabSelect.init();
 
-        Config.instance.mediator.addInitiator( 'levelSelect', Config.instance.levelSelect );
-        Config.instance.mediator.addInitiator( 'tabSelect' , Config.instance.tabSelect );
-        Config.instance.mediator.addInitiator( 'map' , this );
+
+        //Config.instance.mediator.addInitiator( 'levelSelect', Config.instance.levelSelect );
+        //Config.instance.mediator.addInitiator( 'tabSelect' , Config.instance.tabSelect );
+        //Config.instance.mediator.addInitiator( 'map' , this );
 
         Config.instance.levelSelect.setMediator( Config.instance.mediator );
         Config.instance.tabSelect.setMediator( Config.instance.mediator );
@@ -85,29 +86,27 @@ export default class Map {
     }
 
     drawAllPins() {
-        Config.instance.map.innerHTML = '';
-        Config.instance.currentTab
-            .getPinStrategies()
-            .forEach( ( strategy ) => {
-                this._drawPins( strategy );
+        Config.instance.map.elem.innerHTML = '';
+        Config.instance.currentTab.getPinStrategies().forEach( strategy => {
+            this._drawPins( strategy );
         });
     }
 
     _drawPins( strategy ) {
         let pins = Config.instance.pinStrategies[ strategy ].generateMultiplePins();
         pins.forEach( pin => {
-            Config.instance.map.append( pin );
+            Config.instance.map.elem.append( pin );
         })
     }
 
     _bindEvents() {
-        Config.instance.map.addEventListener('click', event => this._onPinClickHandler(event));
+        Config.instance.map.elem.addEventListener('click', event => this._onPinClickHandler(event));
         //Config.instance.map.addEventListener('mouseover', event => this._onPinMouseOverHandler(event));
     }
 
     _unbindEvents() {
-        Config.instance.map.removeEventListener('click', event => this._onPinClickHandler(event) );
-        Config.instance.map.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
+        Config.instance.map.elem.removeEventListener('click', event => this._onPinClickHandler(event) );
+        Config.instance.map.elem.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
     }
 
     _onPinClickHandler( event ) {
@@ -126,8 +125,12 @@ export default class Map {
             target = target.parentNode;
         }
 
-        let pin = this._findMarker( id );
-        console.log( pin );
+        if ( id ) {
+            let pin = this._findMarker( id );
+            Config.instance.pinStrategies[ pin.type ].onPinClick( pin );
+        }
+
+        //console.log( pin );
 
         //Config.instance.currentTab.
     }
@@ -150,6 +153,7 @@ export default class Map {
 
         let pin = this._findMarker( id );
         console.log( pin );
+        //Config.instance.pinStrategies[ pin.pinType ].
     }
 
     _findMarker( id ) {

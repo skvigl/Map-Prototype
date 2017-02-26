@@ -1,8 +1,11 @@
 "use strict";
 
+import Config from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
+import MediatorEvents from '../enums/mediatorEvents';
+
 
 export default class DestinationPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -17,11 +20,7 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
         return super.generateMultipleContent( pinsArray, PinNames.destination, holidayType );
     }
 
-    onHover() {
-        console.log( 'destination pin hover' );
-    }
-
-    onClick() {
-
+    onPinClick( pin ) {
+        Config.instance.mediator.stateChanged( MediatorEvents.destinationPinClicked, pin );
     }
 }

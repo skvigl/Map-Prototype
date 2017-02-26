@@ -2,6 +2,7 @@
 
 import Config from './config';
 import Tab from './tab';
+import MediatorEvents from './enums/mediatorEvents';
 
 export default class TabSelect {
     constructor() {
@@ -25,10 +26,6 @@ export default class TabSelect {
 
         this._currentTabName = Config.instance.currentTab.getName();
         this.update();
-    }
-
-    changeHadler() {
-        this._mediator.stateChanged( this );
     }
 
     getCurrentTabName() {
@@ -62,7 +59,7 @@ export default class TabSelect {
     _clickHandler( event ) {
         this._currentTabName = event.target.getAttribute( 'data-name' );
         this._setActiveTab();
-        this._mediator.stateChanged( this );
+        this._mediator.stateChanged( MediatorEvents.tabChanged );
     }
 
     _updateTabNavigation() {
