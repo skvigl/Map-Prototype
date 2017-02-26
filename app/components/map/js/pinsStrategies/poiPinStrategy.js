@@ -16,6 +16,16 @@ export default class PoiPinStrategy extends AbstractPinStrategy {
         return super.generateMultipleContent( pinsArray, PinNames.poi );
     }
 
+    _generateContent( pin ) {
+        let view = document.createElement('div');
+        view.className = 'card-poi';
+        view.innerHTML = pin.text;
+
+        pin.view = view;
+        console.log( 'base pin content draw' );
+        return view;
+    }
+
     hover() {
         console.log( 'poi pin hover' );
     }

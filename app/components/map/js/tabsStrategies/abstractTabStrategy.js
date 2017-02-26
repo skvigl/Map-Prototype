@@ -16,4 +16,14 @@ export default class AbstractTabStrategy {
     getName() {
         return this._name;
     }
+
+    _generateCards() {
+        let cards = [];
+
+        this._pinStrategies.forEach( strategy => {
+            cards = cards.concat( strategy.generateMultipleContent() );
+        });
+
+        return cards;
+    }
 }

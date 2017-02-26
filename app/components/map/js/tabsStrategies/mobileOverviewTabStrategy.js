@@ -3,6 +3,7 @@
 import AbstractTabStrategy from './abstractTabStrategy';
 import PinFactory from '../pinsStrategies/pinsFactory';
 import PinNames from '../enums/pinNames';
+import TabContent from '../tabContent';
 
 export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     constructor( name, level, isCityBreak = false ) {
@@ -27,6 +28,7 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
             case 2:
             case 3:
                 console.log( 'draw location info' );
+                return new TabContent( this._generateLocationInfo(), null );
                 break;
         }
     }

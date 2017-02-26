@@ -18,8 +18,9 @@ export default class Mediator {
             }
                 break;
             case this._initiators.tabSelect: {
-                Config.instance.currentTab = Config.instance.currentLevel.tabs[ initiator.getCurrentTab() ];
+                Config.instance.currentTab = Config.instance.currentLevel.tabs[ initiator.getCurrentTabName() ];
                 this._initiators.map.drawAllPins();
+                initiator.updateContent();
             }
                 break;
         }

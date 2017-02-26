@@ -13,7 +13,7 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
     }
 
     generateMultipleContent( pinsArray ) {
-
+        return null;
     }
 
     hover() {

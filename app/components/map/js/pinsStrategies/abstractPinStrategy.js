@@ -1,5 +1,7 @@
 "use strict";
 
+import Config from '../config';
+
 export default class AbstractPinStrategy {
     constructor() {
     }
@@ -16,6 +18,10 @@ export default class AbstractPinStrategy {
     generateMultiplePins( pinsArray, pinType, holidayType ) {
         let pins = [];
 
+        if ( pinsArray === undefined ) {
+            pinsArray = Config.instance.pinsArray;
+        }
+
         pinsArray.forEach( ( pin ) => {
             if ( pin.type === pinType ) {
                 pins.push( this._generatePin( pin ) );
@@ -26,12 +32,23 @@ export default class AbstractPinStrategy {
     }
 
     generateMultipleContent ( pinsArray, pinType ) {
-        let views = [];
+        let views = [],
+            view = null;
+
+        if ( pinsArray === undefined ) {
+            pinsArray = Config.instance.pinsArray;
+        }
 
         pinsArray.forEach( ( pin ) => {
             if ( pin.type === pinType ) {
                 if ( pin.view === undefined ) {
-                    views.push( this._generateContent( pin ) );
+                    view = this._generateContent( pin );
+
+                    if ( view !== null ) {
+                        views.push( view );
+                    }
+                } else {
+                    views.push( pin.view );
                 }
             }
         });

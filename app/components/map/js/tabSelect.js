@@ -23,7 +23,7 @@ export default class TabSelect {
             tab.addEventListener( 'click', event => this._clickHandler(event) );
         });
 
-        this._currentTab = Config.instance.currentTab.getName();
+        this._currentTabName = Config.instance.currentTab.getName();
         this.update();
     }
 
@@ -31,8 +31,8 @@ export default class TabSelect {
         this._mediator.stateChanged( this );
     }
 
-    getCurrentTab() {
-        return this._currentTab;
+    getCurrentTabName() {
+        return this._currentTabName;
     }
 
 
@@ -46,17 +46,27 @@ export default class TabSelect {
     }
 
     update() {
+        console.log(this.getCurrentTab);
+        this._currentTabName = Config.instance.currentTab.getName();
         this._updateTabNavigation();
+        this._clearTabContent();
+        this._setActiveTab();
         this._updateTabContent();
+    }
+
+    updateContent() {
+        if ( this._tabs[ this._currentTabName ].currentPage === 0 ) {
+            this._updateTabContent();
+        }
     }
 
     _clickHandler( event ) {
         console.log('click tab');
-        this._tabs[ this._currentTab ].tabElem.classList.remove('is-active');
-        this._tabs[ this._currentTab ].contentElem.classList.remove('is-active');
-        this._currentTab = event.target.getAttribute( 'data-name' );
-        this._tabs[ this._currentTab ].tabElem.classList.add( 'is-active' );
-        this._tabs[ this._currentTab ].contentElem.classList.add( 'is-active' );
+        this.getCurrentTab.tabElem.classList.remove('is-active');
+        this.getCurrentTab.contentElem.classList.remove('is-active');
+        this._currentTabName = event.target.getAttribute( 'data-name' );
+        this.getCurrentTab.tabElem.classList.add( 'is-active' );
+        this.getCurrentTab.contentElem.classList.add( 'is-active' );
         this._mediator.stateChanged( this );
     }
 
@@ -76,19 +86,58 @@ export default class TabSelect {
         }
     }
 
+    _clearTabContent() {
+        this.getCurrentTab.currentPage = 0;
+        this.getCurrentTab.contentElem.innerHTML = '';
+    }
+
     _updateTabContent() {
-        let currentLevel = Config.instance.currentLevel;
-        let currentTabStrategy = currentLevel.tabs[Config.instance.currentTab];
+        let currentTab = this.getCurrentTab;
+        let tabContent = Config.instance.currentTab.generateContent();
+
+        if ( tabContent.additionalInfo ) {
+            console.log('tabContent.additionalInfo ', tabContent.additionalInfo);
+        }
+
+        if ( tabContent.cardList ) {
+            //currentTab.contentElem.append( tabContent.cardList );
+            //this._tabs[ Config.instance.currentTab.getName() ].
+
+            tabContent.cardList.forEach( card => {
+                currentTab.contentElem.append( card );
+            });
+        }
+
+        currentTab.currentPage++;
+
 
         //this._drawContent( currentTabStrategy.generateContent( currentLevel.levelId ) );
     }
 
+    _setActiveTab() {
+        for( let tab in this._tabs ) {
+
+            if ( this._tabs.hasOwnProperty(tab) ) {
+                this._tabs[tab].tabElem.classList.remove('is-active');
+                this._tabs[tab].contentElem.classList.remove('is-active');
+            }
+        }
+
+        this.getCurrentTab.tabElem.classList.add('is-active');
+        this.getCurrentTab.contentElem.classList.add('is-active');
+
+    }
+
     _drawContent() {
-        // if ( this._tabs[this._currentTab].currentPage === 0 ) {
+        // if ( this._tabs[this._currentTabName].currentPage === 0 ) {
         //     Config.instance.currentLevel
         //         .tabs[Config.instance.currentTab]
         //         .generateContent( Config.instance.currentLevel.levelId );
         // }
-        //this._tabs[this._currentTab].contentElem.innerHTML = content;
+        //this._tabs[this._currentTabName].contentElem.innerHTML = content;
+   }
+
+    get getCurrentTab () {
+        return this._tabs[ this._currentTabName ];
     }
 }

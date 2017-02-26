@@ -46,7 +46,9 @@ export default class Map {
         return [
             {type: PinNames.hotel, text: 'HOTEL1'},
             {type: PinNames.poi, text: 'POI1'},
-            {type: PinNames.destination, text: 'Majorca'},
+            {type: PinNames.destination, text: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
+            {type: PinNames.destination, text: 'Minorca'},
+            {type: PinNames.destination, text: 'Ibiza'},
             {type: PinNames.destination, text: 'Chelyabinsk', holidayType: 'cityBreak'},
             {type: PinNames.poi, text: 'POI2'},
             {type: PinNames.airport, text: 'AIRPORT1'},
