@@ -48,7 +48,7 @@ export default class TabSelect {
     update() {
         this._currentTabName = Config.instance.currentTab.getName();
         this._updateTabNavigation();
-        this._clearTabContent();
+        this._clearTabsContent();
         this._setActiveTab();
         this._updateTabContent();
     }
@@ -81,9 +81,13 @@ export default class TabSelect {
         }
     }
 
-    _clearTabContent() {
-        this.getCurrentTab.currentPage = 0;
-        this.getCurrentTab.contentElem.innerHTML = '';
+    _clearTabsContent() {
+        for( let tab in this._tabs ) {
+              if ( this._tabs.hasOwnProperty(tab) ) {
+                  this._tabs[tab].currentPage = 0;
+                  this._tabs[tab].contentElem.innerHTML = '';
+            }
+        }
     }
 
     _updateTabContent() {
