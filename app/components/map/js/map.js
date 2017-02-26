@@ -6,7 +6,7 @@ import LevelsFactory from './levelsStrategies/levelsFactory';
 import Mediator from 'mediator';
 import LevelSelect from './levelSelect';
 import TabSelect from 'tabSelect';
-
+import AjaxHandler from 'ajaxHandler';
 
 export default class Map {
     constructor() {
@@ -17,6 +17,7 @@ export default class Map {
         Config.instance.map = document.querySelector('.js-map');
         Config.instance.levelSelect = new LevelSelect();
         Config.instance.tabSelect = new TabSelect();
+        Config.instance.ajaxHandler = new AjaxHandler();
         Config.instance.mediator = new Mediator();
         Config.instance.pinsArray = this._getMarkers();
 
@@ -24,6 +25,8 @@ export default class Map {
             level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
             level.tabs = level.strategy.getTabs();
         });
+
+
 
         this.initMapAtLevel( 0, 'overview' );
 
@@ -37,27 +40,31 @@ export default class Map {
         Config.instance.levelSelect.setMediator( Config.instance.mediator );
         Config.instance.tabSelect.setMediator( Config.instance.mediator );
 
+
         console.log( Config.instance );
 
         this.drawAllPins();
+        this._bindEvents();
+        //this._unbindEvents();
+        //this._bindEvents();
     }
 
     _getMarkers() {
         return [
-            {type: PinNames.hotel, text: 'HOTEL1'},
-            {type: PinNames.poi, text: 'POI1'},
-            {type: PinNames.destination, text: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
-            {type: PinNames.destination, text: 'Minorca'},
-            {type: PinNames.destination, text: 'Ibiza'},
-            {type: PinNames.destination, text: 'Chelyabinsk', holidayType: 'cityBreak'},
-            {type: PinNames.poi, text: 'POI2'},
-            {type: PinNames.airport, text: 'AIRPORT1'},
-            {type: PinNames.airport, text: 'AIRPORT2'},
-            {type: PinNames.airport, text: 'AIRPORT3'},
-            {type: PinNames.hotel, text: 'HOTEL2'},
-            {type: PinNames.hotel, text: 'HOTEL3'},
-            {type: PinNames.hotel, text: 'HOTEL4'},
-            {type: PinNames.hotel, text: 'HOTEL5'}
+            { id: '1', type: PinNames.hotel, text: 'HOTEL1'},
+            { id: '2', type: PinNames.poi, text: 'POI1'},
+            { id: '3', type: PinNames.destination, text: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
+            { id: '4', type: PinNames.destination, text: 'Minorca'},
+            { id: '5', type: PinNames.destination, text: 'Ibiza'},
+            { id: '6', type: PinNames.destination, text: 'Chelyabinsk', holidayType: 'cityBreak'},
+            { id: '7', type: PinNames.poi, text: 'POI2'},
+            { id: '8', type: PinNames.airport, text: 'AIRPORT1'},
+            { id: '9', type: PinNames.airport, text: 'AIRPORT2'},
+            { id: '10', type: PinNames.airport, text: 'AIRPORT3'},
+            { id: '11', type: PinNames.hotel, text: 'HOTEL2'},
+            { id: '12', type: PinNames.hotel, text: 'HOTEL3'},
+            { id: '13', type: PinNames.hotel, text: 'HOTEL4'},
+            { id: '14', type: PinNames.hotel, text: 'HOTEL5'}
         ];
     }
 
@@ -83,6 +90,58 @@ export default class Map {
         let pins = strategy.generateMultiplePins( Config.instance.pinsArray );
         pins.forEach( pin => {
             Config.instance.map.append( pin );
+        })
+    }
+
+    _bindEvents() {
+        Config.instance.map.addEventListener('click', event => this._onPinClickHandler(event));
+        Config.instance.map.addEventListener('mouseover', event => this._onPinMouseOverHandler(event));
+    }
+
+    _unbindEvents() {
+        Config.instance.map.removeEventListener('click', event => this._onPinClickHandler(event) );
+        Config.instance.map.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
+    }
+
+    _onPinClickHandler( event ) {
+        let target = event.target;
+        let id = null;
+        //console.log( event.target );
+        console.log('pin clicked');
+
+        while( !target.classList.contains( 'js-map' ) ) {
+            if ( target.classList.contains( 'js-marker' ) ) {
+                //console.log(target);
+                id = target.getAttribute('data-id');
+                break;
+            }
+            target = target.parentNode;
+        }
+
+        let pin = this._findMarker( id );
+
+        //Config.instance.currentTab.
+    }
+
+    _onPinMouseOverHandler( event ) {
+        let target = event.target;
+        //console.log( event.target );
+        //console.log('pin mouse over');
+
+        while( !target.classList.contains( 'js-map' ) ) {
+            if ( target.classList.contains( 'js-marker' ) ) {
+                //console.log(target);
+                break;
+            }
+            target = target.parentNode;
+        }
+    }
+
+    _findMarker( id ) {
+        Config.instance.pinsArray.forEach( pin => {
+            if ( pin.id === id ) {
+                return pin;
+            }
         })
     }
 }

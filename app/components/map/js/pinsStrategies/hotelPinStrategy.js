@@ -20,9 +20,9 @@ export default class HotelPinStrategy extends AbstractPinStrategy {
         let view = document.createElement('div');
         view.className = 'card-hotel';
         view.innerHTML = pin.text;
+        view.setAttribute('data-id', pin.id);
 
         pin.view = view;
-        console.log( 'base pin content draw' );
         return view;
     }
 

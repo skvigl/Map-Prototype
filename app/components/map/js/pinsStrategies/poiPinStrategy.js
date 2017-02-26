@@ -20,9 +20,9 @@ export default class PoiPinStrategy extends AbstractPinStrategy {
         let view = document.createElement('div');
         view.className = 'card-poi';
         view.innerHTML = pin.text;
+        view.setAttribute('data-id', pin.id);
 
         pin.view = view;
-        console.log( 'base pin content draw' );
         return view;
     }
 

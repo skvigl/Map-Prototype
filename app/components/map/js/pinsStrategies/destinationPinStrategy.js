@@ -17,7 +17,11 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
         return super.generateMultipleContent( pinsArray, PinNames.destination, holidayType );
     }
 
-    hover() {
+    onHover() {
         console.log( 'destination pin hover' );
+    }
+
+    onClick() {
+
     }
 }

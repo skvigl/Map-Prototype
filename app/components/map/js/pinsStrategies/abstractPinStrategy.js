@@ -6,15 +6,6 @@ export default class AbstractPinStrategy {
     constructor() {
     }
 
-    _generatePin ( pin ) {
-        let marker = document.createElement( 'button' );
-        marker.type = 'button';
-        marker.innerHTML = pin.text;
-        marker.className = 'marker';
-
-        return marker;
-    }
-
     generateMultiplePins( pinsArray, pinType, holidayType ) {
         let pins = [];
 
@@ -56,13 +47,24 @@ export default class AbstractPinStrategy {
         return views;
     }
 
+    _generatePin ( pin ) {
+        let marker = document.createElement( 'button' );
+        marker.type = 'button';
+        marker.innerHTML = pin.text;
+        marker.className = 'marker';
+        marker.setAttribute('data-id', pin.id);
+        pin.marker = marker;
+
+        return marker;
+    }
+
     _generateContent( pin ) {
         let view = document.createElement('div');
         view.className = 'card';
         view.innerHTML = pin.text;
+        view.setAttribute('data-id', pin.id);
 
         pin.view = view;
-        console.log( 'base pin content draw' );
         return view;
     }
 

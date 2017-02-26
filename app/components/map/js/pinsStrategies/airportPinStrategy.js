@@ -19,4 +19,14 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
     hover() {
         console.log( 'airport pin hover' );
     }
+
+    _generatePin ( pin ) {
+        let marker = document.createElement( 'button' );
+        marker.type = 'button';
+        marker.innerHTML = '<strong>' +  pin.text + '</strong>';
+        marker.className = 'marker js-marker';
+        marker.setAttribute('data-id', pin.id);
+
+        return marker;
+    }
 }

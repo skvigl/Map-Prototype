@@ -46,7 +46,6 @@ export default class TabSelect {
     }
 
     update() {
-        console.log(this.getCurrentTab);
         this._currentTabName = Config.instance.currentTab.getName();
         this._updateTabNavigation();
         this._clearTabContent();
@@ -61,12 +60,8 @@ export default class TabSelect {
     }
 
     _clickHandler( event ) {
-        console.log('click tab');
-        this.getCurrentTab.tabElem.classList.remove('is-active');
-        this.getCurrentTab.contentElem.classList.remove('is-active');
         this._currentTabName = event.target.getAttribute( 'data-name' );
-        this.getCurrentTab.tabElem.classList.add( 'is-active' );
-        this.getCurrentTab.contentElem.classList.add( 'is-active' );
+        this._setActiveTab();
         this._mediator.stateChanged( this );
     }
 
@@ -125,7 +120,6 @@ export default class TabSelect {
 
         this.getCurrentTab.tabElem.classList.add('is-active');
         this.getCurrentTab.contentElem.classList.add('is-active');
-
     }
 
     _drawContent() {
