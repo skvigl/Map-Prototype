@@ -1,0 +1,27 @@
+.marker {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    background-color: lightsteelblue;
+    color: white;
+    outline: none;
+
+    &--airport {
+        background-color: dimgray;
+    }
+
+    &--poi {
+        background-color: midnightblue;
+    }
+    
+    &--hotel {
+        background-color: goldenrod;
+    }
+
+    &.is-active {
+        transform: scale(1.2);
+    }
+}
+
+
+

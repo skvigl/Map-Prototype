@@ -16,6 +16,19 @@ export default class PoiPinStrategy extends AbstractPinStrategy {
         return super.generateMultipleContent( pinsArray, PinNames.poi );
     }
 
+    _generatePin ( pin ) {
+        pin.modifierList = ['marker--poi'];
+        super._generatePin( pin, 'marker');
+        // let marker = document.createElement( 'button' );
+        // marker.type = 'button';
+        // marker.innerHTML = pin.text;
+        // marker.className = 'marker js-marker';
+        // marker.setAttribute('data-id', pin.id);
+        // pin.marker = marker;
+
+        return pin.marker;
+    }
+
     _generateContent( pin ) {
         let view = document.createElement('div');
         view.className = 'card-poi';

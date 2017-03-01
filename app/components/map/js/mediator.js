@@ -29,11 +29,19 @@ export default class Mediator {
                 Config.instance.tabSelect.updateContent();
                 break;
             }
+            case MediatorEvents.airportPinClicked: {
+                Config.instance.activeMarker = targetPin;
+                break;
+            }
             case MediatorEvents.destinationPinClicked: {
                 let currentLevel = Config.instance.levelSelect.getCurrentLevel() + 1;
                 Config.instance.levelSelect.setCurrentLevel( currentLevel );
                 console.log( currentLevel );
                 console.log( targetPin );
+                break;
+            }
+            case MediatorEvents.pinClicked: {
+                Config.instance.activeMarker = targetPin;
                 break;
             }
             default: {

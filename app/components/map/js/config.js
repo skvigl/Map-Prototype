@@ -7,6 +7,7 @@ export default class Config {
             map: null,
             currentLevel: null,
             currentTab: null,
+            avtieMarker: null,
             isMobile: false,
             isCityBreak: false,
             pinsArray: [],

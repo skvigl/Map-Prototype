@@ -95,7 +95,8 @@ export default class Map {
     _drawPins( strategy ) {
         let pins = Config.instance.pinStrategies[ strategy ].generateMultiplePins();
         pins.forEach( pin => {
-            Config.instance.map.elem.append( pin );
+            //console.log(document.createElement(pin));
+            Config.instance.map.elem.appendChild( pin.marker );
         })
     }
 

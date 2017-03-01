@@ -86,8 +86,8 @@ module.exports = {
                 loader: isDevServer ? 'style!css!postcss' : ExtractTextPlugin.extract('style', 'css!postcss')
             },
             {
-                test: /\.less$/,
-                loader: isDevServer ? 'style!css!postcss!less' : ExtractTextPlugin.extract('style', 'css!postcss!less')
+                test: /\.scss$/,
+                loaders: ["style-loader", "css-loader", "sass-loader"]
             },
             {
                 test: /\.(svg|png|jpg|jpeg|eot|ttf|woff|woff2|gif)$/i,
@@ -96,15 +96,8 @@ module.exports = {
                 ]
             },
             {
-                test: /\.hbs/,
-                loader: "handlebars-loader",
-                query: {
-                    ignorePartials: true,
-                    helperDirs: [
-                        path.join(__dirname, 'js', 'app', 'handlebars', 'helpers')
-                    ],
-                    runtime: path.join(__dirname, 'node_modules', 'handlebars', 'dist', 'handlebars.runtime.js')
-                }
+                test: /\.(hbs|handlebars)/,
+                loader: "handlebars-loader"
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -175,19 +168,19 @@ module.exports = {
             );
         }
 
-        if (!isDev) {
-            plugins.push(
-                new webpack.optimize.UglifyJsPlugin({
-                    output: {
-                        comments: false
-                    },
-                    compress: {
-                        warnings: false
-                    }
-                }),
-                new webpack.optimize.OccurenceOrderPlugin()
-            );
-        }
+        // if (!isDev) {
+        //     plugins.push(
+        //         new webpack.optimize.UglifyJsPlugin({
+        //             output: {
+        //                 comments: false
+        //             },
+        //             compress: {
+        //                 warnings: false
+        //             }
+        //         }),
+        //         new webpack.optimize.OccurenceOrderPlugin()
+        //     );
+        // }
 
         return plugins;
     })(),

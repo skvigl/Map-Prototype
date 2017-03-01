@@ -1,6 +1,8 @@
 "use strict";
 
 import Config from '../config';
+import MediatorEvents from '../enums/mediatorEvents';
+import markerDestination from '../../templates/markerDestination.handlebars';
 
 export default class AbstractPinStrategy {
     constructor() {
@@ -47,29 +49,17 @@ export default class AbstractPinStrategy {
         return views;
     }
 
-    _generatePin ( pin ) {
-        let marker = document.createElement( 'button' );
-        marker.type = 'button';
-        marker.innerHTML = pin.text;
-        marker.className = 'marker js-marker';
-        marker.setAttribute('data-id', pin.id);
-        pin.marker = marker;
+    onPinClick( pin ) {
 
-        return marker;
-    }
+        if ( Config.instance.activeMarker && Config.instance.activeMarker.marker ) {
+            Config.instance.activeMarker.marker.classList.remove('is-active');
+        }
 
-    _generateContent( pin ) {
-        let view = document.createElement('div');
-        view.className = 'card';
-        view.innerHTML = pin.text;
-        view.setAttribute('data-id', pin.id);
+        if ( pin.marker ) {
+            pin.marker.classList.add('is-active');
+        }
 
-        pin.view = view;
-        return view;
-    }
-
-    onPinClick() {
-        console.log( 'base pin click' );
+        Config.instance.mediator.stateChanged( MediatorEvents.pinClicked, pin );
     }
 
     onPinMouseover( pin ) {
@@ -90,5 +80,27 @@ export default class AbstractPinStrategy {
         if ( pin.view ) {
             pin.view.classList.remove('is-hover');
         }
+    }
+
+    _generatePin ( pin, template ) {
+        pin.marker = this._html2dom( markerDestination( pin ) );
+        //console.log(pin.marker);
+        return pin;
+    }
+
+    _generateContent( pin ) {
+        let view = document.createElement('div');
+        view.className = 'card';
+        view.innerHTML = pin.text;
+        view.setAttribute('data-id', pin.id);
+
+        pin.view = view;
+        return view;
+    }
+
+    _html2dom( html ) {
+        let container = document.createElement('div');
+        container.innerHTML = html;
+        return container.firstChild;
     }
 }
