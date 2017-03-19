@@ -1,26 +1,30 @@
 "use strict";
 
+import Config from '../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import PinNames from '../enums/pinNames';
+import HolidayTypeNames from '../enums/holidayTypeNames';
 import TabContent from '../tabContent';
 
 export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
-    constructor( name, level, isCityBreak = false ) {
-        let allowedPinTypes = [
+    constructor( name ) {
+        super( [], name );
+        this.updatePinStrategies();
+    }
+
+    updatePinStrategies() {
+        let currentLevel = Config.instance.currentLevel.levelId || 0,
+            currentHolidayType = Config.instance.currentHolidayType;
+        let allowedPinStrategies = [
             PinNames.airport,
             PinNames.destination
-            //PinFactory.getPinStrategy( PinNames.airport ),
-            //PinFactory.getPinStrategy( PinNames.destination )//,
-            //PinFactory.getPinStrategy( 'childDestination' )
         ];
 
-        if ( ( isCityBreak && level == 2 ) || level == 3 ) {
-            allowedPinTypes.push( PinNames.poi, PinNames.hotel );
-            //allowedPinTypes.push( PinFactory.getPinStrategy( PinNames.poi ) );
-            //allowedPinTypes.push( PinFactory.getPinStrategy( PinNames.hotel ) );
+        if ( ( currentHolidayType === HolidayTypeNames.city && currentLevel == 2 ) || currentLevel == 3 ) {
+            allowedPinStrategies.push( PinNames.poi, PinNames.hotel );
         }
 
-        super( allowedPinTypes, name );
+        this._pinStrategies = allowedPinStratagies;
     }
 
     generateContent( level ) {

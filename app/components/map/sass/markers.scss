@@ -1,10 +1,11 @@
 .marker {
+    display: inline-block;
     margin: 5px;
     padding: 5px;
     border: 1px solid black;
     background-color: lightsteelblue;
     color: white;
-    outline: none;
+    cursor: pointer;
 
     &--airport {
         background-color: dimgray;
@@ -23,5 +24,13 @@
     }
 }
 
-
+.marker-dest {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 12px;
+    border: 1px solid crimson;
+    background-color: whitesmoke;
+    color: crimson;
+    cursor: pointer;
+}
 

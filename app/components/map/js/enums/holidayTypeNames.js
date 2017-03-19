@@ -12,4 +12,8 @@ export default class HolidayTypeNames {
     static get city() {
         return 'cityBreak';
     }
+
+    static get villas() {
+        return 'villas';
+    }
 }

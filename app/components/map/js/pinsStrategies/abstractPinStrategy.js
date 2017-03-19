@@ -2,7 +2,7 @@
 
 import Config from '../config';
 import MediatorEvents from '../enums/mediatorEvents';
-import markerDestination from '../../templates/markerDestination.handlebars';
+
 
 export default class AbstractPinStrategy {
     constructor() {
@@ -50,9 +50,10 @@ export default class AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
+        let activePin = Config.instance.activePin;
 
-        if ( Config.instance.activeMarker && Config.instance.activeMarker.marker ) {
-            Config.instance.activeMarker.marker.classList.remove('is-active');
+        if ( activePin && activePin.marker ) {
+            activePin.marker.classList.remove('is-active');
         }
 
         if ( pin.marker ) {
@@ -83,8 +84,7 @@ export default class AbstractPinStrategy {
     }
 
     _generatePin ( pin, template ) {
-        pin.marker = this._html2dom( markerDestination( pin ) );
-        //console.log(pin.marker);
+        pin.marker = this._html2dom( template( pin ) );
         return pin;
     }
 

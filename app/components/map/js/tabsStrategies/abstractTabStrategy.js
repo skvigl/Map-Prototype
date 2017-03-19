@@ -19,6 +19,10 @@ export default class AbstractTabStrategy {
         return this._name;
     }
 
+    updatePinStrategies() {
+
+    }
+
     _generateCards() {
         let cards = [];
 

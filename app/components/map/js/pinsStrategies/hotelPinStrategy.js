@@ -2,6 +2,7 @@
 
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
+import MarkerTemplate from '../../templates/marker.hbs';
 
 export default class HotelPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -16,7 +17,14 @@ export default class HotelPinStrategy extends AbstractPinStrategy {
         return super.generateMultipleContent( pinsArray, PinNames.hotel );
     }
 
+    _generatePin ( pin ) {
+        pin.modifierList = ['marker--hotel'];
+        super._generatePin( pin, MarkerTemplate );
+        return pin;
+    }
+
     _generateContent( pin ) {
+        pin.modifierList = ['marker--poi'];
         let view = document.createElement('div');
         view.className = 'card-hotel';
         view.innerHTML = pin.text;

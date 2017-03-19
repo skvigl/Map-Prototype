@@ -2,6 +2,7 @@
 
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
+import MarkerTemplate from '../../templates/marker.hbs';
 
 export default class PoiPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -18,15 +19,8 @@ export default class PoiPinStrategy extends AbstractPinStrategy {
 
     _generatePin ( pin ) {
         pin.modifierList = ['marker--poi'];
-        super._generatePin( pin, 'marker');
-        // let marker = document.createElement( 'button' );
-        // marker.type = 'button';
-        // marker.innerHTML = pin.text;
-        // marker.className = 'marker js-marker';
-        // marker.setAttribute('data-id', pin.id);
-        // pin.marker = marker;
-
-        return pin.marker;
+        super._generatePin( pin, MarkerTemplate );
+        return pin;
     }
 
     _generateContent( pin ) {

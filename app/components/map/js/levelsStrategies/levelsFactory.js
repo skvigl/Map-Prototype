@@ -17,22 +17,18 @@ export default class LevelsFactory {
                 case 0:
                     return new MobileZeroLevelStrategy();
                 case 1:
-                    return new MobileNestedLevelStrategy( 1 );
                 case 2:
-                    return new MobileNestedLevelStrategy( 2 );
                 case 3:
-                    return new MobileNestedLevelStrategy( 3 );
+                    return new MobileNestedLevelStrategy();
             }
         } else {
             switch ( level ) {
                 case 0:
                     return new ZeroLevelStrategy();
                 case 1:
-                    return new NestedLevelStrategy( 1 );
                 case 2:
-                    return new NestedLevelStrategy( 2 );
                 case 3:
-                    return new NestedLevelStrategy( 3 );
+                    return new NestedLevelStrategy();
             }
         }
     }

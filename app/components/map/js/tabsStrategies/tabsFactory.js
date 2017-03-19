@@ -6,25 +6,23 @@ import MobileOverviewTabStrategy from './mobileOverviewTabStrategy';
 import OverviewTabStrategy from './OverviewTabStrategy';
 import PoiTabStrategy from './poiTabStrategy';
 import HotelTabStrategy from './hotelTabStrategy';
+import VillaTabStrategy from './villaTabStrategy';
 
 export default class TabsFactory {
     constructor() {
     }
 
-    static getTabStrategy( tab, level ) {
+    static getTabStrategy( name ) {
 
-        switch ( tab ) {
+        switch ( name ) {
             case TabNames.overview:
                 if ( Config.instance.isMobile ) {
                     return new MobileOverviewTabStrategy(
-                        TabNames.overview,
-                        level,
-                        Config.instance.isCityBreak
+                        TabNames.overview
                     );
                 } else {
                     return new OverviewTabStrategy(
-                        TabNames.overview,
-                        level
+                        TabNames.overview
                     );
                 }
             case TabNames.pois:
@@ -34,6 +32,10 @@ export default class TabsFactory {
             case TabNames.hotels:
                 return new HotelTabStrategy(
                     TabNames.hotels
+                );
+            case TabNames.villas:
+                return new VillaTabStrategy(
+                    TabNames.villas
                 );
         }
     }

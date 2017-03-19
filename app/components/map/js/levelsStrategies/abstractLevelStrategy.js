@@ -3,9 +3,6 @@
 export default class AbstractLevelStrategy {
     constructor() {
     }
-
-    getTabs() {
-    }
 }
 
 

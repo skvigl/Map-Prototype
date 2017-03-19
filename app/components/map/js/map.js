@@ -2,12 +2,16 @@
 
 import Config from './config';
 import PinNames from './enums/pinNames';
+import TabNames from './enums/tabNames';
+import HolidayTypeNames from './enums/holidayTypeNames';
 import LevelsFactory from './levelsStrategies/levelsFactory';
+import TabsFactory from './tabsStrategies/tabsFactory';
+import PinsFactory from './pinsStrategies/pinsFactory';
 import Mediator from 'mediator';
 import LevelSelect from './levelSelect';
 import TabSelect from 'tabSelect';
 import AjaxHandler from 'ajaxHandler';
-import PinFactory from './pinsStrategies/pinsFactory';
+
 
 export default class Map {
     constructor() {
@@ -27,15 +31,23 @@ export default class Map {
             level.tabs = level.strategy.getTabs();
         });
 
+        Config.instance.tabStrategies = {
+            [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
+            [ TabNames.pois ]: TabsFactory.getTabStrategy( TabNames.pois ),
+            [ TabNames.hotels ]: TabsFactory.getTabStrategy( TabNames.hotels ),
+            [ TabNames.villas ]: TabsFactory.getTabStrategy( TabNames.villas )
+        };
+
         Config.instance.pinStrategies = {
-            [ PinNames.airport ]: PinFactory.getPinStrategy( PinNames.airport ),
-            [ PinNames.destination ]: PinFactory.getPinStrategy( PinNames.destination ),
-            [ PinNames.poi ]: PinFactory.getPinStrategy( PinNames.poi ),
-            [ PinNames.hotel ]: PinFactory.getPinStrategy( PinNames.hotel )
+            [ PinNames.airport ]: PinsFactory.getPinStrategy( PinNames.airport ),
+            [ PinNames.destination ]: PinsFactory.getPinStrategy( PinNames.destination ),
+            [ PinNames.poi ]: PinsFactory.getPinStrategy( PinNames.poi ),
+            [ PinNames.hotel ]: PinsFactory.getPinStrategy( PinNames.hotel )
         };
 
 
-        this.initMapAtLevel( 0, 'overview' );
+
+        this.initMapAtLevel( 0, TabNames.overview );
 
         Config.instance.levelSelect.init();
         Config.instance.tabSelect.init();
@@ -55,34 +67,19 @@ export default class Map {
         this._bindEvents();
         //this._unbindEvents();
         //this._bindEvents();
-    }
+        //this.villas();
 
-    _getMarkers() {
-        return [
-            { id: '1', type: PinNames.hotel, text: 'HOTEL1'},
-            { id: '2', type: PinNames.poi, text: 'POI1'},
-            { id: '3', type: PinNames.destination, text: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
-            { id: '4', type: PinNames.destination, text: 'Minorca'},
-            { id: '5', type: PinNames.destination, text: 'Ibiza'},
-            { id: '6', type: PinNames.destination, text: 'Chelyabinsk', holidayType: 'cityBreak'},
-            { id: '7', type: PinNames.poi, text: 'POI2'},
-            { id: '8', type: PinNames.airport, text: 'AIRPORT1'},
-            { id: '9', type: PinNames.airport, text: 'AIRPORT2'},
-            { id: '10', type: PinNames.airport, text: 'AIRPORT3'},
-            { id: '11', type: PinNames.hotel, text: 'HOTEL2'},
-            { id: '12', type: PinNames.hotel, text: 'HOTEL3'},
-            { id: '13', type: PinNames.hotel, text: 'HOTEL4'},
-            { id: '14', type: PinNames.hotel, text: 'HOTEL5'}
-        ];
+
     }
 
     destroy() {
 
     }
 
-    initMapAtLevel( level, tab ) {
+    initMapAtLevel( level, tabName ) {
         Config.instance.currentLevel = Config.instance.levelCollections[ level ];
-        Config.instance.currentTab = Config.instance.currentLevel.tabs[ tab ];
+        Config.instance.currentTab = Config.instance.tabStrategies[ tabName ];
+        Config.instance.currentHolidayType = HolidayTypeNames.beach;
     }
 
     drawAllPins() {
@@ -167,6 +164,25 @@ export default class Map {
         }
 
         return null;
+    }
+
+    _getMarkers() {
+        return [
+            { id: '1', type: PinNames.hotel, text: 'HOTEL1'},
+            { id: '2', type: PinNames.poi, text: 'POI1'},
+            { id: '3', type: PinNames.destination, text: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
+            { id: '4', type: PinNames.destination, text: 'Minorca'},
+            { id: '5', type: PinNames.destination, text: 'Ibiza'},
+            { id: '6', type: PinNames.destination, text: 'Chelyabinsk', holidayType: 'cityBreak'},
+            { id: '7', type: PinNames.poi, text: 'POI2'},
+            { id: '8', type: PinNames.airport, text: 'AIRPORT1'},
+            { id: '9', type: PinNames.airport, text: 'AIRPORT2'},
+            { id: '10', type: PinNames.airport, text: 'AIRPORT3'},
+            { id: '11', type: PinNames.hotel, text: 'HOTEL2'},
+            { id: '12', type: PinNames.hotel, text: 'HOTEL3'},
+            { id: '13', type: PinNames.hotel, text: 'HOTEL4'},
+            { id: '14', type: PinNames.hotel, text: 'HOTEL5'}
+        ];
     }
 }
 

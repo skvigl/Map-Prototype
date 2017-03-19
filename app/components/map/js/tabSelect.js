@@ -69,7 +69,7 @@ export default class TabSelect {
 
             if ( this._tabs.hasOwnProperty(tab) ) {
 
-                if ( currentLevel.tabs[tab] === undefined ) {
+                if ( currentLevel.tabs.indexOf(tab) === -1 ) {
                     this._tabs[tab].tabElem.classList.add('is-hidden');
                 } else {
                     this._tabs[tab].tabElem.classList.remove('is-hidden');

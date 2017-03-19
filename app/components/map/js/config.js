@@ -5,11 +5,11 @@ export default class Config {
     constructor() {
         this._config = {
             map: null,
-            currentLevel: null,
-            currentTab: null,
-            avtieMarker: null,
+            currentLevel: {},
+            currentTab: {},
+            currentHolidayType: '',
+            activePin: null,
             isMobile: false,
-            isCityBreak: false,
             pinsArray: [],
             levelCollections: [
                 {
@@ -27,7 +27,9 @@ export default class Config {
             ],
             levelSelect: {},
             tabSelect: {},
-            mediator: {}
+            mediator: {},
+            pinStrategies: {},
+            tabStrategies: {}
         };
     }
 

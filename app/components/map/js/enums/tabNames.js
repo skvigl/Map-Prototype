@@ -16,4 +16,8 @@ export default class TabNames {
     static get hotels() {
         return 'hotels';
     }
+
+    static get villas() {
+        return 'villas';
+    }
 }

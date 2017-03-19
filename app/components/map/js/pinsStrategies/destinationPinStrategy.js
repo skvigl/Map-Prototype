@@ -5,7 +5,7 @@ import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
 import MediatorEvents from '../enums/mediatorEvents';
-
+import MarkerDestinationTemplate from '../../templates/markerDestination.hbs';
 
 export default class DestinationPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -18,6 +18,12 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
 
     generateMultipleContent( pinsArray, holidayType = HolidayTypeNames.beach ) {
         return super.generateMultipleContent( pinsArray, PinNames.destination, holidayType );
+    }
+
+    _generatePin ( pin ) {
+        pin.modifierList = [];
+        super._generatePin( pin, MarkerDestinationTemplate );
+        return pin;
     }
 
     onPinClick( pin ) {

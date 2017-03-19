@@ -15,7 +15,8 @@ export default class Mediator {
             case MediatorEvents.levelChanged: {
                 let currentLevelId = Config.instance.levelSelect.getCurrentLevel();
                 Config.instance.currentLevel = Config.instance.levelCollections[ currentLevelId ];
-                Config.instance.currentTab = Config.instance.currentLevel.tabs[ TabNames.overview ];
+                Config.instance.currentTab = Config.instance.tabStrategies[ TabNames.overview ];
+                Config.instance.currentTab.updatePinStrategies();
 
                 Config.instance.map.drawAllPins();
                 Config.instance.tabSelect.update();
@@ -23,14 +24,14 @@ export default class Mediator {
             }
             case MediatorEvents.tabChanged: {
                 let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-                Config.instance.currentTab = Config.instance.currentLevel.tabs[ currentTabName ];
+                Config.instance.currentTab = Config.instance.tabStrategies[ currentTabName ];
 
                 Config.instance.map.drawAllPins();
                 Config.instance.tabSelect.updateContent();
                 break;
             }
             case MediatorEvents.airportPinClicked: {
-                Config.instance.activeMarker = targetPin;
+                Config.instance.activePin = targetPin;
                 break;
             }
             case MediatorEvents.destinationPinClicked: {
@@ -41,7 +42,7 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.pinClicked: {
-                Config.instance.activeMarker = targetPin;
+                Config.instance.activePin = targetPin;
                 break;
             }
             default: {

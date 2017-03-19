@@ -3,7 +3,6 @@
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
 import DestinationPinStrategy from './destinationPinStrategy';
-import CityBreakPinStrategy from './cityBreakPinStrategy';
 import AirportPinStrategy from './airportPinStrategy';
 import PoiPinStrategy from './PoiPinStrategy';
 import HotelPinStrategy from './HotelPinStrategy';

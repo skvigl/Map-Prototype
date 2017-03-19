@@ -2,6 +2,7 @@
 
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
+import MarkerTemplate from '../../templates/marker.hbs';
 
 export default class AirportPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -25,13 +26,8 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
     }
 
     _generatePin ( pin ) {
-        let marker = document.createElement( 'button' );
-        marker.type = 'button';
-        marker.innerHTML = '<strong>' +  pin.text + '</strong>';
-        marker.className = 'marker marker--airport js-marker';
-        marker.setAttribute('data-id', pin.id);
-        pin.marker = marker;
-
+        pin.modifierList = ['marker--airport'];
+        super._generatePin( pin, MarkerTemplate );
         return pin;
     }
 }

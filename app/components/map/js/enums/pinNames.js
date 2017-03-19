@@ -20,4 +20,8 @@ export default class PinNames {
     static get hotel() {
         return 'hotel';
     }
+
+    static get villa() {
+        return 'villa';
+    }
 }

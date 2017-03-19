@@ -6,10 +6,21 @@ import PinNames from '../enums/pinNames';
 import TabContent from '../tabContent';
 
 export default class OverviewTabStrategy extends AbstractTabStrategy {
-    constructor( name, level ) {
-        let allowedPinStratagies = null;
+    constructor( name ) {
+        super( [], name );
+        this.updatePinStrategies();
+    }
 
-        switch ( level ) {
+    updatePinStrategies() {
+        let allowedPinStratagies = null,
+            currentLevel = Config.instance.currentLevel,
+            levelId = 0;
+
+        if ( currentLevel && currentLevel.levelId ) {
+            levelId = currentLevel.levelId;
+        }
+
+        switch ( levelId ) {
             case 0:
             case 1:
             case 2:
@@ -17,25 +28,17 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
                     PinNames.airport,
                     PinNames.destination
                 ];
-                //
-                //
-                //     PinFactory.getPinStrategy( PinNames.airport ),
-                //     PinFactory.getPinStrategy( PinNames.destination )
-                // ];
                 break;
             case 3:
                 allowedPinStratagies = [
                     PinNames.airport,
                     PinNames.poi,
                     PinNames.hotel
-                    //PinFactory.getPinStrategy( PinNames.airport ),
-                    //PinFactory.getPinStrategy( PinNames.poi ),
-                    //PinFactory.getPinStrategy( PinNames.hotel ),
                 ];
                 break;
         }
 
-        super( allowedPinStratagies, name );
+        this._pinStrategies = allowedPinStratagies;
     }
 
     generateContent() {
