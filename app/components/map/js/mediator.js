@@ -2,32 +2,44 @@
 
 import Config from './config';
 import TabNames from './enums/tabNames';
+import HolidayTypeNames from './enums/holidayTypeNames';
 import MediatorEvents from './enums/mediatorEvents';
 
 export default class Mediator {
-    constructor() {
-        //this._initiators = {};
-    }
+    constructor() {}
 
     stateChanged( mediatorEvent, targetPin ) {
 
         switch ( mediatorEvent ) {
             case MediatorEvents.levelChanged: {
-                let currentLevelId = Config.instance.levelSelect.getCurrentLevel();
-                Config.instance.currentLevel = Config.instance.levelCollections[ currentLevelId ];
-                Config.instance.currentTab = Config.instance.tabStrategies[ TabNames.overview ];
-                Config.instance.currentTab.updatePinStrategies();
+                // let currentLevelId = Config.instance.levelSelect.getCurrentLevel();
+                //
+                // Config.instance.currentLevel = Config.instance.levelCollections[ currentLevelId ];
+                //
+                // let currentTab = Config.instance.currentTab;
+                // currentTab = Config.instance.tabStrategies[ TabNames.overview ];
+                // currentTab.updatePinStrategies();
+                //
+                // Config.instance.map.drawAllPins();
+                //
+                // let currentLevel = Config.instance.currentLevel,
+                //     tabSelect = Config.instance.tabSelect;
+                // tabSelect.setTabsVisibility( currentLevel.tabs );
+                // tabSelect.setActiveTab( currentLevel.tabs[0] );
+                // tabSelect.clearTabsContent();
+                //
+                // let content = Config.instance.currentTab.generateContent();
+                // Config.instance.tabSelect.updateTabContent( content );
 
-                Config.instance.map.drawAllPins();
-                Config.instance.tabSelect.update();
                 break;
             }
             case MediatorEvents.tabChanged: {
                 let currentTabName = Config.instance.tabSelect.getCurrentTabName();
                 Config.instance.currentTab = Config.instance.tabStrategies[ currentTabName ];
-
                 Config.instance.map.drawAllPins();
-                Config.instance.tabSelect.updateContent();
+
+                let content = Config.instance.currentTab.generateContent();
+                Config.instance.tabSelect.updateTabContent( content );
                 break;
             }
             case MediatorEvents.airportPinClicked: {
@@ -35,14 +47,39 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.destinationPinClicked: {
-                let currentLevel = Config.instance.levelSelect.getCurrentLevel() + 1;
-                Config.instance.levelSelect.setCurrentLevel( currentLevel );
-                console.log( currentLevel );
-                console.log( targetPin );
+                let currentLevelId = Config.instance.currentLevel.levelId;
+
+                if ( targetPin.holidayType === HolidayTypeNames.city ) {
+                    currentLevelId = 3;
+                } else {
+                    currentLevelId++;
+                }
+
+                Config.instance.currentLevel = Config.instance.levelCollections[ currentLevelId ];
+
+                let currentTab = Config.instance.currentTab;
+                currentTab = Config.instance.tabStrategies[ TabNames.overview ];
+                currentTab.updatePinStrategies();
+
+                Config.instance.map.drawAllPins();
+
+                let currentLevel = Config.instance.currentLevel,
+                    tabSelect = Config.instance.tabSelect;
+                tabSelect.setTabsVisibility( currentLevel.tabs );
+                tabSelect.setActiveTab( currentLevel.tabs[0] );
+                tabSelect.clearTabsContent();
+
+                let content = Config.instance.currentTab.generateContent();
+                Config.instance.tabSelect.updateTabContent( content );
                 break;
             }
             case MediatorEvents.pinClicked: {
                 Config.instance.activePin = targetPin;
+
+                if ( Config.instance.activePin.detailsView ) {
+                    Config.instance.tabSelect
+                }
+
                 break;
             }
             default: {

@@ -1,0 +1,15 @@
+{
+  "pins": [
+    {
+      "id": 6,
+      "type": "poi",
+      "title": "POI1"
+    },
+    {
+      "id": 7,
+      "type": "poi",
+      "title": "POI2"
+    }
+  ]
+}
+

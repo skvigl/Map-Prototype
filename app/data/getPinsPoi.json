@@ -1,0 +1,23 @@
+{
+  "pins": [
+    {
+      "id": 6,
+      "type": "poi",
+      "title": "POI1",
+      "summary": "Lorem ipsum dolor sit amet."
+    },
+    {
+      "id": 7,
+      "type": "poi",
+      "title": "POI2",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+    },
+    {
+      "id": 8,
+      "type": "poi",
+      "title": "POI3",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+    }
+  ]
+}
+

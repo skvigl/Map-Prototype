@@ -6,6 +6,7 @@ export default class Config {
         this._config = {
             map: null,
             currentLevel: {},
+            currentLevelId: 0,
             currentTab: {},
             currentHolidayType: '',
             activePin: null,
@@ -25,7 +26,6 @@ export default class Config {
                     levelId: 3
                 }
             ],
-            levelSelect: {},
             tabSelect: {},
             mediator: {},
             pinStrategies: {},

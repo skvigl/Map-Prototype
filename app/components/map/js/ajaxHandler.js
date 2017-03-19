@@ -5,19 +5,19 @@ export default class AjaxHandler {
 
     }
 
-    getConfig () {
+    getConfig() {
 
     }
 
-    getMarkers( pinType, level ) {
+    getPins( type, level ) {
 
     }
 
-    getMarkersByPage() {
+    getPinsByPage( type, page ) {
 
     }
 
-    getMarkerDetails() {
+    getPinDetails( idList ) {
 
     }
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "type": "hotel",
+    "title": "HOTEL1",
+    "summary": "Lorem ipsum dolor sit amet."
+  },
+  {
+    "id": 2,
+    "type": "hotel",
+    "title": "HOTEL2",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+  },
+  {
+    "id": 3,
+    "type": "hotel",
+    "title": "HOTEL3",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+  },
+  {
+    "id": 4,
+    "type": "hotel",
+    "title": "HOTEL4",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!"
+  },
+  {
+    "id": 5,
+    "type": "hotel",
+    "title": "HOTEL5",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!"
+  }
+]

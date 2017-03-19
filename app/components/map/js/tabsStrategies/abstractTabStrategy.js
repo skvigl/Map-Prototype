@@ -12,22 +12,22 @@ export default class AbstractTabStrategy {
         return this._pinStrategies;
     }
 
-    drawContent( level ) {
-    }
-
     getName() {
         return this._name;
     }
 
-    updatePinStrategies() {
-
-    }
+    updatePinStrategies() {}
 
     _generateCards() {
         let cards = [];
 
         this._pinStrategies.forEach( strategy => {
-            cards = cards.concat( Config.instance.pinStrategies[ strategy ].generateMultipleContent() );
+            let newContent = Config.instance.pinStrategies[ strategy ].generateMultipleContent();
+
+            if ( newContent ) {
+                cards = cards.concat( newContent );
+            }
+
         });
 
         return cards;

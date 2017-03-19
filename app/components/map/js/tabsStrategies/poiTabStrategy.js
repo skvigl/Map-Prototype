@@ -21,7 +21,6 @@ export default class PoiTabStrategy extends AbstractTabStrategy {
             case 3:
                 console.log( 'draw all pois' );
                 return new TabContent( null , this._generateCards() );
-                break;
         }
     }
 }

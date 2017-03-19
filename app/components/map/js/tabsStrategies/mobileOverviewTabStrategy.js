@@ -35,7 +35,7 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
             case 3:
                 console.log( 'draw location info' );
                 return new TabContent( this._generateLocationInfo(), null );
-                break;
+
         }
     }
 }

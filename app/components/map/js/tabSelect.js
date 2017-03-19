@@ -1,35 +1,37 @@
 "use strict";
 
-import Config from './config';
-import Tab from './tab';
 import MediatorEvents from './enums/mediatorEvents';
 
 export default class TabSelect {
     constructor() {
         this._elem = document.querySelector( '.js-tabs' );
         this._tabs = {};
+        this._currentTabName = '';
     }
 
     init() {
         let tabNodes = document.querySelectorAll( '.js-tabs-nav > .js-tab' );
 
-        tabNodes.forEach( ( tab ) => {
-            let tabName = tab.getAttribute( 'data-name' );
+        tabNodes.forEach( ( tabNode ) => {
+            let tabName = tabNode.getAttribute( 'data-name' );
 
-            this._tabs[tabName] = new Tab(
-                tab,
-                document.querySelector( '.js-tabs > .js-content[data-name=' + tabName + ']')
-            );
+            this._tabs[ tabName ] = {
+                tabNode: tabNode,
+                contentNode: document.querySelector( '.js-tabs > .js-content[data-name=' + tabName + ']')
+            };
 
-            tab.addEventListener( 'click', event => this._clickHandler(event) );
+            tabNode.addEventListener( 'click', event => this._clickHandler(event) );
         });
 
-        this._currentTabName = Config.instance.currentTab.getName();
-        this.update();
+        console.log( this );
     }
 
     getCurrentTabName() {
         return this._currentTabName;
+    }
+
+    setMediator( mediator ) {
+        this._mediator = mediator;
     }
 
 
@@ -38,98 +40,102 @@ export default class TabSelect {
     //     clearingTab.contentElem.innerHTML = '';
     // }
 
-    setMediator( mediator ) {
-        this._mediator = mediator;
+    // update() {
+    //     this._currentTabName = Config.instance.currentTab.getName();
+    //     this._updateTabNavigation();
+    //     this._clearTabsContent();
+    //     this._setActiveTab();
+    //     this._updateTabContent();
+    // }
+
+    setActiveTab( tabName ) {
+        let oldTab = this._tabs[ this._currentTabName ];
+
+        if ( oldTab ) {
+            oldTab.tabNode.classList.remove('is-active');
+            oldTab.contentNode.classList.remove('is-active');
+        }
+
+        let currentTab = this._tabs[ tabName ];
+
+        if ( currentTab ) {
+            currentTab.tabNode.classList.add('is-active');
+            currentTab.contentNode.classList.add('is-active');
+        }
+
+        this._currentTabName = tabName;
     }
 
-    update() {
-        this._currentTabName = Config.instance.currentTab.getName();
-        this._updateTabNavigation();
-        this._clearTabsContent();
-        this._setActiveTab();
-        this._updateTabContent();
-    }
+    setTabsVisibility( tabList ) {
 
-    updateContent() {
-        if ( this._tabs[ this._currentTabName ].currentPage === 0 ) {
-            this._updateTabContent();
+        for( let tabName in this._tabs ) {
+
+            if ( !this._tabs.hasOwnProperty( tabName ) ) {
+                continue;
+            }
+
+            if ( tabList.indexOf( tabName ) === -1 ) {
+                this._tabs[ tabName ].tabNode.classList.add('is-hidden');
+            } else {
+                this._tabs[ tabName ].tabNode.classList.remove('is-hidden');
+            }
         }
     }
 
-    _clickHandler( event ) {
-        this._currentTabName = event.target.getAttribute( 'data-name' );
-        this._setActiveTab();
-        this._mediator.stateChanged( MediatorEvents.tabChanged );
-    }
+    // updateContent() {
+    //     if ( this._tabs[ this._currentTabName ].currentPage === 0 ) {
+    //         this._updateTabContent();
+    //     }
+    // }
 
-    _updateTabNavigation() {
-        let currentLevel = Config.instance.currentLevel;
-
+    clearTabsContent() {
         for( let tab in this._tabs ) {
-
             if ( this._tabs.hasOwnProperty(tab) ) {
-
-                if ( currentLevel.tabs.indexOf(tab) === -1 ) {
-                    this._tabs[tab].tabElem.classList.add('is-hidden');
-                } else {
-                    this._tabs[tab].tabElem.classList.remove('is-hidden');
-                }
+                this._tabs[tab].contentNode.innerHTML = '';
             }
         }
     }
 
-    _clearTabsContent() {
-        for( let tab in this._tabs ) {
-              if ( this._tabs.hasOwnProperty(tab) ) {
-                  this._tabs[tab].currentPage = 0;
-                  this._tabs[tab].contentElem.innerHTML = '';
-            }
-        }
-    }
-
-    _updateTabContent() {
-        let currentTab = this.getCurrentTab;
-        let tabContent = Config.instance.currentTab.generateContent();
+    updateTabContent( tabContent ) {
+        let currentTab = this._tabs[ this._currentTabName ];
 
         if ( tabContent.additionalInfo ) {
             console.log('tabContent.additionalInfo ', tabContent.additionalInfo);
         }
 
         if ( tabContent.cardList ) {
-            //currentTab.contentElem.append( tabContent.cardList );
-            //this._tabs[ Config.instance.currentTab.getName() ].
-
             tabContent.cardList.forEach( card => {
-                currentTab.contentElem.append( card );
+                currentTab.contentNode.append( card );
             });
         }
-
-        currentTab.currentPage++;
-
-
-        //this._drawContent( currentTabStrategy.generateContent( currentLevel.levelId ) );
     }
 
-    _setActiveTab() {
-        for( let tab in this._tabs ) {
-
-            if ( this._tabs.hasOwnProperty(tab) ) {
-                this._tabs[tab].tabElem.classList.remove('is-active');
-                this._tabs[tab].contentElem.classList.remove('is-active');
-            }
-        }
-
-        this.getCurrentTab.tabElem.classList.add('is-active');
-        this.getCurrentTab.contentElem.classList.add('is-active');
+    _clickHandler( event ) {
+        let tabName = event.target.getAttribute( 'data-name' );
+        this.setActiveTab( tabName );
+        this._mediator.stateChanged( MediatorEvents.tabChanged );
     }
+
+    // _updateTabNavigation() {
+    //     let currentLevel = Config.instance.currentLevel;
+    //
+    //     for( let tab in this._tabs ) {
+    //
+    //         if ( this._tabs.hasOwnProperty(tab) ) {
+    //
+    //             if ( currentLevel.tabs.indexOf(tab) === -1 ) {
+    //                 this._tabs[tab].tabNode.classList.add('is-hidden');
+    //             } else {
+    //                 this._tabs[tab].tabNode.classList.remove('is-hidden');
+    //             }
+    //         }
+    //     }
+    // }
+
+
 
     _drawContent() {
-        // if ( this._tabs[this._currentTabName].currentPage === 0 ) {
-        //     Config.instance.currentLevel
-        //         .tabs[Config.instance.currentTab]
-        //         .generateContent( Config.instance.currentLevel.levelId );
-        // }
-        //this._tabs[this._currentTabName].contentElem.innerHTML = content;
+
    }
 
     get getCurrentTab () {

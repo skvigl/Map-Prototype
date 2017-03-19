@@ -1,8 +1,9 @@
 "use strict";
 
 export default class AbstractLevelStrategy {
-    constructor() {
-    }
+    constructor() {}
+
+    getTabs() {}
 }
 
 

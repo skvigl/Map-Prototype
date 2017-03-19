@@ -91,6 +91,16 @@ export default class AbstractPinStrategy {
     _generateContent( pin ) {
         let view = document.createElement('div');
         view.className = 'card';
+        view.innerHTML = pin.title;
+        view.setAttribute('data-id', pin.id);
+
+        pin.view = view;
+        return view;
+    }
+
+    _generateDetails( pin ) {
+        let view = document.createElement('div');
+        view.className = 'card';
         view.innerHTML = pin.text;
         view.setAttribute('data-id', pin.id);
 

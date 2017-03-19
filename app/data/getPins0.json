@@ -1,0 +1,43 @@
+{
+  "pins": [
+    {
+      "id": 10,
+      "type": "airport",
+      "title": "LONDON"
+    },
+    {
+      "id": 11,
+      "type": "airport",
+      "title": "LEEDS(fake)"
+    },
+    {
+      "id": 12,
+      "type": "destination",
+      "holidayType": "beachHoliday",
+      "title": "Balerics",
+      "summary": "Lorem ipsum dolor sit amet."
+    },
+    {
+      "id": 13,
+      "type": "destination",
+      "holidayType": "beachHoliday",
+      "title": "Spain",
+      "summary": "Lorem ipsum dolor sit amet."
+    },
+    {
+      "id": 17,
+      "type": "destination",
+      "holidayType": "cityBreak",
+      "title": "Madrid",
+      "summary": "Lorem ipsum dolor sit amet."
+    },
+    {
+      "id": 18,
+      "type": "destination",
+      "holidayType": "cityBreak",
+      "title": "Rome",
+      "summary": "Lorem ipsum dolor sit amet."
+    }
+  ]
+}
+

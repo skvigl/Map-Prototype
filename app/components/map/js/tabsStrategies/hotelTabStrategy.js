@@ -9,7 +9,6 @@ export default class HotelTabStrategy extends AbstractTabStrategy {
     constructor( name ) {
         let allowedPinTypes = [
             PinNames.hotel
-            //PinFactory.getPinStrategy( PinNames.hotel )
         ];
         super( allowedPinTypes, name );
     }
@@ -24,7 +23,6 @@ export default class HotelTabStrategy extends AbstractTabStrategy {
             case 3:
                 console.log( 'draw all hotel' );
                 return new TabContent( null , this._generateCards() );
-                break;
         }
     }
 }
