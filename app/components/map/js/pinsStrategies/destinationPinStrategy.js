@@ -6,6 +6,7 @@ import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
 import MediatorEvents from '../enums/mediatorEvents';
 import MarkerDestinationTemplate from '../../templates/markerDestination.hbs';
+import CardDestTemplate from '../../templates/cardDest.hbs';
 
 export default class DestinationPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -22,7 +23,13 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
 
     _generatePin ( pin ) {
         pin.modifierList = [];
-        super._generatePin( pin, MarkerDestinationTemplate );
+        super._generateContent( pin, 'marker', MarkerDestinationTemplate );
+        return pin;
+    }
+
+    _generateView( pin ) {
+        pin.modifierList = [];
+        super._generateContent( pin, 'view', CardDestTemplate );
         return pin;
     }
 

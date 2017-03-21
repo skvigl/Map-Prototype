@@ -35,10 +35,10 @@ export default class AbstractPinStrategy {
         pinsArray.forEach( ( pin ) => {
             if ( pin.type === pinType ) {
                 if ( pin.view === undefined ) {
-                    view = this._generateContent( pin );
+                    view = this._generateView( pin );
 
-                    if ( view !== null ) {
-                        views.push( view );
+                    if ( pin.view !== null ) {
+                        views.push( pin.view );
                     }
                 } else {
                     views.push( pin.view );
@@ -83,22 +83,16 @@ export default class AbstractPinStrategy {
         }
     }
 
-    _generatePin ( pin, template ) {
-        pin.marker = this._html2dom( template( pin ) );
+    _generateContent ( pin, key ,template ) {
+        pin[key] = this._html2dom( template( pin ) );
         return pin;
     }
 
-    _generateContent( pin ) {
-        let view = document.createElement('div');
-        view.className = 'card';
-        view.innerHTML = pin.title;
-        view.setAttribute('data-id', pin.id);
+    _generatePin() {}
 
-        pin.view = view;
-        return view;
-    }
+    _generateView() {}
 
-    _generateDetails( pin ) {
+    _generateDetailsView( pin ) {
         let view = document.createElement('div');
         view.className = 'card';
         view.innerHTML = pin.text;

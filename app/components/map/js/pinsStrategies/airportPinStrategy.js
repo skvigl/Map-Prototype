@@ -21,13 +21,9 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
         super.onPinClick( pin );
     }
 
-    hover() {
-        console.log( 'airport pin hover' );
-    }
-
     _generatePin ( pin ) {
         pin.modifierList = ['marker--airport'];
-        super._generatePin( pin, MarkerTemplate );
+        super._generateContent( pin, 'marker', MarkerTemplate );
         return pin;
     }
 }

@@ -2,108 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        .tabs {
-            width: 260px;
-        }
-        .tabs-nav {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            font-size: 0;
-        }
 
-        .tabs-nav__li {
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 5px;
-            padding: 0.5em 1em;
-            background-color: rgba(0,127,127,0.5);
-            font-size: 16px;
-            user-select: none;
-            cursor: pointer;
-        }
-
-        .tabs-nav__li.is-active {
-            background-color: rgba(0,127,127,0.8);
-        }
-        .tabs-nav__li.is-hidden{
-            display: none;
-        }
-        .tabs-content {
-            display: none;
-            padding: 1em;
-            border: 1px solid rgba(0,127,127,0.5);
-        }
-        .tabs-content.is-active {
-            display: block;
-        }
-        select {
-            width: 50px;
-            margin: 0 0 20px;
-        }
-        .map {
-            width: 300px;
-            height: 300px;
-            margin: 20px 0 0;
-            padding: 20px;
-            border: 2px solid darkslategray;
-        }
-
-        .card {
-            background-color: lightcoral;
-            color: white;
-            padding: 5px 10px;
-            margin: 10px 0;
-            font-size: 24px;
-            letter-spacing: 2px;
-        }
-
-        .card-poi {
-            background-color: midnightblue;
-            color: white;
-            padding: 5px 10px;
-            margin: 10px 0;
-            font-size: 24px;
-            letter-spacing: 2px;
-        }
-
-        .card-hotel {
-            background-color: goldenrod;
-            color: white;
-            padding: 5px 10px;
-            margin: 10px 0;
-            font-size: 24px;
-            letter-spacing: 2px;
-        }
-    </style>
 </head>
 <body>
-<h1>Patterns</h1>
+<h1>Map prototype</h1>
 
-<div class="tabs js-tabs">
-    <ul class="tabs-nav js-tabs-nav">
-        <li class="tabs-nav__li js-tab" data-name="overview">Overview</li>
-        <li class="tabs-nav__li js-tab" data-name="pois">Poi</li>
-        <li class="tabs-nav__li js-tab" data-name="hotels">Hotels</li>
-    </ul>
-    <div class="tabs-content js-content" data-name="overview">1</div>
-    <div class="tabs-content js-content" data-name="pois">2</div>
-    <div class="tabs-content js-content" data-name="hotels">3</div>
+<div class="map">
+    <div class="map__gmap gmap js-map"></div>
+    <div class="map__aside">
+        <div class="tabs js-tabs">
+            <ul class="tabs__nav js-tabs-nav">
+                <li class="tabs__li js-tab" data-name="overview">Overview</li>
+                <li class="tabs__li js-tab" data-name="pois">Poi</li>
+                <li class="tabs__li js-tab" data-name="hotels">Hotels</li>
+            </ul>
+            <div class="tabs__content js-content" data-name="overview">1</div>
+            <div class="tabs__content js-content" data-name="pois">2</div>
+            <div class="tabs__content js-content" data-name="hotels">3</div>
+        </div>
+    </div>
 </div>
-
-<div class="details js-details"></div>
-
-<div class="map js-map">
-
-</div>
-Lorem ipsum dolor sit amet.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cum eius eos impedit ipsa iste magni maxime non quam saepe?
 
 <script src="/assets/dist/app.js"></script>
 </body>

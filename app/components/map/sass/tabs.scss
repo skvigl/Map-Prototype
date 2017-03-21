@@ -1,0 +1,49 @@
+.tabs {
+    $block: '.tabs';
+    width: 260px;
+    height: 100%;
+
+    &__nav {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0;
+    }
+
+    &__li {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 5px;
+        padding: 0.5em 1em;
+        background-color: rgba(0, 127, 127, 0.5);
+        font-size: 16px;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .tabs__li {
+
+        &.is-active {
+            background-color: rgba(0, 127, 127, 0.8);
+        }
+
+        &.is-hidden {
+            display: none;
+        }
+    }
+
+    &__content {
+        display: none;
+        overflow-y: auto;
+        height: calc(100% - 34px);
+        padding: 10px;
+        border: 1px solid rgba(0, 127, 127, 0.5);
+
+        &.is-active {
+            display: block;
+        }
+    }
+}
+
+
+

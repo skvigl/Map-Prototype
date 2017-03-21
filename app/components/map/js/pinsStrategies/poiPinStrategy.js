@@ -3,6 +3,7 @@
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
+import CardPoiTemplate from '../../templates/cardPoi.hbs';
 
 export default class PoiPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -19,21 +20,14 @@ export default class PoiPinStrategy extends AbstractPinStrategy {
 
     _generatePin ( pin ) {
         pin.modifierList = ['marker--poi'];
-        super._generatePin( pin, MarkerTemplate );
+        super._generateContent( pin, 'marker', MarkerTemplate );
         return pin;
     }
 
-    _generateContent( pin ) {
-        let view = document.createElement('div');
-        view.className = 'card-poi';
-        view.innerHTML = pin.text;
-        view.setAttribute('data-id', pin.id);
-
-        pin.view = view;
-        return view;
+    _generateView( pin ) {
+        pin.modifierList = [];
+        super._generateContent( pin, 'view', CardPoiTemplate );
+        return pin;
     }
 
-    hover() {
-        console.log( 'poi pin hover' );
-    }
 }

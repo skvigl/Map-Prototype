@@ -1,0 +1,13 @@
+.map {
+    display: flex;
+    height: 70vh;
+
+    &__gmap {
+        width: 100%;
+        background-color: #ccc;
+    }
+
+    &__aside {
+        width: 300px;
+    }
+}
