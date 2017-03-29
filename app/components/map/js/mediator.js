@@ -49,6 +49,9 @@ export default class Mediator {
             case MediatorEvents.destinationPinClicked: {
                 let currentLevelId = Config.instance.currentLevel.levelId;
 
+                Config.instance.currentLocation = Object.assign( {}, targetPin );
+                Config.instance.currentLocation.view = null;
+
                 if ( targetPin.holidayType === HolidayTypeNames.city ) {
                     currentLevelId = 3;
                 } else {

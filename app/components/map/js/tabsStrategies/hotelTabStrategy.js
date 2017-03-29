@@ -15,9 +15,6 @@ export default class HotelTabStrategy extends AbstractTabStrategy {
 
     generateContent() {
         switch ( Config.instance.currentLevel.levelId ) {
-            case 0:
-                console.log( 'tab is hidden' );
-                break;
             case 1:
             case 2:
             case 3:

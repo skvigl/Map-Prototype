@@ -1,8 +1,14 @@
-<div class="card-hotel {{ modifierMarkerList}} js-view" data-id="{{ id }}">
-    <div class="card-hotel__figure">
-        <img src="//placehold.it/200x100" alt="">
+<div class="card card--hotel {{ modifierMarkerList}} js-view" data-id="{{ id }}">
+    <div class="card__figure">
+        <img class="image-cover" src="//placehold.it/350x100" alt="">
+        <div class="card__stars">* * *</div>
     </div>
-    <div class="card-hotel__heading">{{ title }}</div>
-    <div class="card-hotel__summary">{{{ summary }}}</div>
-    <a href="/to-hotel-page" target="_blank">Show more</a>
+    <div class="card__content">
+        <div class="card__heading">{{ title }}</div>
+        <div class="card__summary">{{{ summary }}}</div>
+    </div>
+    <div class="card__footer">
+        <a class="card__btn">View on map</a>
+        <a class="card__btn" href="/to-poi-page" target="_blank">Show more</a>
+    </div>
 </div>

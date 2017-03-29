@@ -1,38 +1,174 @@
+.image-cover {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .card-dest {
-    //background-color: lightcoral;
-    color: white;
-    padding: 5px 10px;
+    $block: '.card-dest';
+    position: relative;
+    height: 100px ;
     margin: 10px 0;
-    //font-size: 24px;
-    letter-spacing: 2px;
+
+    &__image {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__heading {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: white;
+        border: 2px solid;
+        font-weight: 500;
+    }
 
     &--beach {
         background-color: lighten(dodgerblue, 10%);
+
+        #{$block}__heading {
+            border-color: dodgerblue;
+            color: dodgerblue;
+        }
+
     }
 
     &--city {
         background-color: lighten(crimson, 10%);
+
+        #{$block}__heading {
+            border-color: crimson;
+            color: crimson;
+        }
     }
 
     &--villas {
         background-color: lighten(rebeccapurple, 10%);
+
+        #{$block}__heading {
+            border-color: rebeccapurple;
+            color: rebeccapurple;
+        }
     }
 }
 
-.card-poi {
-    background-color: cornflowerblue;
-    color: white;
-    padding: 5px 10px;
+.card {
+    $block: '.card';
+    background-color: whitesmoke;
     margin: 10px 0;
-    //font-size: 24px;
-    letter-spacing: 2px;
+
+    &__figure {
+        position: relative;
+        height: 150px;
+        overflow: hidden;
+    }
+
+    &__content {
+        padding: 10px 15px 20px;
+    }
+
+    &__heading {
+        letter-spacing: 2px;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    &__heading + &__summary {
+        margin-top: 10px;
+    }
+
+    &__footer {
+        display: table;
+        width: 100%;
+        height: 40px;
+        border-top: 1px solid;
+    }
+
+    &__btn {
+        display: table-cell;
+        vertical-align: middle;
+        width: 50%;
+        height: 30px;
+        font-size: 1rem;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    &__btn:first-child {
+        border-right: 1px solid;
+    }
+
+    &--poi {
+
+        #{$block}__figure {
+            background-color: cornflowerblue;
+        }
+
+        #{$block}__heading {
+            color: cornflowerblue;
+        }
+
+        #{$block}__footer {
+            border-color: cornflowerblue;
+        }
+
+        #{$block}__btn {
+            color: darken(cornflowerblue, 5%);
+
+            &:hover {
+                background-color: cornflowerblue;
+                color: white;
+            }
+        }
+
+        &__btn:first-child {
+            border-color: cornflowerblue;
+        }
+    }
+
+    &--hotel {
+
+        #{$block}__figure {
+            background-color: goldenrod;
+        }
+
+        #{$block}__stars {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        #{$block}__heading {
+            color: goldenrod;
+        }
+
+        #{$block}__footer {
+            border-color: goldenrod;
+        }
+
+        #{$block}__btn {
+            color: darken(goldenrod, 5%);
+
+            &:hover {
+                background-color: goldenrod;
+                color: white;
+            }
+        }
+
+        &__btn:first-child {
+            border-color: goldenrod;
+        }
+    }
 }
 
-.card-hotel {
-    background-color: goldenrod;
-    color: white;
-    padding: 5px 10px;
-    margin: 10px 0;
-    //font-size: 24px;
-    letter-spacing: 2px;
+.loc-overview {
+
 }

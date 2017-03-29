@@ -1,6 +1,6 @@
 .tabs {
     $block: '.tabs';
-    width: 260px;
+    width: 300px;
     height: 100%;
 
     &__nav {
@@ -38,6 +38,7 @@
         height: calc(100% - 34px);
         padding: 10px;
         border: 1px solid rgba(0, 127, 127, 0.5);
+        background-color: #e9ebee;
 
         &.is-active {
             display: block;

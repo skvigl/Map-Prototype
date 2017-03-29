@@ -6,7 +6,8 @@ import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
 import MediatorEvents from '../enums/mediatorEvents';
 import MarkerDestTemplate from '../../templates/markerDest.hbs';
-import CardDestTemplate from '../../templates/cardDest.hbs'
+import CardDestTemplate from '../../templates/cardDest.hbs';
+import LocOverviewTemplate from '../../templates/locOverview.hbs';
 import GenerateContentModel from '../models/generateContentModel';
 
 export default class DestinationPinStrategy extends AbstractPinStrategy {
@@ -32,6 +33,22 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
 
     generateMultipleContent( pinsArray, holidayType = HolidayTypeNames.beach ) {
         return super.generateMultipleContent( pinsArray, PinNames.destination, holidayType );
+    }
+
+    generateLocationInfo() {
+        let locationPin = Config.instance.currentLocation;
+
+        if ( locationPin.view ) {
+            return locationPin.view;
+        }
+
+        let params = new GenerateContentModel();
+        params.pin = locationPin;
+        params.key = 'view';
+        params.template = LocOverviewTemplate;
+
+        super._generateContent( params );
+        return locationPin.view;
     }
 
     _generatePin( pin ) {

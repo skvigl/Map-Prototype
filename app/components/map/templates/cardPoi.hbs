@@ -1,8 +1,13 @@
-<div class="card-poi {{ modifierMarkerList}} js-view" data-id="{{ id }}">
-    <div class="card-poi__figure">
-        <img src="//placehold.it/200x100" alt="">
+<div class="card card--poi {{ modifierMarkerList}} js-view" data-id="{{ id }}">
+    <div class="card__figure">
+        <img class="image-cover" src="//placehold.it/200x400" alt="">
     </div>
-    <div class="card-poi__heading">{{ title }}</div>
-    <div class="card-poi__summary">{{{ summary }}}</div>    
-    <a href="/to-poi-page" target="_blank">Show more</a>
+    <div class="card__content">
+        <div class="card__heading">{{ title }}</div>
+        <div class="card__summary">{{{ summary }}}</div>
+    </div>
+    <div class="card__footer">
+        <a class="card__btn">View on map</a>
+        <a class="card__btn" href="/to-poi-page" target="_blank">Show more</a>
+    </div>
 </div>

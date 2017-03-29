@@ -9,6 +9,7 @@ export default class Config {
             currentLevelId: 0,
             currentTab: {},
             currentHolidayType: '',
+            currentLocation: {},
             activePin: null,
             isMobile: false,
             pinsArray: [],
