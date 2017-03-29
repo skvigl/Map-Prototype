@@ -39,6 +39,7 @@ export default class Map {
         Config.instance.pinStrategies = {
             [ PinNames.airport ]: PinsFactory.getPinStrategy( PinNames.airport ),
             [ PinNames.destination ]: PinsFactory.getPinStrategy( PinNames.destination ),
+            [ PinNames.childDestination ]: PinsFactory.getPinStrategy( PinNames.childDestination ),
             [ PinNames.poi ]: PinsFactory.getPinStrategy( PinNames.poi ),
             [ PinNames.hotel ]: PinsFactory.getPinStrategy( PinNames.hotel )
         };
@@ -161,10 +162,11 @@ export default class Map {
         return [
             { id: '1', type: PinNames.hotel, title: 'HOTEL1'},
             { id: '2', type: PinNames.poi, title: 'POI1'},
-            { id: '3', type: PinNames.destination, title: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
-            { id: '4', type: PinNames.destination, title: 'Minorca'},
-            { id: '5', type: PinNames.destination, title: 'Ibiza'},
-            { id: '6', type: PinNames.destination, title: 'Chelyabinsk', holidayType: 'cityBreak'},
+            { id: '3', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
+            { id: '4', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Minorca'},
+            { id: '5', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Ibiza'},
+            { id: '6', type: PinNames.destination, holidayType: 'cityBreak', title: 'Chelyabinsk' },
+            { id: '6', type: PinNames.destination, holidayType: 'villas', title: 'Balerics' },
             { id: '7', type: PinNames.poi, title: 'POI2'},
             { id: '8', type: PinNames.airport, title: 'AIRPORT1'},
             { id: '9', type: PinNames.airport, title: 'AIRPORT2'},
@@ -172,7 +174,10 @@ export default class Map {
             { id: '11', type: PinNames.hotel, title: 'HOTEL2'},
             { id: '12', type: PinNames.hotel, title: 'HOTEL3'},
             { id: '13', type: PinNames.hotel, title: 'HOTEL4'},
-            { id: '14', type: PinNames.hotel, title: 'HOTEL5'}
+            { id: '14', type: PinNames.hotel, title: 'HOTEL5'},
+            { id: '15', type: PinNames.childDestination, holidayType: 'beachHoliday', title: 'child dest beach' },
+            { id: '16', type: PinNames.childDestination, holidayType: 'cityBreak', title: 'child dest city' },
+            { id: '17', type: PinNames.childDestination, holidayType: 'villas', title: 'child dest villas' },
         ];
     }
 }

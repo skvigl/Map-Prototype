@@ -1,5 +1,6 @@
 .marker {
     display: inline-block;
+    vertical-align: middle;
     margin: 5px;
     padding: 5px;
     border: 1px solid black;
@@ -12,7 +13,7 @@
     }
 
     &--poi {
-        background-color: midnightblue;
+        background-color: cornflowerblue;
     }
     
     &--hotel {
@@ -26,11 +27,60 @@
 
 .marker-dest {
     display: inline-block;
+    vertical-align: middle;
     margin: 5px;
     padding: 10px 12px;
-    border: 1px solid crimson;
+    border: 2px solid;
     background-color: whitesmoke;
-    color: crimson;
+
     cursor: pointer;
+
+    &--beach {
+        border-color: dodgerblue;
+        color: dodgerblue;
+    }
+
+    &--city {
+        border-color: crimson;
+        color: crimson;
+    }
+
+    &--villas {
+        border-color: rebeccapurple;
+        color: rebeccapurple;
+    }
+}
+
+.marker-child {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
+
+    &__heading {
+        display: none;
+    }
+
+    &__pin {
+        width: 30px;
+        height: 30px;
+        border: 2px solid;
+        border-radius: 50%;
+        background-color: whitesmoke;
+    }
+
+    &--beach {
+        border-color: dodgerblue;
+        color: dodgerblue;
+    }
+
+    &--city {
+        border-color: crimson;
+        color: crimson;
+    }
+
+    &--villas {
+        border-color: rebeccapurple;
+        color: rebeccapurple;
+    }
 }
 

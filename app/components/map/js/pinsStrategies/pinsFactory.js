@@ -1,8 +1,8 @@
 'use strict';
 
 import PinNames from '../enums/pinNames';
-import HolidayTypeNames from '../enums/holidayTypeNames';
 import DestinationPinStrategy from './destinationPinStrategy';
+import ChildDestinationPinStrategy from './childDestinationPinStrategy';
 import AirportPinStrategy from './airportPinStrategy';
 import PoiPinStrategy from './PoiPinStrategy';
 import HotelPinStrategy from './HotelPinStrategy';
@@ -16,12 +16,9 @@ export default class PinFactory {
             case PinNames.airport:
                 return new AirportPinStrategy();
             case PinNames.destination:
-                if ( holidayType === undefined || holidayType === HolidayTypeNames.beach ) {
-                    return new DestinationPinStrategy();
-                } else if ( holidayType === HolidayTypeNames.city ) {
-                    return new CityBreakPinStrategy();
-                }
-                break;
+                return new DestinationPinStrategy();
+            case PinNames.childDestination:
+                return new ChildDestinationPinStrategy();
             case PinNames.poi:
                 return new PoiPinStrategy();
             case PinNames.hotel:

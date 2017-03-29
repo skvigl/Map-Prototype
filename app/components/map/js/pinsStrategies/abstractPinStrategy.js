@@ -83,9 +83,9 @@ export default class AbstractPinStrategy {
         }
     }
 
-    _generateContent ( pin, key ,template ) {
-        pin[key] = this._html2dom( template( pin ) );
-        return pin;
+    _generateContent( params ) {
+        params.pin[params.key] = this._html2dom( params.template( params.pin ));
+        return params.pin;
     }
 
     _generatePin() {}

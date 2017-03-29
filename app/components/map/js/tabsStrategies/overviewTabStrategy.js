@@ -22,11 +22,22 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
         switch ( levelId ) {
             case 0:
+                allowedPinStratagies = [
+                    PinNames.airport,
+                    PinNames.destination,
+                ];
+                break;
             case 1:
+                allowedPinStratagies = [
+                    PinNames.airport,
+                    PinNames.destination,
+                    PinNames.childDestination,
+                ];
+                break;
             case 2:
                 allowedPinStratagies = [
                     PinNames.airport,
-                    PinNames.destination
+                    PinNames.destination,
                 ];
                 break;
             case 3:
@@ -48,10 +59,10 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
                 console.log( 'draw all locations in tab' );
                 return new TabContent( null, this._generateCards() );
             case 1:
-                console.log( 'draw location info + all child location' );
+                console.log( 'draw location info + destinations + all child location' );
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
             case 2:
-                console.log( 'draw location info + all child location' );
+                console.log( 'draw location info + destinations' );
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
             case 3:
                 console.log( 'draw location info' );

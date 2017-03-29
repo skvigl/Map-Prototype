@@ -13,6 +13,10 @@ export default class PinNames {
         return 'destination';
     }
 
+    static get childDestination() {
+        return 'childDest';
+    }
+
     static get poi() {
         return 'poi';
     }

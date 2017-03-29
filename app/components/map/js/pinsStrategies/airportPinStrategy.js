@@ -3,6 +3,7 @@
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
+import GenerateContentModel from '../models/generateContentModel';
 
 export default class AirportPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -22,8 +23,14 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
     }
 
     _generatePin ( pin ) {
-        pin.modifierList = ['marker--airport'];
-        super._generateContent( pin, 'marker', MarkerTemplate );
+        pin.markerModifiers = 'marker--airport';
+
+        let params = new GenerateContentModel();
+        params.pin = pin;
+        params.key = 'marker';
+        params.template = MarkerTemplate;
+
+        super._generateContent( params );
         return pin;
     }
 }
