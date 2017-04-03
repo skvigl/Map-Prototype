@@ -9,8 +9,9 @@
 .card-dest {
     $block: '.card-dest';
     position: relative;
-    height: 100px ;
-    margin: 10px 0;
+    height: 100px;
+    user-select: none;
+    cursor: pointer;
 
     &__image {
         position: absolute;
@@ -29,6 +30,14 @@
         background-color: white;
         border: 2px solid;
         font-weight: 500;
+    }
+
+    &.is-visible {
+        display: block;
+    }
+
+    &.is-visible ~ &.is-visible {
+        margin-top: 10px;
     }
 
     &--beach {
@@ -170,5 +179,38 @@
 }
 
 .loc-overview {
+    &__heading {
+        margin-top: 10px;
+        border-bottom: 2px solid;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: cornflowerblue;
+        text-transform: uppercase;
+    }
 
+    &__summary {
+        line-height: 1.5;
+    }
+
+    &__heading + &__summary {
+        margin-top: 15px;
+    }
+
+    &__more {
+        display: block;
+        padding: 10px 10px;
+        background-color: cornflowerblue;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: darken(cornflowerblue, 5%);
+        }
+    }
+
+    &__summary + &__more {
+        margin: 30px 0;
+    }
 }

@@ -1,0 +1,49 @@
+{
+  "pins": [
+    {
+      "id": "a3",
+      "type": "Airport",
+      "title": "AIRPORT MAJ"
+    },
+    {
+      "id": "d6",
+      "type": "Destination",
+      "holidayType": "beachHoliday",
+      "title": "Majorca",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-6.jpg"
+    },
+    {
+      "id": "d7",
+      "type": "Destination",
+      "holidayType": "beachHoliday",
+      "title": "Minorca",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-7.jpg"
+    },
+    {
+      "id": "d8",
+      "type": "Destination",
+      "holidayType": "beachHoliday",
+      "title": "Ibiza",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-3.jpg"
+    },
+    {
+      "id": "c1",
+      "type": "ChildDestination",
+      "holidayType": "beachHoliday",
+      "title": "Alcudia",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem."
+    },
+    {
+      "id": "c2",
+      "type": "ChildDestination",
+      "holidayType": "villas",
+      "title": "Alcudia",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem."
+    }
+
+  ]
+}
+

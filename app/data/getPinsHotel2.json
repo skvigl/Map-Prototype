@@ -1,28 +1,28 @@
 {
   "pins": [
     {
-      "id": 1,
-      "type": "hotel",
+      "id": "h1",
+      "type": "Hotel",
       "title": "HOTEL1"
     },
     {
-      "id": 2,
-      "type": "hotel",
+      "id": "h2",
+      "type": "Hotel",
       "title": "HOTEL2"
     },
     {
-      "id": 3,
-      "type": "hotel",
+      "id": "h3",
+      "type": "Hotel",
       "title": "HOTEL3"
     },
     {
-      "id": 4,
-      "type": "hotel",
+      "id": "h4",
+      "type": "Hotel",
       "title": "HOTEL4"
     },
     {
-      "id": 5,
-      "type": "hotel",
+      "id": "h5",
+      "type": "Hotel",
       "title": "HOTEL5"
     }
   ]

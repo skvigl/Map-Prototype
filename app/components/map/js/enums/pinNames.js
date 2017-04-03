@@ -6,26 +6,26 @@ export default class PinNames {
     }
 
     static get airport() {
-        return 'airport';
+        return 'Airport';
     }
 
     static get destination() {
-        return 'destination';
+        return 'Destination';
     }
 
     static get childDestination() {
-        return 'childDest';
+        return 'ChildDestination';
     }
 
     static get poi() {
-        return 'poi';
+        return 'Poi';
     }
 
     static get hotel() {
-        return 'hotel';
+        return 'Hotel';
     }
 
     static get villa() {
-        return 'villa';
+        return 'Villa';
     }
 }

@@ -1,31 +1,31 @@
 [
   {
-    "id": 1,
-    "type": "hotel",
+    "id": "h1",
+    "type": "Hotel",
     "title": "HOTEL1",
     "summary": "Lorem ipsum dolor sit amet."
   },
   {
-    "id": 2,
-    "type": "hotel",
+    "id": "h2",
+    "type": "Hotel",
     "title": "HOTEL2",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
   },
   {
-    "id": 3,
-    "type": "hotel",
+    "id": "h3",
+    "type": "Hotel",
     "title": "HOTEL3",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
   },
   {
-    "id": 4,
-    "type": "hotel",
+    "id": "h4",
+    "type": "Hotel",
     "title": "HOTEL4",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!"
   },
   {
-    "id": 5,
-    "type": "hotel",
+    "id": "h5",
+    "type": "Hotel",
     "title": "HOTEL5",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!"
   }

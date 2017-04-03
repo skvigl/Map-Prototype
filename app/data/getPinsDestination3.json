@@ -1,0 +1,50 @@
+{
+  "pins": [
+    {
+      "id": "a3",
+      "type": "Airport",
+      "title": "AIRPORT MAJ"
+    },
+    {
+      "id": "h1",
+      "type": "Hotel",
+      "title": "Hotel1"
+    },
+    {
+      "id": "h2",
+      "type": "Hotel",
+      "title": "Hotel2"
+    },
+    {
+      "id": "h3",
+      "type": "Hotel",
+      "title": "Hotel3"
+    },
+    {
+      "id": "h4",
+      "type": "Hotel",
+      "title": "Hotel4"
+    },
+    {
+      "id": "h5",
+      "type": "Hotel",
+      "title": "Hotel5"
+    },
+    {
+      "id": "p1",
+      "type": "Poi",
+      "title": "Poi1"
+    },
+    {
+      "id": "p2",
+      "type": "Poi",
+      "title": "Poi2"
+    },
+    {
+      "id": "p3",
+      "type": "Poi",
+      "title": "Poi3"
+    }
+  ]
+}
+

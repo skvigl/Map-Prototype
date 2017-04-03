@@ -4,6 +4,8 @@ import Config from './config';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import HolidayTypeNames from './enums/holidayTypeNames';
+import MediatorEvents from './enums/mediatorEvents';
+import MediatorEventModel from './models/mediatorEventModel';
 import LevelsFactory from './levelsStrategies/levelsFactory';
 import TabsFactory from './tabsStrategies/tabsFactory';
 import PinsFactory from './pinsStrategies/pinsFactory';
@@ -22,7 +24,8 @@ export default class Map {
         Config.instance.tabSelect = new TabSelect();
         Config.instance.ajaxHandler = new AjaxHandler();
         Config.instance.mediator = new Mediator();
-        Config.instance.pinsArray = this._getMarkers();
+        Config.instance.currentHolidayType = HolidayTypeNames.beach;
+        //Config.instance.pinsArray = this._getMarkers();
 
         Config.instance.levelCollections.forEach( ( level ) => {
             level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
@@ -49,29 +52,18 @@ export default class Map {
 
         console.log( Config.instance );
 
-        this.initMapAtLevel( 0, TabNames.overview );
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.levelChanged;
+        mediatorEvent.level = 0;
+        mediatorEvent.pinType = PinNames.destination;
+        mediatorEvent.tabName = TabNames.overview;
+        Config.instance.mediator.stateChanged( mediatorEvent );
 
-        this.drawAllPins();
         this._bindEvents();
-        //this._unbindEvents();
-        //this._bindEvents();
-        //this.villas();
     }
 
     destroy() {
 
-    }
-
-    initMapAtLevel( level, tabName ) {
-        Config.instance.currentLevel = Config.instance.levelCollections[ level ];
-        Config.instance.currentLevelId = Config.instance.levelCollections[ level ];
-        Config.instance.currentTab = Config.instance.tabStrategies[ tabName ];
-        Config.instance.currentHolidayType = HolidayTypeNames.beach;
-        Config.instance.tabSelect.setTabsVisibility( Config.instance.currentLevel.tabs );
-        Config.instance.tabSelect.setActiveTab( Config.instance.currentLevel.tabs[0] );
-
-        let content = Config.instance.currentTab.generateContent();
-        Config.instance.tabSelect.updateTabContent( content );
     }
 
     drawAllPins() {
@@ -84,7 +76,6 @@ export default class Map {
     _drawPins( strategy ) {
         let pins = Config.instance.pinStrategies[ strategy ].generateMultiplePins();
         pins.forEach( pin => {
-            //console.log(document.createElement(pin));
             Config.instance.map.elem.appendChild( pin.marker );
         })
     }
@@ -115,10 +106,18 @@ export default class Map {
             target = target.parentNode;
         }
 
-        if ( id ) {
-            let pin = this._findMarker( id );
-            Config.instance.pinStrategies[ pin.type ].onPinClick( pin );
+        if ( !id ) {
+            return false;
         }
+
+        let pin = this._findMarker( id );
+
+        if ( !pin ) {
+            return false;
+        }
+
+        Config.instance.pinStrategies[ pin.type ].onPinClick( pin );
+
 
         //console.log( pin );
 
@@ -158,28 +157,28 @@ export default class Map {
         return null;
     }
 
-    _getMarkers() {
-        return [
-            { id: '1', type: PinNames.hotel, title: 'HOTEL1', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-            { id: '2', type: PinNames.poi, title: 'POI1', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'},
-            { id: '3', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
-            { id: '4', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Minorca'},
-            { id: '5', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Ibiza'},
-            { id: '6', type: PinNames.destination, holidayType: 'cityBreak', title: 'Chelyabinsk' },
-            { id: '6', type: PinNames.destination, holidayType: 'villas', title: 'Balerics' },
-            { id: '7', type: PinNames.poi, title: 'POI2', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-            { id: '8', type: PinNames.airport, title: 'AIRPORT1'},
-            { id: '9', type: PinNames.airport, title: 'AIRPORT2'},
-            { id: '10', type: PinNames.airport, title: 'AIRPORT3'},
-            { id: '11', type: PinNames.hotel, title: 'HOTEL2', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-            { id: '12', type: PinNames.hotel, title: 'HOTEL3', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-            { id: '13', type: PinNames.hotel, title: 'HOTEL4'},
-            { id: '14', type: PinNames.hotel, title: 'HOTEL5'},
-            { id: '15', type: PinNames.childDestination, holidayType: 'beachHoliday', title: 'child dest beach' },
-            { id: '16', type: PinNames.childDestination, holidayType: 'cityBreak', title: 'child dest city' },
-            { id: '17', type: PinNames.childDestination, holidayType: 'villas', title: 'child dest villas' },
-        ];
-    }
+    // _getMarkers() {
+    //     return [
+    //         { id: '1', type: PinNames.hotel, title: 'HOTEL1', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
+    //         { id: '2', type: PinNames.poi, title: 'POI1', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'},
+    //         { id: '3', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
+    //         { id: '4', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Minorca'},
+    //         { id: '5', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Ibiza'},
+    //         { id: '6', type: PinNames.destination, holidayType: 'cityBreak', title: 'Chelyabinsk' },
+    //         { id: '6', type: PinNames.destination, holidayType: 'villas', title: 'Balerics' },
+    //         { id: '7', type: PinNames.poi, title: 'POI2', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
+    //         { id: '8', type: PinNames.airport, title: 'AIRPORT1'},
+    //         { id: '9', type: PinNames.airport, title: 'AIRPORT2'},
+    //         { id: '10', type: PinNames.airport, title: 'AIRPORT3'},
+    //         { id: '11', type: PinNames.hotel, title: 'HOTEL2', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
+    //         { id: '12', type: PinNames.hotel, title: 'HOTEL3', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
+    //         { id: '13', type: PinNames.hotel, title: 'HOTEL4'},
+    //         { id: '14', type: PinNames.hotel, title: 'HOTEL5'},
+    //         { id: '15', type: PinNames.childDestination, holidayType: 'beachHoliday', title: 'child dest beach' },
+    //         { id: '16', type: PinNames.childDestination, holidayType: 'cityBreak', title: 'child dest city' },
+    //         { id: '17', type: PinNames.childDestination, holidayType: 'villas', title: 'child dest villas' },
+    //     ];
+    // }
 }
 
 

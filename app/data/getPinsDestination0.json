@@ -1,0 +1,55 @@
+{
+  "pins": [
+    {
+      "id": "a1",
+      "type": "Airport",
+      "title": "LONDON"
+    },
+    {
+      "id": "a2",
+      "type": "Airport",
+      "title": "LEEDS(fake)"
+    },
+    {
+      "id": "d1",
+      "type": "Destination",
+      "holidayType": "beachHoliday",
+      "title": "Balerics",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-1.jpg"
+    },
+    {
+      "id": "d2",
+      "type": "Destination",
+      "holidayType": "beachHoliday",
+      "title": "Spain",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-2.jpg"
+    },
+    {
+      "id": "d3",
+      "type": "Destination",
+      "holidayType": "cityBreak",
+      "title": "Madrid",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-3.jpg"
+    },
+    {
+      "id": "d4",
+      "type": "Destination",
+      "holidayType": "cityBreak",
+      "title": "Rome",
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-4.jpg"
+    },
+    {
+      "id": "d5",
+      "type": "Destination",
+      "holidayType": "villas",
+      "title": "Balerics",
+      "summary": "Lorem ipsum dolor sit amet. Enett Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "imgURL": "/app/images/destination-5.jpg"
+    }
+  ]
+}
+

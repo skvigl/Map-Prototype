@@ -10,7 +10,13 @@
       "id": "p2",
       "type": "Poi",
       "title": "POI2",
-      "summary": "Lorem ipsum dolor sit amet. Dollar stopicot"
+      "summary": "Lorem ipsum dolor sit amet."
+    },
+    {
+      "id": "p3",
+      "type": "Poi",
+      "title": "POI3",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
     }
   ]
 }

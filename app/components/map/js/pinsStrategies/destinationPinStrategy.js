@@ -9,6 +9,7 @@ import MarkerDestTemplate from '../../templates/markerDest.hbs';
 import CardDestTemplate from '../../templates/cardDest.hbs';
 import LocOverviewTemplate from '../../templates/locOverview.hbs';
 import GenerateContentModel from '../models/generateContentModel';
+import MediatorEventModel from '../models/mediatorEventModel';
 
 export default class DestinationPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -76,6 +77,9 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
-        Config.instance.mediator.stateChanged( MediatorEvents.destinationPinClicked, pin );
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.destinationPinClicked;
+        mediatorEvent.targetPin = pin;
+        Config.instance.mediator.stateChanged( mediatorEvent );
     }
 }

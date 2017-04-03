@@ -2,6 +2,7 @@
 
 import Config from '../config';
 import MediatorEvents from '../enums/mediatorEvents';
+import MediatorEventModel from '../models/mediatorEventModel';
 
 
 export default class AbstractPinStrategy {
@@ -60,7 +61,11 @@ export default class AbstractPinStrategy {
             pin.marker.classList.add('is-active');
         }
 
-        Config.instance.mediator.stateChanged( MediatorEvents.pinClicked, pin );
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.pinClicked;
+        mediatorEvent.tagetPin = pin;
+
+        Config.instance.mediator.stateChanged( mediatorEvent );
     }
 
     onPinMouseover( pin ) {

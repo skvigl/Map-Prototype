@@ -1,5 +1,8 @@
 "use strict";
 
+import axios from 'axios';
+
+
 export default class AjaxHandler {
     constructor() {
 
@@ -10,6 +13,17 @@ export default class AjaxHandler {
     }
 
     getPins( type, level ) {
+
+        //just for example purpose
+        let url = '/app/data/getPins' + type + level + '.json';
+
+        return axios( {
+            url,
+            data: {
+                type,
+                level
+            }
+        });
 
     }
 

@@ -1,0 +1,20 @@
+{
+  "pins": [
+    {
+      "id": "h1",
+      "type": "Hotel",
+      "title": "HOTEL1"
+    },
+    {
+      "id": "h2",
+      "type": "Hotel",
+      "title": "HOTEL2"
+    },
+    {
+      "id": "h3",
+      "type": "Hotel",
+      "title": "HOTEL3"
+    }
+  ]
+}
+
