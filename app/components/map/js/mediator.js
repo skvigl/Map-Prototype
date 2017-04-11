@@ -15,7 +15,7 @@ export default class Mediator {
         switch ( eventModel.eventType ) {
             case MediatorEvents.levelChanged: {
 
-                let request = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level);
+                let request = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
 
                 request.then(function(response){
 
@@ -46,12 +46,54 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.tabChanged: {
+                let currentLevelId = Config.instance.currentLevel.levelId;
                 let currentTabName = Config.instance.tabSelect.getCurrentTabName();
                 Config.instance.currentTab = Config.instance.tabStrategies[ currentTabName ];
-                Config.instance.map.drawAllPins();
+                let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
 
-                let content = Config.instance.currentTab.generateContent();
-                Config.instance.tabSelect.updateTabContent( content );
+                let request = Config.instance.ajaxHandler.getPins( pinType, currentLevelId );
+
+                request.then(function(response) {
+
+                    if ( !response.data ) {
+                        return;
+                    }
+
+                    console.log( response.data );
+
+                    //TODO: Implement merge with currrent pins state
+                    Config.instance.pinsArray = response.data.pins;
+                    Config.instance.map.drawAllPins();
+
+                    let content = Config.instance.currentTab.generateContent();
+                    Config.instance.tabSelect.updateTabContent( content );
+                });
+
+                // let pageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 0 );
+                //
+                // pageRequest.then(function(response) {
+                //
+                //     if ( !response.data ) {
+                //         return;
+                //     }
+                //
+                //     console.log( response.data );
+                //
+                //     Config.instance.pinsArray = response.data.pins;
+                //
+                //     let content = Config.instance.currentTab.generateContent(),
+                //         tabSelect = Config.instance.tabSelect;
+                //
+                //     tabSelect.clearTabsContent();
+                //     tabSelect.updateTabContent( content );
+                //
+                // });
+                // Config.instance.map.drawAllPins();
+                //
+                // let content = Config.instance.currentTab.generateContent();
+                // Config.instance.tabSelect.updateTabContent( content );
+
+
                 break;
             }
             case MediatorEvents.airportPinClicked: {
@@ -106,6 +148,20 @@ export default class Mediator {
             }
             default: {
                 console.log( eventModel.eventType, ' hasn\'t been handled.');
+            }
+        }
+    }
+
+    getTargetPinType( pinTypes, tabName ) {
+
+        if ( tabName === TabNames.overview ) {
+            return PinNames.destination;
+        }
+
+        for( let pinType in pinTypes ) {
+
+            if( pinTypes[pinType] !== PinNames.childDestination && pinTypes[pinType] !== PinNames.airport ) {
+                return pinTypes[pinType];
             }
         }
     }

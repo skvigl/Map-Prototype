@@ -2,14 +2,10 @@
   "pins": [
     {
       "id": "p1",
-      "type": "Poi",
-      "title": "POI1",
       "summary": "Lorem ipsum dolor sit amet."
     },
     {
       "id": "p2",
-      "type": "Poi",
-      "title": "POI2",
       "summary": "Lorem ipsum dolor sit amet. Dollar stopicot"
     }
   ]

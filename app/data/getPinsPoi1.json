@@ -3,20 +3,17 @@
     {
       "id": "p1",
       "type": "Poi",
-      "title": "POI1",
-      "summary": "Lorem ipsum dolor sit amet."
+      "title": "POI1"
     },
     {
       "id": "p2",
       "type": "Poi",
-      "title": "POI2",
-      "summary": "Lorem ipsum dolor sit amet."
+      "title": "POI2"
     },
     {
       "id": "p3",
       "type": "Poi",
-      "title": "POI3",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+      "title": "POI3"
     }
   ]
 }

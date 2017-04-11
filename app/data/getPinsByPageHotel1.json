@@ -2,14 +2,10 @@
   "pins": [
     {
       "id": "h3",
-      "type": "Hotel",
-      "title": "HOTEL3",
       "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
     },
     {
       "id": "h4",
-      "type": "Hotel",
-      "title": "HOTEL4",
       "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!"
     }
   ]

@@ -1,6 +1,7 @@
 "use strict";
 
 import MediatorEvents from './enums/mediatorEvents';
+import MediatorEventModel from './models/mediatorEventModel';
 
 export default class TabSelect {
     constructor() {
@@ -114,7 +115,13 @@ export default class TabSelect {
     _clickHandler( event ) {
         let tabName = event.target.getAttribute( 'data-name' );
         this.setActiveTab( tabName );
-        this._mediator.stateChanged( MediatorEvents.tabChanged );
+
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.tabChanged;
+        // mediatorEvent.level = currentLevelId;
+        // mediatorEvent.pinType = PinNames.destination;
+        //this.stateChanged( mediatorEvent );
+        this._mediator.stateChanged( mediatorEvent );
     }
 
     // _updateTabNavigation() {

@@ -29,6 +29,17 @@ export default class AjaxHandler {
 
     getPinsByPage( type, page ) {
 
+        //just for example purpose
+        let url = '/app/data/getPinsByPage' + type + page + '.json';
+
+        return axios( {
+            url,
+            data: {
+                type,
+                page
+            }
+        });
+
     }
 
     getPinDetails( idList ) {
