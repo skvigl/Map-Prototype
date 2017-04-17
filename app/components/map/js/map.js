@@ -12,6 +12,7 @@ import PinsFactory from './pinsStrategies/pinsFactory';
 import Mediator from 'mediator';
 import TabSelect from 'tabSelect';
 import AjaxHandler from 'ajaxHandler';
+import PinsHelper from 'pinsHelper';
 
 
 export default class Map {
@@ -98,8 +99,6 @@ export default class Map {
 
         while( !target.classList.contains( 'js-map' ) ) {
             if ( target.classList.contains( 'js-marker' ) ) {
-                console.log('pin clicked');
-                //console.log(target);
                 id = target.getAttribute('data-id');
                 break;
             }
@@ -110,7 +109,7 @@ export default class Map {
             return false;
         }
 
-        let pin = this._findMarker( id );
+        let pin = PinsHelper.findPin( id );
 
         if ( !pin ) {
             return false;
@@ -140,22 +139,12 @@ export default class Map {
             target = target.parentNode;
         }
 
-        let pin = this._findMarker( id );
+        let pin = PinsHelper.findPin( id );
         console.log( pin );
         //Config.instance.pinStrategies[ pin.pinType ].
     }
 
-    _findMarker( id ) {
-        let pins = Config.instance.pinsArray;
 
-        for( let i = 0, imax = pins.length; i < imax; i++ ) {
-            if ( pins[i].id === id ) {
-                return pins[i];
-            }
-        }
-
-        return null;
-    }
 
     // _getMarkers() {
     //     return [

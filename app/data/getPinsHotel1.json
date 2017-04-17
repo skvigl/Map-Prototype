@@ -14,7 +14,16 @@
       "id": "h3",
       "type": "Hotel",
       "title": "HOTEL3"
+    },
+    {
+      "id": "h4",
+      "type": "Hotel",
+      "title": "HOTEL4"
+    },
+    {
+      "id": "h5",
+      "type": "Hotel",
+      "title": "HOTEL5"
     }
   ]
 }
-

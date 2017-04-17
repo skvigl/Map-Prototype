@@ -18,11 +18,11 @@ export default class AbstractTabStrategy {
 
     updatePinStrategies() {}
 
-    _generateCards() {
+    _generateCards( pins ) {
         let cards = [];
 
         this._pinStrategies.forEach( strategy => {
-            let newContent = Config.instance.pinStrategies[ strategy ].generateMultipleContent();
+            let newContent = Config.instance.pinStrategies[ strategy ].generateMultipleContent( pins );
 
             if ( newContent ) {
                 cards = cards.concat( newContent );

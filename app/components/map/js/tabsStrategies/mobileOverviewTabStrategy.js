@@ -20,15 +20,15 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
             PinNames.destination
         ];
 
-        if ( ( currentHolidayType === HolidayTypeNames.city && currentLevel == 2 ) || currentLevel == 3 ) {
+        if ( ( currentHolidayType === HolidayTypeNames.city && currentLevel === 2 ) || currentLevel === 3 ) {
             allowedPinStrategies.push( PinNames.poi, PinNames.hotel );
         }
 
         this._pinStrategies = allowedPinStratagies;
     }
 
-    generateContent( level ) {
-        switch ( level ) {
+    generateContent() {
+        switch ( Config.instance.currentLevel.levelId ) {
             case 0:
             case 1:
             case 2:

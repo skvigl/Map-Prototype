@@ -56,16 +56,12 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
         switch ( Config.instance.currentLevel.levelId ) {
             case 0:
-                console.log( 'draw all locations in tab' );
                 return new TabContent( null, this._generateCards() );
             case 1:
-                console.log( 'draw location info + destinations + all child location' );
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
             case 2:
-                console.log( 'draw location info + destinations' );
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
             case 3:
-                console.log( 'draw location info' );
                 return new TabContent( this._generateLocationInfo(), null );
         }
     }

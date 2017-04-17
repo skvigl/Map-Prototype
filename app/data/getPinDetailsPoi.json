@@ -3,18 +3,21 @@
     "id": "p1",
     "type": "Poi",
     "title": "POI1",
-    "summary": "Lorem ipsum dolor sit amet."
+    "summary": "Lorem ipsum dolor sit amet.",
+    "imgURL": "/app/images/poi-1.jpg"
   },
   {
     "id": "p2",
     "type": "Poi",
     "title": "POI2",
-    "summary": "Lorem ipsum dolor sit amet."
+    "summary": "Lorem ipsum dolor sit amet.",
+    "imgURL": "/app/images/poi-2.jpg"
   },
   {
     "id": "p3",
     "type": "Poi",
     "title": "POI3",
-    "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
+    "imgURL": "/app/images/poi-3.jpg"
   }
 ]

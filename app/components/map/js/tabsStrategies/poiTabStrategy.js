@@ -14,13 +14,13 @@ export default class PoiTabStrategy extends AbstractTabStrategy {
         super( allowedPinTypes, name );
     }
 
-    generateContent() {
+    generateContent( pins ) {
         switch ( Config.instance.currentLevel.levelId ) {
             case 1:
             case 2:
             case 3:
                 console.log( 'draw all pois' );
-                return new TabContent( null , this._generateCards() );
+                return new TabContent( null , this._generateCards( pins ) );
         }
     }
 }

@@ -101,7 +101,6 @@ export default class TabSelect {
         let currentTab = this._tabs[ this._currentTabName ];
 
         if ( tabContent.additionalInfo ) {
-            console.log('tabContent.additionalInfo ', tabContent.additionalInfo );
             currentTab.contentNode.append( tabContent.additionalInfo );
         }
 

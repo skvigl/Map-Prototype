@@ -13,7 +13,7 @@ export default class VillaTabStrategy extends AbstractTabStrategy {
         super( allowedPinTypes, name );
     }
 
-    generateContent() {
+    generateContent( pins ) {
         switch ( Config.instance.currentLevel.levelId ) {
             case 0:
                 console.log( 'tab is hidden' );
@@ -22,7 +22,7 @@ export default class VillaTabStrategy extends AbstractTabStrategy {
             case 2:
             case 3:
                 console.log( 'draw all hotel' );
-                return new TabContent( null , this._generateCards() );
+                return new TabContent( null , this._generateCards( pins ) );
                 break;
         }
     }

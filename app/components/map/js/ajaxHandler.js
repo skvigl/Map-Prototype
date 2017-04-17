@@ -24,7 +24,6 @@ export default class AjaxHandler {
                 level
             }
         });
-
     }
 
     getPinsByPage( type, page ) {
@@ -39,10 +38,13 @@ export default class AjaxHandler {
                 page
             }
         });
-
     }
 
     getPinDetails( idList ) {
 
+    }
+
+    getPinsMultithread( requests, callback ){
+        axios.all(requests).then(axios.spread(callback));
     }
 }

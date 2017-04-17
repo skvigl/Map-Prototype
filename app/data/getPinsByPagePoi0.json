@@ -2,11 +2,13 @@
   "pins": [
     {
       "id": "p1",
-      "summary": "Lorem ipsum dolor sit amet."
+      "summary": "Lorem ipsum dolor sit amet.",
+      "imgURL": "/app/images/poi-1.jpg"
     },
     {
       "id": "p2",
-      "summary": "Lorem ipsum dolor sit amet. Dollar stopicot"
+      "summary": "Lorem ipsum dolor sit amet. Dollar stopicot",
+      "imgURL": "/app/images/poi-2.jpg"
     }
   ]
 }

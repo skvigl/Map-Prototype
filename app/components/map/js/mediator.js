@@ -6,6 +6,7 @@ import TabNames from './enums/tabNames';
 import HolidayTypeNames from './enums/holidayTypeNames';
 import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
+import PinsHelper from 'pinsHelper';
 
 export default class Mediator {
     constructor() {}
@@ -15,9 +16,9 @@ export default class Mediator {
         switch ( eventModel.eventType ) {
             case MediatorEvents.levelChanged: {
 
-                let request = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
+                let getPinsRequest = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
 
-                request.then(function(response){
+                getPinsRequest.then(function(response){
 
                     if ( !response.data ) {
                         return;
@@ -51,49 +52,61 @@ export default class Mediator {
                 Config.instance.currentTab = Config.instance.tabStrategies[ currentTabName ];
                 let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
 
-                let request = Config.instance.ajaxHandler.getPins( pinType, currentLevelId );
+                let getPinsRequest = Config.instance.ajaxHandler.getPins( pinType, currentLevelId );
 
-                request.then(function(response) {
+                getPinsRequest.then((response) => {
 
                     if ( !response.data ) {
                         return;
                     }
 
                     console.log( response.data );
-
-                    //TODO: Implement merge with currrent pins state
-                    Config.instance.pinsArray = response.data.pins;
-                    Config.instance.map.drawAllPins();
-
-                    let content = Config.instance.currentTab.generateContent();
-                    Config.instance.tabSelect.updateTabContent( content );
+                    this._updatePins( response.data.pins );
                 });
 
-                // let pageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 0 );
-                //
-                // pageRequest.then(function(response) {
-                //
-                //     if ( !response.data ) {
-                //         return;
-                //     }
-                //
-                //     console.log( response.data );
-                //
-                //     Config.instance.pinsArray = response.data.pins;
+                let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 0 );
+
+                getPinsByPageRequest.then((response) => {
+
+                    if ( !response.data ) {
+                        return;
+                    }
+
+                    console.log( response.data );
+                    this._updatePins( response.data.pins );
+                });
+
+                let pinsCallback = function pinsCallback( getPinsResponse, getPinsByPageResponse ) {
+                    console.log( getPinsResponse, getPinsByPageResponse );
+                    Config.instance.map.drawAllPins();
+
+                    let pinsByPage = [];
+                    getPinsByPageResponse.data.pins.forEach(( pin )=>{
+                        let existingPin = PinsHelper.findPin( pin.id );
+
+                        if ( existingPin ) {
+                            pinsByPage.push( existingPin );
+                        }
+                    });
+
+                    let content = Config.instance.currentTab.generateContent( pinsByPage ),
+                        tabSelect = Config.instance.tabSelect;
+
+                    tabSelect.clearTabsContent();
+                    tabSelect.updateTabContent( content );
+                };
+
+                Config.instance.ajaxHandler.getPinsMultithread([ getPinsRequest, getPinsByPageRequest ], pinsCallback);
+
+                // multithreadRequest.then(() => {
+                //     Config.instance.map.drawAllPins();
                 //
                 //     let content = Config.instance.currentTab.generateContent(),
                 //         tabSelect = Config.instance.tabSelect;
                 //
                 //     tabSelect.clearTabsContent();
                 //     tabSelect.updateTabContent( content );
-                //
                 // });
-                // Config.instance.map.drawAllPins();
-                //
-                // let content = Config.instance.currentTab.generateContent();
-                // Config.instance.tabSelect.updateTabContent( content );
-
-
                 break;
             }
             case MediatorEvents.airportPinClicked: {
@@ -164,6 +177,18 @@ export default class Mediator {
                 return pinTypes[pinType];
             }
         }
+    }
+
+    _updatePins( pins ) {
+        pins.forEach(( pin )=>{
+            let targetPin = PinsHelper.findPin( pin.id );
+
+            if ( targetPin ) {
+                PinsHelper.mergePin( targetPin, pin );
+            } else {
+                Config.instance.pinsArray.push( pin );
+            }
+        });
     }
 
     // addInitiator( initiatorName, initiatorObj ) {
