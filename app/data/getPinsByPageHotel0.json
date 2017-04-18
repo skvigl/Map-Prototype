@@ -8,6 +8,8 @@
       "id": "h2",
       "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
     }
-  ]
+  ],
+  "currentPage":1,
+  "totalPages":2
 }
 

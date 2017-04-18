@@ -18,6 +18,14 @@ export default class AbstractTabStrategy {
 
     updatePinStrategies() {}
 
+    hasLoadMore(){
+        return true;
+    }
+
+    hasDetails(){
+        return true;
+    }
+
     _generateCards( pins ) {
         let cards = [];
 

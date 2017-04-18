@@ -7,6 +7,7 @@ import HolidayTypeNames from './enums/holidayTypeNames';
 import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
 import PinsHelper from 'pinsHelper';
+import TabState from 'tabState';
 
 export default class Mediator {
     constructor() {}
@@ -41,6 +42,15 @@ export default class Mediator {
                     tabSelect.setTabsVisibility( currentLevel.tabs );
                     tabSelect.setActiveTab( tabName );
 
+                    Config.instance.tabStates = {};
+                    for(let tabIndex in currentLevel.tabs)
+                    {
+                        let tabName = currentLevel.tabs[tabIndex];
+                        Config.instance.tabStates[tabName] = new TabState();
+                    }
+
+                    Config.instance.tabStates[tabName].hasPins = true;
+
                     let content = currentTab.generateContent();
                     Config.instance.tabSelect.updateTabContent( content );
                 });
@@ -49,9 +59,18 @@ export default class Mediator {
             case MediatorEvents.tabChanged: {
                 let currentLevelId = Config.instance.currentLevel.levelId;
                 let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-                Config.instance.currentTab = Config.instance.tabStrategies[ currentTabName ];
+                let currentTabStrategy = Config.instance.tabStrategies[ currentTabName ];
+                Config.instance.currentTab = currentTabStrategy;
                 let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
 
+                let currentTabState = Config.instance.tabStates[currentTabName];
+
+
+                if( currentTabState.hasPins ){
+                    Config.instance.map.drawAllPins();
+                    return ;
+                }
+                //TODO Level 3 pins loading: think about tab states for Level 3. All pint will be load on Overview request
                 let getPinsRequest = Config.instance.ajaxHandler.getPins( pinType, currentLevelId );
 
                 getPinsRequest.then((response) => {
@@ -59,10 +78,15 @@ export default class Mediator {
                     if ( !response.data ) {
                         return;
                     }
-
+                    let currentTabName = Config.instance.tabSelect.getCurrentTabName();
+                    Config.instance.tabStates[currentTabName].hasPins = true;
                     console.log( response.data );
                     this._updatePins( response.data.pins );
+                    Config.instance.map.drawAllPins();
                 });
+
+                if(!currentTabStrategy.hasDetails() || currentTabState.currentPage !== 0)
+                    return;
 
                 let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 0 );
 
@@ -76,9 +100,8 @@ export default class Mediator {
                     this._updatePins( response.data.pins );
                 });
 
-                let pinsCallback = function pinsCallback( getPinsResponse, getPinsByPageResponse ) {
+                let pinsDetailsCallback = function pinsCallback( getPinsResponse, getPinsByPageResponse ) {
                     console.log( getPinsResponse, getPinsByPageResponse );
-                    Config.instance.map.drawAllPins();
 
                     let pinsByPage = [];
                     getPinsByPageResponse.data.pins.forEach(( pin )=>{
@@ -92,11 +115,20 @@ export default class Mediator {
                     let content = Config.instance.currentTab.generateContent( pinsByPage ),
                         tabSelect = Config.instance.tabSelect;
 
-                    tabSelect.clearTabsContent();
+                    //tabSelect.clearTabsContent();
                     tabSelect.updateTabContent( content );
+
+                    let currentTabName = Config.instance.tabSelect.getCurrentTabName();
+                    let currentTabState = Config.instance.tabStates[currentTabName];
+
+                    currentTabState.currentPage = getPinsByPageResponse.data.currentPage;
+                    currentTabState.totalPages = getPinsByPageResponse.data.totalPages;
+                    console.log(currentTabState);
                 };
 
-                Config.instance.ajaxHandler.getPinsMultithread([ getPinsRequest, getPinsByPageRequest ], pinsCallback);
+                Config.instance.ajaxHandler.getPinsMultithread([ getPinsRequest, getPinsByPageRequest ], pinsDetailsCallback);
+
+
 
                 // multithreadRequest.then(() => {
                 //     Config.instance.map.drawAllPins();

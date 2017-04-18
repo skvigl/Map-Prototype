@@ -38,4 +38,12 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
 
         }
     }
+
+    hasLoadMore(){
+        return false;
+    }
+
+    hasDetails(){
+        return false;
+    }
 }

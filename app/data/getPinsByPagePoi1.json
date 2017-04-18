@@ -4,5 +4,7 @@
       "id": "p3",
       "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
     }
-  ]
+  ],
+  "currentPage":2,
+  "totalPages":2
 }

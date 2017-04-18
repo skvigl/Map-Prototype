@@ -30,7 +30,8 @@ export default class Config {
             tabSelect: {},
             mediator: {},
             pinStrategies: {},
-            tabStrategies: {}
+            tabStrategies: {},
+            tabStates: {}
         };
     }
 
