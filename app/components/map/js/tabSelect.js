@@ -18,7 +18,8 @@ export default class TabSelect {
 
             this._tabs[ tabName ] = {
                 tabNode: tabNode,
-                contentNode: document.querySelector( '.js-tabs > .js-content[data-name=' + tabName + ']')
+                contentNode: document.querySelector( '.js-tabs > .js-content[data-name=' + tabName + ']'),
+                detailsNode: document.querySelector( '.js-tabs > .js-details')
             };
 
             tabNode.addEventListener( 'click', event => this._clickHandler(event) );
@@ -109,6 +110,14 @@ export default class TabSelect {
                 currentTab.contentNode.append( card );
             });
         }
+
+        if ( tabContent.detailsCard ) {
+            this._clearDetailsTab();
+            currentTab.detailsNode.append( tabContent.detailsCard );
+            currentTab.detailsNode.classList.add('is-active');
+        } else {
+            currentTab.detailsNode.classList.remove('is-active');
+        }
     }
 
     _clickHandler( event ) {
@@ -121,6 +130,10 @@ export default class TabSelect {
         // mediatorEvent.pinType = PinNames.destination;
         //this.stateChanged( mediatorEvent );
         this._mediator.stateChanged( mediatorEvent );
+    }
+
+    _clearDetailsTab() {
+        this._tabs[ this._currentTabName ].detailsNode.innerHTML = '';
     }
 
     // _updateTabNavigation() {

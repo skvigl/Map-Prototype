@@ -50,6 +50,10 @@ export default class AbstractPinStrategy {
         return views;
     }
 
+    generateDetailsContent( pin ) {
+        return this._generateDetailsView( pin );
+    }
+
     onPinClick( pin ) {
         let activePin = Config.instance.activePin;
 
@@ -63,7 +67,7 @@ export default class AbstractPinStrategy {
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.pinClicked;
-        mediatorEvent.tagetPin = pin;
+        mediatorEvent.targetPin = pin;
 
         Config.instance.mediator.stateChanged( mediatorEvent );
     }
@@ -97,15 +101,7 @@ export default class AbstractPinStrategy {
 
     _generateView() {}
 
-    _generateDetailsView( pin ) {
-        let view = document.createElement('div');
-        view.className = 'card';
-        view.innerHTML = pin.text;
-        view.setAttribute('data-id', pin.id);
-
-        pin.view = view;
-        return view;
-    }
+    _generateDetailsView() {}
 
     _html2dom( html ) {
         let container = document.createElement('div');

@@ -72,7 +72,6 @@
 .card {
     $block: '.card';
     background-color: whitesmoke;
-    margin: 10px 0;
 
     &__figure {
         position: relative;
@@ -113,6 +112,10 @@
 
     &__btn:first-child {
         border-right: 1px solid;
+    }
+
+    & + & {
+        margin-top: 10px;
     }
 
     &--poi {

@@ -4,6 +4,7 @@ import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
 import CardHotelTemplate from '../../templates/cardHotel.hbs';
+import CardHotelDetailsTemplate from '../../templates/cardHotel.hbs';
 import GenerateContentModel from '../models/generateContentModel';
 
 export default class HotelPinStrategy extends AbstractPinStrategy {
@@ -38,6 +39,18 @@ export default class HotelPinStrategy extends AbstractPinStrategy {
         params.pin = pin;
         params.key = 'view';
         params.template = CardHotelTemplate;
+
+        super._generateContent( params );
+        return pin;
+    }
+
+    _generateDetailsView( pin ) {
+        pin.viewModifiers = '';
+
+        let params = new GenerateContentModel();
+        params.pin = pin;
+        params.key = 'detailsView';
+        params.template = CardHotelDetailsTemplate;
 
         super._generateContent( params );
         return pin;

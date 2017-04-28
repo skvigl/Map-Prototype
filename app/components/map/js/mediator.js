@@ -183,12 +183,15 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.pinClicked: {
-                Config.instance.activePin = eventModel.targetPin;
+                let activePin = eventModel.targetPin;
 
-                if ( Config.instance.activePin.detailsView ) {
-                    //Config.instance.tabSelect;
-                }
+                Config.instance.activePin = activePin;
 
+                let content = Config.instance.currentTab.generateDetailsCard( activePin ),
+                    tabSelect = Config.instance.tabSelect;
+
+                tabSelect.updateTabContent( content );
+                //TODO back button: add to details view
                 break;
             }
             default: {
