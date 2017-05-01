@@ -73,6 +73,7 @@ export default class AbstractPinStrategy {
     }
 
     onPinMouseover( pin ) {
+
         if ( pin.marker ) {
             pin.marker.classList.add('is-hover');
         }

@@ -6,7 +6,6 @@ export default class Config {
         this._config = {
             map: null,
             currentLevel: {},
-            currentLevelId: 0,
             currentTab: {},
             currentHolidayType: '',
             currentLocation: {},

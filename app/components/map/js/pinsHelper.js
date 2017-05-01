@@ -8,6 +8,11 @@ export default class PinsHelper {
     }
 
     static findPin( id ) {
+
+        if ( !id ) {
+            return null;
+        }
+
         let pins = Config.instance.pinsArray;
 
         for( let i = 0, imax = pins.length; i < imax; i++ ) {

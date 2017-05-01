@@ -194,6 +194,11 @@ export default class Mediator {
                 //TODO back button: add to details view
                 break;
             }
+            case MediatorEvents.levelBack: {
+                console.log( eventModel.level );
+                console.log( Config.instance.currentLevel.levelId );
+                break;
+            }
             default: {
                 console.log( eventModel.eventType, ' hasn\'t been handled.');
             }

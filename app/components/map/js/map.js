@@ -17,11 +17,15 @@ import PinsHelper from 'pinsHelper';
 
 export default class Map {
     constructor() {
+
     }
 
     init() {
+        this.listeners = {};
         Config.instance.map = this;
-        Config.instance.map.elem = document.querySelector('.js-map');
+        this.viewNode = document.querySelector( '.js-map' );
+        this.gmap = {};
+        this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap' );
         Config.instance.tabSelect = new TabSelect();
         Config.instance.ajaxHandler = new AjaxHandler();
         Config.instance.mediator = new Mediator();
@@ -31,7 +35,7 @@ export default class Map {
         Config.instance.levelCollections.forEach( ( level ) => {
             level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
             level.tabs = level.strategy.getTabs();
-        });
+        } );
 
         Config.instance.tabStrategies = {
             [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
@@ -60,114 +64,141 @@ export default class Map {
         mediatorEvent.tabName = TabNames.overview;
         Config.instance.mediator.stateChanged( mediatorEvent );
 
-        this._bindEvents();
+        this._attachEvents();
     }
 
     destroy() {
-
+        this._detachEvents();
+        console.log( this );
     }
 
     drawAllPins() {
-        Config.instance.map.elem.innerHTML = '';
+        this.gmap.viewNode.innerHTML = '';
         Config.instance.currentTab.getPinStrategies().forEach( strategy => {
             this._drawPins( strategy );
-        });
+        } );
     }
 
     _drawPins( strategy ) {
-        let pins = Config.instance.pinStrategies[ strategy ].generateMultiplePins();
+        let pins = Config.instance.pinStrategies[strategy].generateMultiplePins();
         pins.forEach( pin => {
-            Config.instance.map.elem.appendChild( pin.marker );
-        })
+            this.gmap.viewNode.appendChild( pin.marker );
+        } );
     }
 
-    _bindEvents() {
-        Config.instance.map.elem.addEventListener('click', event => this._onPinClickHandler(event));
-        //Config.instance.map.addEventListener('mouseover', event => this._onPinMouseOverHandler(event));
+    _attachEvents() {
+        this.viewNode.addEventListener(
+            'click',
+            this.listeners.onPinClickHandler = event => this._onPinClickHandler( event, 'js-marker' )
+        );
+        this.viewNode.addEventListener(
+            'mouseover',
+            ( event, cssClass ) => this._onPinMouseoverHandler( event, 'js-marker' )
+        );
+        this.viewNode.addEventListener(
+            'mouseover',
+            ( event, cssClass ) => this._onPinMouseoverHandler( event, 'js-view' )
+        );
+        this.viewNode.addEventListener(
+            'mouseout',
+            ( event, cssClass ) => this._onPinMouseoutHandler( event, 'js-marker' )
+        );
+        this.viewNode.addEventListener(
+            'mouseout',
+            ( event, cssClass ) => this._onPinMouseoutHandler( event, 'js-view' )
+        );
+        this.viewNode.addEventListener(
+            'click',
+            this.listeners.onBtnLevelBackClickHandler = event => this._onBtnLevelBackClickHandler( event, 'js-level-back' )
+        );
     }
 
-    _unbindEvents() {
-        Config.instance.map.elem.removeEventListener('click', event => this._onPinClickHandler(event) );
-        Config.instance.map.elem.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
+    _detachEvents() {
+        this.viewNode.removeEventListener(
+            'click',
+            this.listeners.onPinClickHandler
+        );
+        // Config.instance.map.removeEventListener('click', event => this._onPinClickHandler(event) );
+        // Config.instance.map.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
+        this.listeners = null;
     }
 
-    _onPinClickHandler( event ) {
-        let target = event.target;
-        let id = null;
-        //console.log( event.target );
+    _onPinClickHandler( event, cssClass ) {
+        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
 
-
-        while( !target.classList.contains( 'js-map' ) ) {
-            if ( target.classList.contains( 'js-marker' ) ) {
-                id = target.getAttribute('data-id');
-                break;
-            }
-            target = target.parentNode;
-        }
-
-        if ( !id ) {
+        if ( !target ) {
             return false;
         }
 
-        let pin = PinsHelper.findPin( id );
+        let id = target.getAttribute( 'data-id' ),
+            pin = PinsHelper.findPin( id );
 
         if ( !pin ) {
             return false;
         }
 
-        Config.instance.pinStrategies[ pin.type ].onPinClick( pin );
-
-
-        //console.log( pin );
-
-        //Config.instance.currentTab.
+        Config.instance.pinStrategies[pin.type].onPinClick( pin );
     }
 
-    _onPinMouseOverHandler( event ) {
-        let target = event.target;
-        let id = null;
-        //console.log( event.target );
+    _onPinMouseoverHandler( event, cssClass ) {
+        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
 
-
-        while( !target.classList.contains( 'js-map' ) ) {
-            if ( target.classList.contains( 'js-marker' ) ) {
-                console.log('pin mouse over');
-                console.log(target);
-                id = target.getAttribute('data-id');
-                break;
-            }
-            target = target.parentNode;
+        if ( !target ) {
+            return false;
         }
 
-        let pin = PinsHelper.findPin( id );
-        console.log( pin );
-        //Config.instance.pinStrategies[ pin.pinType ].
+        let id = target.getAttribute( 'data-id' ),
+            pin = PinsHelper.findPin( id );
+
+        if ( !pin ) {
+            return false;
+        }
+
+        Config.instance.pinStrategies[pin.type].onPinMouseover( pin );
     }
 
+    _onPinMouseoutHandler( event, cssClass ) {
+        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
 
+        if ( !target ) {
+            return false;
+        }
 
-    // _getMarkers() {
-    //     return [
-    //         { id: '1', type: PinNames.hotel, title: 'HOTEL1', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-    //         { id: '2', type: PinNames.poi, title: 'POI1', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'},
-    //         { id: '3', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Majorca', summary: 'Lorem ipsum dolor sit amet.'},
-    //         { id: '4', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Minorca'},
-    //         { id: '5', type: PinNames.destination, holidayType: 'beachHoliday', title: 'Ibiza'},
-    //         { id: '6', type: PinNames.destination, holidayType: 'cityBreak', title: 'Chelyabinsk' },
-    //         { id: '6', type: PinNames.destination, holidayType: 'villas', title: 'Balerics' },
-    //         { id: '7', type: PinNames.poi, title: 'POI2', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-    //         { id: '8', type: PinNames.airport, title: 'AIRPORT1'},
-    //         { id: '9', type: PinNames.airport, title: 'AIRPORT2'},
-    //         { id: '10', type: PinNames.airport, title: 'AIRPORT3'},
-    //         { id: '11', type: PinNames.hotel, title: 'HOTEL2', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-    //         { id: '12', type: PinNames.hotel, title: 'HOTEL3', summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, non.'},
-    //         { id: '13', type: PinNames.hotel, title: 'HOTEL4'},
-    //         { id: '14', type: PinNames.hotel, title: 'HOTEL5'},
-    //         { id: '15', type: PinNames.childDestination, holidayType: 'beachHoliday', title: 'child dest beach' },
-    //         { id: '16', type: PinNames.childDestination, holidayType: 'cityBreak', title: 'child dest city' },
-    //         { id: '17', type: PinNames.childDestination, holidayType: 'villas', title: 'child dest villas' },
-    //     ];
-    // }
+        let id = target.getAttribute( 'data-id' ),
+            pin = PinsHelper.findPin( id );
+
+        if ( !pin ) {
+            return false;
+        }
+
+        Config.instance.pinStrategies[pin.type].onPinMouseout( pin );
+    }
+
+    _onBtnLevelBackClickHandler( event, cssClass ) {
+        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
+
+        if ( !target ) {
+            return false;
+        }
+
+        console.log('btn back clicked ');
+
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.levelBack;
+        Config.instance.mediator.stateChanged( mediatorEvent );
+    }
+
+    _findNodeByCssClass( currentNode, rootClass, cssClass ) {
+
+        while ( !currentNode.classList.contains( rootClass ) ) {
+            if ( currentNode.classList.contains( cssClass ) ) {
+                return currentNode;
+            }
+            currentNode = currentNode.parentNode;
+        }
+
+        return null;
+    }
 }
 
 

@@ -40,6 +40,13 @@
         margin-top: 10px;
     }
 
+    &.is-hover {
+
+        #{$block}__heading {
+            color: white;
+        }
+    }
+
     &--beach {
         background-color: lighten(dodgerblue, 10%);
 
@@ -47,7 +54,13 @@
             border-color: dodgerblue;
             color: dodgerblue;
         }
+    }
 
+    &--beach.is-hover {
+
+        #{$block}__heading {
+            background-color: dodgerblue;
+        }
     }
 
     &--city {
@@ -56,6 +69,18 @@
         #{$block}__heading {
             border-color: crimson;
             color: crimson;
+
+            //It is doesn't work
+            //#{$block}--city.is-hover & {
+            //    background-color: crimson;
+            //}
+        }
+    }
+
+    &--city.is-hover {
+
+        #{$block}__heading {
+            background-color: crimson;
         }
     }
 
@@ -65,6 +90,13 @@
         #{$block}__heading {
             border-color: rebeccapurple;
             color: rebeccapurple;
+        }
+    }
+
+    &--villas.is-hover {
+
+        #{$block}__heading {
+            background-color: rebeccapurple;
         }
     }
 }

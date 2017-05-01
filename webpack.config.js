@@ -1,39 +1,39 @@
-﻿var argv = require('yargs').argv;
+﻿var argv = require( 'yargs' ).argv;
 
 var isDev = !argv.live;
-var isDevServer = process.argv[1].indexOf('webpack-dev-server') >= 0;
+var isDevServer = process.argv[1].indexOf( 'webpack-dev-server' ) >= 0;
 
-console.log(isDev ? '\n*** running development ***\n' : '\n*** running production ***\n');
+console.log( isDev ? '\n*** running development ***\n' : '\n*** running production ***\n' );
 
-var webpack = require('webpack'),
-    path = require('path'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin'),
+var webpack = require( 'webpack' ),
+    path = require( 'path' ),
+    ExtractTextPlugin = require( 'extract-text-webpack-plugin' ),
     //SvgStore = require('webpack-svgstore-plugin'),
-    Clean = require('clean-webpack-plugin'),
+    Clean = require( 'clean-webpack-plugin' ),
 
     //postcss plugins
-    postcssFlexbugsFixes = require('postcss-flexbugs-fixes'),
-    autoprefixer = require('autoprefixer'),
-    cssnano = require('cssnano'),
-    mqpacker = require("css-mqpacker");
+    postcssFlexbugsFixes = require( 'postcss-flexbugs-fixes' ),
+    autoprefixer = require( 'autoprefixer' ),
+    cssnano = require( 'cssnano' ),
+    mqpacker = require( "css-mqpacker" );
 
 module.exports = {
-    entry: (function() {
+    entry: (function () {
         var entry = {
             'app': ["babel-polyfill", "./app/app"]//,
             //'spritesJs': ["spritesJs"]
         };
 
-        if(isDevServer) {
-            for (var entryName in entry)
-                entry[entryName].unshift('webpack-dev-server/client?http://localhost:8080', 'webpack/hot/dev-server');
+        if ( isDevServer ) {
+            for ( var entryName in entry )
+                entry[entryName].unshift( 'webpack-dev-server/client?http://localhost:8080', 'webpack/hot/dev-server' );
         }
 
         return entry;
     })(),
 
     output: {
-        path: path.resolve(__dirname + "/dist/"),
+        path: path.resolve( __dirname + "/dist/" ),
         publicPath: '/assets/dist/',
         filename: '[name].js'//,
         //chunkFilename: isDev ? "[name].result.js" : "[name].[hash].js"
@@ -50,7 +50,7 @@ module.exports = {
             "js/lib",
             "js/app/modules",
             "js/lib",
-			"js/plugins",
+            "js/plugins",
             "css",
             "less",
             "svg/icons",
@@ -62,7 +62,7 @@ module.exports = {
             handlebars: 'handlebars/dist/handlebars.min.js'
 //		 	'jquery': 'jquery-3.0.0',
 //		 	'jqueryviewport': 'jquery.viewport'
-		 },
+        },
         extensions: ["", ".min.js", ".custom.js", ".jquery.js", ".js"]
     },
 
@@ -81,13 +81,13 @@ module.exports = {
                     ]
                 }
             },
-            {
-                test: /\.css/,
-                loader: isDevServer ? 'style!css!postcss' : ExtractTextPlugin.extract('style', 'css!postcss')
-            },
+            // {
+            //     test: /\.css/,
+            //     loader: isDevServer ? 'style!css!postcss' : ExtractTextPlugin.extract( 'style', 'css!postcss' )
+            // },
             {
                 test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
+                loader: isDevServer ? 'style!css!sass!postcss' : ExtractTextPlugin.extract( 'style', 'css!sass-loader!postcss' )
             },
             {
                 test: /\.(svg|png|jpg|jpeg|eot|ttf|woff|woff2|gif)$/i,
@@ -110,16 +110,16 @@ module.exports = {
         ]
     },
 
-    postcss: function() {
+    postcss: function () {
         var postPlugins = [
             postcssFlexbugsFixes,
-            autoprefixer({ browsers: ["last 3 versions", "ie 9"] })
+            autoprefixer( {browsers: ["last 3 versions", "ie 9"]} )
         ];
 
-        if (!isDev) {
+        if ( !isDev ) {
             postPlugins.push(
                 mqpacker(),
-                cssnano({
+                cssnano( {
                     safe: true,
                     zindex: false,
                     autoprefixer: {
@@ -132,7 +132,7 @@ module.exports = {
                     convertValues: {
                         length: false
                     }
-                })
+                } )
             );
         }
 
@@ -140,7 +140,7 @@ module.exports = {
     },
 
     plugins: (function () {
-        var plugins = isDevServer ? [new webpack.HotModuleReplacementPlugin()] : [new Clean([path.join(__dirname, 'dist')])];
+        var plugins = isDevServer ? [new webpack.HotModuleReplacementPlugin()] : [new Clean( [path.join( __dirname, 'dist' )] )];
 
         // plugins.push(
         //     new SvgStore(
@@ -162,9 +162,9 @@ module.exports = {
         //     new webpack.NoErrorsPlugin()
         // );
 
-        if(!isDevServer ) {
+        if ( !isDevServer ) {
             plugins.push(
-                new ExtractTextPlugin('[name].css', { allChunks: true, disable: process.env.NODE_ENV == "development" })
+                new ExtractTextPlugin( '[name].css', {allChunks: true, disable: process.env.NODE_ENV == "development"} )
             );
         }
 
@@ -186,7 +186,7 @@ module.exports = {
     })(),
 
     stats: {
-      children: false
+        children: false
     },
 
     devServer: {

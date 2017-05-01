@@ -23,4 +23,8 @@ export default class MediatorEvents {
     static get pinClicked() {
         return 'PIN_CLICKED';
     }
+
+    static get levelBack() {
+
+    }
 }
