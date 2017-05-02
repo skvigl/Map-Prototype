@@ -40,8 +40,18 @@ export default class AjaxHandler {
         });
     }
 
-    getPinDetails( idList ) {
+    getPinDetails( idList, type ) {
 
+        //just for example purpose
+        let url = '/app/data/getPinDetails' + type + '.json';
+
+        return axios( {
+            url,
+            data: {
+                idList,
+                type
+            }
+        });
     }
 
     getPinsMultithread( requests, callback ){

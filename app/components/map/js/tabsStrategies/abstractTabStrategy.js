@@ -36,6 +36,10 @@ export default class AbstractTabStrategy {
         return new TabContent( null, null , pin.detailsView );
     }
 
+    getDetailsCard( pin ) {
+        return new TabContent( null, null , pin.detailsView );
+    }
+
     _generateCards( pins ) {
         let cards = [];
 

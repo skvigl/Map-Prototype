@@ -61,7 +61,7 @@ export default class AbstractPinStrategy {
             activePin.marker.classList.remove('is-active');
         }
 
-        if ( pin.marker ) {
+        if ( pin && pin.marker ) {
             pin.marker.classList.add('is-active');
         }
 
@@ -74,6 +74,10 @@ export default class AbstractPinStrategy {
 
     onPinMouseover( pin ) {
 
+        if ( !pin ) {
+            return false;
+        }
+
         if ( pin.marker ) {
             pin.marker.classList.add('is-hover');
         }
@@ -84,6 +88,11 @@ export default class AbstractPinStrategy {
     }
 
     onPinMouseout( pin ) {
+
+        if ( !pin ) {
+            return false;
+        }
+
         if ( pin.marker ) {
             pin.marker.classList.remove('is-hover');
         }

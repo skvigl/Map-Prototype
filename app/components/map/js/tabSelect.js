@@ -8,6 +8,7 @@ export default class TabSelect {
         this._elem = document.querySelector( '.js-tabs' );
         this._tabs = {};
         this._currentTabName = '';
+        this._btnHideDetails = this._elem.querySelector('.js-hide-details');
     }
 
     init() {
@@ -18,12 +19,19 @@ export default class TabSelect {
 
             this._tabs[ tabName ] = {
                 tabNode: tabNode,
-                contentNode: document.querySelector( '.js-tabs > .js-content[data-name=' + tabName + ']'),
-                detailsNode: document.querySelector( '.js-tabs > .js-details')
+                contentNode: document.querySelector( '.js-tabs .js-content[data-name=' + tabName + ']'),
+                detailsNode: document.querySelector( '.js-tabs .js-details')
             };
 
             tabNode.addEventListener( 'click', event => this._clickHandler(event) );
         });
+
+        if ( this._btnHideDetails ) {
+            this._btnHideDetails.addEventListener(
+                'click',
+                event => this._onClickBtnHideDetailsHandler(event)
+            );
+        }
 
         console.log( this );
     }
@@ -114,9 +122,11 @@ export default class TabSelect {
         if ( tabContent.detailsCard ) {
             this._clearDetailsTab();
             currentTab.detailsNode.append( tabContent.detailsCard );
-            currentTab.detailsNode.classList.add('is-active');
+            this._elem.classList.add('is-details-visible');
+            //currentTab.detailsNode.classList.add('is-active');
         } else {
-            currentTab.detailsNode.classList.remove('is-active');
+            //currentTab.detailsNode.classList.remove('is-active');
+            this._elem.classList.remove('is-details-visible');
         }
     }
 
@@ -126,14 +136,19 @@ export default class TabSelect {
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.tabChanged;
-        // mediatorEvent.level = currentLevelId;
-        // mediatorEvent.pinType = PinNames.destination;
-        //this.stateChanged( mediatorEvent );
         this._mediator.stateChanged( mediatorEvent );
     }
 
     _clearDetailsTab() {
         this._tabs[ this._currentTabName ].detailsNode.innerHTML = '';
+    }
+
+    _onClickBtnHideDetailsHandler() {
+        this._elem.classList.remove('is-details-visible');
+
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.hideDetails;
+        this._mediator.stateChanged( mediatorEvent );
     }
 
     // _updateTabNavigation() {

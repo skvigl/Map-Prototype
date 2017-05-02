@@ -26,6 +26,7 @@ export default class Map {
         this.viewNode = document.querySelector( '.js-map' );
         this.gmap = {};
         this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap' );
+        this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
         Config.instance.tabSelect = new TabSelect();
         Config.instance.ajaxHandler = new AjaxHandler();
         Config.instance.mediator = new Mediator();
@@ -79,6 +80,15 @@ export default class Map {
         } );
     }
 
+    updateBtnBackToLevelVisibility( isVisible ) {
+
+        if ( isVisible ) {
+            this.btnBackToLevel.classList.remove('is-hidden');
+        } else {
+            this.btnBackToLevel.classList.add('is-hidden');
+        }
+    }
+
     _drawPins( strategy ) {
         let pins = Config.instance.pinStrategies[strategy].generateMultiplePins();
         pins.forEach( pin => {
@@ -109,7 +119,7 @@ export default class Map {
         );
         this.viewNode.addEventListener(
             'click',
-            this.listeners.onBtnLevelBackClickHandler = event => this._onBtnLevelBackClickHandler( event, 'js-level-back' )
+            this.listeners.onBtnLevelBackClickHandler = event => this._onBtnLevelBackClickHandler( event, 'js-back-to-level' )
         );
     }
 
@@ -124,14 +134,7 @@ export default class Map {
     }
 
     _onPinClickHandler( event, cssClass ) {
-        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
-
-        if ( !target ) {
-            return false;
-        }
-
-        let id = target.getAttribute( 'data-id' ),
-            pin = PinsHelper.findPin( id );
+        let pin = this._getEventTargetPin( event, cssClass );
 
         if ( !pin ) {
             return false;
@@ -141,14 +144,7 @@ export default class Map {
     }
 
     _onPinMouseoverHandler( event, cssClass ) {
-        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
-
-        if ( !target ) {
-            return false;
-        }
-
-        let id = target.getAttribute( 'data-id' ),
-            pin = PinsHelper.findPin( id );
+        let pin = this._getEventTargetPin( event, cssClass );
 
         if ( !pin ) {
             return false;
@@ -158,14 +154,7 @@ export default class Map {
     }
 
     _onPinMouseoutHandler( event, cssClass ) {
-        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
-
-        if ( !target ) {
-            return false;
-        }
-
-        let id = target.getAttribute( 'data-id' ),
-            pin = PinsHelper.findPin( id );
+        let pin = this._getEventTargetPin( event, cssClass );
 
         if ( !pin ) {
             return false;
@@ -183,8 +172,16 @@ export default class Map {
 
         console.log('btn back clicked ');
 
+        let targetLocation = Config.instance.locationsHistory.pop();
+
+        if ( !targetLocation ) {
+            return false;
+        }
+
         let mediatorEvent = new MediatorEventModel();
-        mediatorEvent.eventType = MediatorEvents.levelBack;
+        mediatorEvent.eventType = MediatorEvents.levelChanged;
+        mediatorEvent.level = targetLocation.levelId;
+        mediatorEvent.pinType = PinNames.destination;
         Config.instance.mediator.stateChanged( mediatorEvent );
     }
 
@@ -198,6 +195,18 @@ export default class Map {
         }
 
         return null;
+    }
+
+    _getEventTargetPin( event, cssClass ) {
+        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
+
+        if ( !target ) {
+            return null;
+        }
+
+        let id = target.getAttribute( 'data-id' );
+
+        return PinsHelper.findPin( id );
     }
 }
 

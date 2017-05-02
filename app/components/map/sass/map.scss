@@ -12,9 +12,13 @@
         width: 300px;
     }
 
-    &__level-back {
+    &__back-to-level {
         position: absolute;
         left: 20px;
         top: 20px;
+
+        &.is-hidden {
+            display: none;
+        }
     }
 }

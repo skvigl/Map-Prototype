@@ -24,7 +24,7 @@ export default class MediatorEvents {
         return 'PIN_CLICKED';
     }
 
-    static get levelBack() {
-
+    static get hideDetails() {
+        return 'HIDE_DETAILS';
     }
 }

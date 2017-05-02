@@ -66,11 +66,21 @@
         padding: 10px;
         background-color: #e9ebee;
 
-        &.is-active {
+
+    }
+
+    &__hide-details {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+    }
+
+    &.is-details-visible {
+
+        #{$block}__details {
             display: block;
         }
     }
-
 }
 
 
