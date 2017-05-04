@@ -15,7 +15,7 @@ export default class PinsHelper {
 
         let pins = Config.instance.pinsArray;
 
-        for( let i = 0, imax = pins.length; i < imax; i++ ) {
+        for ( let i = 0, imax = pins.length; i < imax; i++ ) {
             if ( pins[i].id === id ) {
                 return pins[i];
             }
@@ -26,6 +26,11 @@ export default class PinsHelper {
 
     static mergePin( targetPin, newPin ) {
         Object.assign( targetPin, newPin );
+    }
+
+    static filterPins() {
+        //TODO: return filtered pins array
+
     }
 
 }

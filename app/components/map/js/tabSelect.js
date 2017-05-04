@@ -9,6 +9,7 @@ export default class TabSelect {
         this._tabs = {};
         this._currentTabName = '';
         this._btnHideDetails = this._elem.querySelector('.js-hide-details');
+        this._mediator = null;
     }
 
     init() {

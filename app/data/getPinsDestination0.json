@@ -3,12 +3,22 @@
     {
       "id": "a1",
       "type": "Airport",
-      "title": "LONDON"
+      "title": "London"
     },
     {
       "id": "a2",
       "type": "Airport",
-      "title": "LEEDS(fake)"
+      "title": "Leeds"
+    },
+    {
+      "id": "a3",
+      "type": "Airport",
+      "title": "Yorkshire"
+    },
+    {
+      "id": "a4",
+      "type": "Airport",
+      "title": "Manchester"
     },
     {
       "id": "d1",
@@ -16,7 +26,8 @@
       "holidayType": "beachHoliday",
       "title": "Balerics",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-1.jpg"
+      "imgURL": "/app/images/destination-1.jpg",
+      "allowedAirportIds": [ "a1", "a2" ]
     },
     {
       "id": "d2",
@@ -24,7 +35,8 @@
       "holidayType": "beachHoliday",
       "title": "Spain",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-2.jpg"
+      "imgURL": "/app/images/destination-2.jpg",
+      "allowedAirportIds": [ "a1", "a3" ]
     },
     {
       "id": "d3",
@@ -32,7 +44,8 @@
       "holidayType": "cityBreak",
       "title": "Madrid",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-3.jpg"
+      "imgURL": "/app/images/destination-3.jpg",
+      "allowedAirportIds": [ "a2", "a4" ]
     },
     {
       "id": "d4",
@@ -40,7 +53,8 @@
       "holidayType": "cityBreak",
       "title": "Rome",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-4.jpg"
+      "imgURL": "/app/images/destination-4.jpg",
+      "allowedAirportIds": [ "a2", "a3" ]
     },
     {
       "id": "d5",
@@ -48,7 +62,8 @@
       "holidayType": "villas",
       "title": "Balerics",
       "summary": "Lorem ipsum dolor sit amet. Enett Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-5.jpg"
+      "imgURL": "/app/images/destination-5.jpg",
+      "allowedAirportIds": [ "a1", "a2", "a4" ]
     }
   ]
 }

@@ -38,7 +38,7 @@ export default class Mediator {
                     let currentTab = Config.instance.tabStrategies[tabName];
                     Config.instance.currentTab = currentTab;
                     currentTab.updatePinStrategies();
-
+                    console.log('before draw');
                     Config.instance.map.drawAllPins();
 
                     let currentLevel = Config.instance.currentLevel,
@@ -186,6 +186,23 @@ export default class Mediator {
             }
             case MediatorEvents.hideDetails: {
                 let activePin = Config.instance.activePin;
+                break;
+            }
+
+            case MediatorEvents.filterPins: {
+
+                if ( eventModel.airportId ) {
+                    Config.instance.filterParams.airportId = eventModel.airportId;
+                }
+
+                if ( eventModel.holidayType) {
+                    Config.instance.filterParams.holidayType = eventModel.holidayType;
+                }
+
+                PinsHelper.
+
+
+                console.log('by airport');
                 break;
             }
 

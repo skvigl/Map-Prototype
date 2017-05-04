@@ -27,4 +27,7 @@ export default class MediatorEvents {
     static get hideDetails() {
         return 'HIDE_DETAILS';
     }
+    static get filterPins() {
+        return 'FILTER_PINS';
+    }
 }
