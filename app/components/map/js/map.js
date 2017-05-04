@@ -11,6 +11,8 @@ import TabsFactory from './tabsStrategies/tabsFactory';
 import PinsFactory from './pinsStrategies/pinsFactory';
 import Mediator from 'mediator';
 import TabSelect from 'tabSelect';
+import FilterAirport from 'filterAirport';
+import FilterHolidayType from 'filterHolidayType';
 import AjaxHandler from 'ajaxHandler';
 import PinsHelper from 'pinsHelper';
 
@@ -21,6 +23,8 @@ export default class Map {
     }
 
     init() {
+        //TODO: Create initialisation for components
+        //TODO: Refactor config object structure
         this.listeners = {};
         Config.instance.map = this;
         this.viewNode = document.querySelector( '.js-map' );
@@ -28,10 +32,11 @@ export default class Map {
         this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap' );
         this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
         Config.instance.tabSelect = new TabSelect();
+        Config.instance.filterAirport = new FilterAirport();
+        Config.instance.filterHolidayType = new FilterHolidayType();
         Config.instance.ajaxHandler = new AjaxHandler();
         Config.instance.mediator = new Mediator();
         Config.instance.currentHolidayType = HolidayTypeNames.beach;
-        //Config.instance.pinsArray = this._getMarkers();
 
         Config.instance.levelCollections.forEach( ( level ) => {
             level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
@@ -55,6 +60,13 @@ export default class Map {
 
         Config.instance.tabSelect.init();
         Config.instance.tabSelect.setMediator( Config.instance.mediator );
+        Config.instance.filterAirport.setMediator( Config.instance.mediator );
+        Config.instance.filterHolidayType.setMediator( Config.instance.mediator );
+
+        Config.instance.filterParams = {
+            airportId: Config.instance.filterAirport.getValue(),
+            holidayType: Config.instance.filterHolidayType.getValue()
+        };
 
         console.log( Config.instance );
 
@@ -63,6 +75,11 @@ export default class Map {
         mediatorEvent.level = 0;
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.tabName = TabNames.overview;
+        Config.instance.mediator.stateChanged( mediatorEvent );
+
+        mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.filterByAirport;
+        mediatorEvent.airportId = 'a1';
         Config.instance.mediator.stateChanged( mediatorEvent );
 
         this._attachEvents();
@@ -170,8 +187,6 @@ export default class Map {
             return false;
         }
 
-        console.log('btn back clicked ');
-
         let targetLocation = Config.instance.locationsHistory.pop();
 
         if ( !targetLocation ) {
@@ -182,6 +197,7 @@ export default class Map {
         mediatorEvent.eventType = MediatorEvents.levelChanged;
         mediatorEvent.level = targetLocation.levelId;
         mediatorEvent.pinType = PinNames.destination;
+        mediatorEvent.targetPin = targetLocation;
         Config.instance.mediator.stateChanged( mediatorEvent );
     }
 
