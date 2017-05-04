@@ -1,10 +1,13 @@
 "use strict";
 
+import Config from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
 import MarkerChildDestTemplate from '../../templates/markerChildDest.hbs';
 import GenerateContentModel from '../models/generateContentModel';
+import MediatorEvents from '../enums/mediatorEvents';
+import MediatorEventModel from '../models/mediatorEventModel';
 
 export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -41,6 +44,13 @@ export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
 
         super._generateContent( params );
         return pin;
+    }
+
+    onPinClick( pin ) {
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.destinationPinClicked;
+        mediatorEvent.targetPin = pin;
+        Config.instance.mediator.stateChanged( mediatorEvent );
     }
 
 }

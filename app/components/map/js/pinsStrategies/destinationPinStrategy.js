@@ -4,11 +4,11 @@ import Config from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
-import MediatorEvents from '../enums/mediatorEvents';
 import MarkerDestTemplate from '../../templates/markerDest.hbs';
 import CardDestTemplate from '../../templates/cardDest.hbs';
 import LocOverviewTemplate from '../../templates/locOverview.hbs';
 import GenerateContentModel from '../models/generateContentModel';
+import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
 export default class DestinationPinStrategy extends AbstractPinStrategy {

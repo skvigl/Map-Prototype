@@ -18,6 +18,10 @@ export default class Mediator {
         switch ( eventModel.eventType ) {
             case MediatorEvents.levelChanged: {
 
+                if ( eventModel.targetPin ) {
+                    Config.instance.currentLocation = eventModel.targetPin;
+                }
+
                 let getPinsRequest = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
 
                 getPinsRequest.then( function( response ) {
@@ -131,16 +135,15 @@ export default class Mediator {
             case MediatorEvents.destinationPinClicked: {
                 let currentLevelId = Config.instance.currentLevel.levelId;
 
+                Config.instance.currentLocation.levelId = currentLevelId;
+                Config.instance.locationsHistory.push( Config.instance.currentLocation );
                 Config.instance.currentLocation = Object.assign( {}, eventModel.targetPin );
                 Config.instance.currentLocation.view = null;
-                Config.instance.locationsHistory.push({
-                    levelId: currentLevelId
-                });
 
                 if ( eventModel.targetPin.holidayType === HolidayTypeNames.city ) {
                     currentLevelId = 3;
                 } else {
-                    currentLevelId++;
+                    currentLevelId += eventModel.targetPin.type === PinNames.childDestination ? 2 : 1;
                 }
 
                 let mediatorEvent = new MediatorEventModel();
