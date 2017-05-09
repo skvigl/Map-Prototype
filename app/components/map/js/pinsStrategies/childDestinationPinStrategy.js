@@ -53,4 +53,16 @@ export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
         Config.instance.mediator.stateChanged( mediatorEvent );
     }
 
+    checkPinVisibility( pin ) {
+        let pinVisiblity = true,
+            holidayType = Config.instance.filterParams.holidayType;
+
+        if ( holidayType !== undefined ) {
+            if ( pinVisiblity && pin.holidayType !== holidayType ) {
+                pinVisiblity = false;
+            }
+        }
+
+        return pinVisiblity
+    }
 }

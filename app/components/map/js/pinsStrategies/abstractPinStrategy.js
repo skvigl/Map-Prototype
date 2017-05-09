@@ -25,7 +25,7 @@ export default class AbstractPinStrategy {
         return pins;
     }
 
-    generateMultipleContent ( pinsArray, pinType ) {
+    generateMultipleContent( pinsArray, pinType ) {
         let views = [],
             view = null;
 
@@ -45,7 +45,7 @@ export default class AbstractPinStrategy {
                     views.push( pin.view );
                 }
             }
-        });
+        } );
 
         return views;
     }
@@ -58,11 +58,11 @@ export default class AbstractPinStrategy {
         let activePin = Config.instance.activePin;
 
         if ( activePin && activePin.marker ) {
-            activePin.marker.classList.remove('is-active');
+            activePin.marker.classList.remove( 'is-active' );
         }
 
         if ( pin && pin.marker ) {
-            pin.marker.classList.add('is-active');
+            pin.marker.classList.add( 'is-active' );
         }
 
         let mediatorEvent = new MediatorEventModel();
@@ -79,11 +79,11 @@ export default class AbstractPinStrategy {
         }
 
         if ( pin.marker ) {
-            pin.marker.classList.add('is-hover');
+            pin.marker.classList.add( 'is-hover' );
         }
 
         if ( pin.view ) {
-            pin.view.classList.add('is-hover');
+            pin.view.classList.add( 'is-hover' );
         }
     }
 
@@ -94,27 +94,38 @@ export default class AbstractPinStrategy {
         }
 
         if ( pin.marker ) {
-            pin.marker.classList.remove('is-hover');
+            pin.marker.classList.remove( 'is-hover' );
         }
 
         if ( pin.view ) {
-            pin.view.classList.remove('is-hover');
+            pin.view.classList.remove( 'is-hover' );
         }
     }
 
+    checkPinVisibility( pin ) {
+        return true;
+    }
+
     _generateContent( params ) {
-        params.pin[params.key] = this._html2dom( params.template( params.pin ));
+
+        if ( !params.pin[params.key] ) {
+            params.pin[params.key] = this._html2dom( params.template( params.pin ) );
+        }
+
         return params.pin;
     }
 
-    _generatePin() {}
+    _generatePin() {
+    }
 
-    _generateView() {}
+    _generateView() {
+    }
 
-    _generateDetailsView() {}
+    _generateDetailsView() {
+    }
 
     _html2dom( html ) {
-        let container = document.createElement('div');
+        let container = document.createElement( 'div' );
         container.innerHTML = html;
         return container.firstChild;
     }

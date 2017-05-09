@@ -1,5 +1,9 @@
 'use strict';
 
+import Config from './config';
+import MediatorEvents from './enums/mediatorEvents';
+import MediatorEventModel from './models/mediatorEventModel';
+
 export default class FilterHolidayType {
     constructor(){
         this._elem = document.querySelector( '.js-filter-holiday-type' );
@@ -24,8 +28,17 @@ export default class FilterHolidayType {
     }
 
     _onChangeHandler( event ) {
-        console.log( event.target.value );
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.filterPins;
+        mediatorEvent.holidayType = event.target.value;
+        Config.instance.mediator.stateChanged( mediatorEvent );
     }
 
-
+    updateVisibility( level ) {
+        if ( level > 0 ) {
+            this._elem.classList.remove('is-visible');
+        } else {
+            this._elem.classList.add('is-visible');
+        }
+    }
 }

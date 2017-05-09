@@ -82,4 +82,24 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
         mediatorEvent.targetPin = pin;
         Config.instance.mediator.stateChanged( mediatorEvent );
     }
+
+    checkPinVisibility( pin ) {
+        let pinVisiblity = true,
+            airportId = Config.instance.filterParams.airportId,
+            holidayType = Config.instance.filterParams.holidayType;
+
+        if ( airportId !== undefined && airportId !== 'default' ) {
+            if ( pinVisiblity && pin.allowedAirportIds && pin.allowedAirportIds.indexOf( airportId ) === -1 ) {
+                pinVisiblity = false;
+            }
+        }
+
+        if ( holidayType !== undefined ) {
+            if ( pinVisiblity && pin.holidayType !== holidayType ) {
+                pinVisiblity = false;
+            }
+        }
+
+        return pinVisiblity
+    }
 }

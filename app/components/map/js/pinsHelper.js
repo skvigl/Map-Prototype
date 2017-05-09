@@ -27,10 +27,4 @@ export default class PinsHelper {
     static mergePin( targetPin, newPin ) {
         Object.assign( targetPin, newPin );
     }
-
-    static filterPins() {
-        //TODO: return filtered pins array
-
-    }
-
 }

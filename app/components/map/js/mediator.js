@@ -22,13 +22,23 @@ export default class Mediator {
                     Config.instance.currentLocation = eventModel.targetPin;
                 }
 
+                //TODO: Move to config init method clear
+                Config.instance.filterParams.airportId = 'default';
+                Config.instance.filterAirport.setValue('default');
+
+                Config.instance.filterAirport.updateVisibility( eventModel.level );
+                Config.instance.filterHolidayType.updateVisibility( eventModel.level );
+
                 let getPinsRequest = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
 
-                getPinsRequest.then( function( response ) {
+                getPinsRequest.then( function ( response ) {
 
                     if ( !response.data ) {
                         return;
                     }
+
+                    Config.instance.map.removeAllPins();
+                    Config.instance.tabSelect.clearTabsContent();
 
                     Config.instance.currentLevel = Config.instance.levelCollections[eventModel.level];
                     Config.instance.pinsArray = response.data.pins;
@@ -38,12 +48,10 @@ export default class Mediator {
                     let currentTab = Config.instance.tabStrategies[tabName];
                     Config.instance.currentTab = currentTab;
                     currentTab.updatePinStrategies();
-                    console.log('before draw');
-                    Config.instance.map.drawAllPins();
 
                     let currentLevel = Config.instance.currentLevel,
                         tabSelect = Config.instance.tabSelect;
-                    tabSelect.clearTabsContent();
+
                     tabSelect.setTabsVisibility( currentLevel.tabs );
                     tabSelect.setActiveTab( tabName );
 
@@ -58,6 +66,8 @@ export default class Mediator {
                     let content = currentTab.generateContent();
                     Config.instance.tabSelect.updateTabContent( content );
                     Config.instance.map.updateBtnBackToLevelVisibility( Config.instance.locationsHistory.length );
+
+                    Config.instance.map.drawAllPins();
                 } );
                 break;
             }
@@ -69,12 +79,13 @@ export default class Mediator {
                 let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
 
                 let currentTabState = Config.instance.tabStates[currentTabName];
+                Config.instance.map.hideAllPins();
 
                 if ( currentTabState.hasPins ) {
                     Config.instance.map.drawAllPins();
                     return;
                 }
-                //TODO Level 3 pins loading: think about tab states for Level 3. All pint will be load on Overview request
+
                 let getPinsRequest = Config.instance.ajaxHandler.getPins( pinType, currentLevelId );
 
                 getPinsRequest.then( ( response ) => {
@@ -85,7 +96,7 @@ export default class Mediator {
                     let currentTabName = Config.instance.tabSelect.getCurrentTabName();
                     Config.instance.tabStates[currentTabName].hasPins = true;
                     this._updatePins( response.data.pins );
-                    Config.instance.map.drawAllPins();
+
                 } );
 
                 if ( !currentTabStrategy.hasDetails() || currentTabState.currentPage !== 0 )
@@ -117,6 +128,7 @@ export default class Mediator {
 
                     //tabSelect.clearTabsContent();
                     tabSelect.updateTabContent( content );
+                    Config.instance.map.drawAllPins();
 
                     let currentTabName = Config.instance.tabSelect.getCurrentTabName();
                     let currentTabState = Config.instance.tabStates[currentTabName];
@@ -195,14 +207,15 @@ export default class Mediator {
                     Config.instance.filterParams.airportId = eventModel.airportId;
                 }
 
-                if ( eventModel.holidayType) {
+                if ( eventModel.holidayType ) {
                     Config.instance.filterParams.holidayType = eventModel.holidayType;
                 }
 
-                PinsHelper.
+                //PinsHelper.filterPins();
+                Config.instance.map.updatePinsVisibility();
+                //console.log( Config.instance.pinsArray );
 
-
-                console.log('by airport');
+                console.log( 'filtering' );
                 break;
             }
 

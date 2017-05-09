@@ -77,11 +77,6 @@ export default class Map {
         mediatorEvent.tabName = TabNames.overview;
         Config.instance.mediator.stateChanged( mediatorEvent );
 
-        mediatorEvent = new MediatorEventModel();
-        mediatorEvent.eventType = MediatorEvents.filterByAirport;
-        mediatorEvent.airportId = 'a1';
-        Config.instance.mediator.stateChanged( mediatorEvent );
-
         this._attachEvents();
     }
 
@@ -91,9 +86,28 @@ export default class Map {
     }
 
     drawAllPins() {
-        this.gmap.viewNode.innerHTML = '';
+
         Config.instance.currentTab.getPinStrategies().forEach( strategy => {
-            this._drawPins( strategy );
+            this._drawPinsByStrategy( strategy );
+        } );
+        Config.instance.map.updatePinsVisibility();
+    }
+
+    removeAllPins() {
+        this.gmap.viewNode.innerHTML = '';
+    }
+
+    hideAllPins() {
+        Config.instance.pinsArray.forEach( pin => {
+            if ( pin.marker ) {
+                pin.marker.classList.remove( 'is-visible' );
+            }
+        });
+    }
+
+    updatePinsVisibility() {
+        Config.instance.currentTab.getPinStrategies().forEach( strategy => {
+            this._updatePinsVisibilityByStrategy( strategy );
         } );
     }
 
@@ -106,10 +120,35 @@ export default class Map {
         }
     }
 
-    _drawPins( strategy ) {
-        let pins = Config.instance.pinStrategies[strategy].generateMultiplePins();
+    _drawPinsByStrategy( strategy ) {
+        let currentPinStrategy = Config.instance.pinStrategies[strategy],
+        pins = currentPinStrategy.generateMultiplePins();
+
         pins.forEach( pin => {
             this.gmap.viewNode.appendChild( pin.marker );
+        } );
+    }
+
+    _updatePinsVisibilityByStrategy( strategy ) {
+        let currentPinStrategy = Config.instance.pinStrategies[strategy],
+            pins = currentPinStrategy.generateMultiplePins();
+
+        pins.forEach( pin => {
+
+            if ( currentPinStrategy.checkPinVisibility( pin ) ) {
+                pin.marker.classList.add('is-visible');
+
+                if ( pin.view ) {
+                    pin.view.classList.add('is-visible');
+                }
+
+            } else {
+                pin.marker.classList.remove('is-visible');
+
+                if ( pin.view ) {
+                    pin.view.classList.remove( 'is-visible' );
+                }
+            }
         } );
     }
 

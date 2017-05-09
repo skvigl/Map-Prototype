@@ -34,7 +34,7 @@ export default class TabSelect {
             );
         }
 
-        console.log( this );
+        //console.log( this );
     }
 
     getCurrentTabName() {
@@ -111,18 +111,18 @@ export default class TabSelect {
         let currentTab = this._tabs[ this._currentTabName ];
 
         if ( tabContent.additionalInfo ) {
-            currentTab.contentNode.append( tabContent.additionalInfo );
+            currentTab.contentNode.appendChild( tabContent.additionalInfo );
         }
 
         if ( tabContent.cardList ) {
             tabContent.cardList.forEach( card => {
-                currentTab.contentNode.append( card );
+                currentTab.contentNode.appendChild( card );
             });
         }
 
         if ( tabContent.detailsCard ) {
             this._clearDetailsTab();
-            currentTab.detailsNode.append( tabContent.detailsCard );
+            currentTab.detailsNode.appendChild( tabContent.detailsCard );
             this._elem.classList.add('is-details-visible');
             //currentTab.detailsNode.classList.add('is-active');
         } else {

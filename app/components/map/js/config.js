@@ -1,5 +1,7 @@
 'use strict';
 
+import HolidayTypeNames from './enums/holidayTypeNames';
+
 export default class Config {
 
     constructor() {
@@ -31,7 +33,11 @@ export default class Config {
             mediator: {},
             pinStrategies: {},
             tabStrategies: {},
-            tabStates: {}
+            tabStates: {},
+            filterParams: {
+                airportId: 'default',
+                holidayType: HolidayTypeNames.beach
+            }
         };
     }
 

@@ -1,9 +1,12 @@
 "use strict";
 
+import Config from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
 import GenerateContentModel from '../models/generateContentModel';
+import MediatorEvents from '../enums/mediatorEvents';
+import MediatorEventModel from '../models/mediatorEventModel';
 
 export default class AirportPinStrategy extends AbstractPinStrategy {
     constructor() {
@@ -19,7 +22,13 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
-        super.onPinClick( pin );
+
+        if ( Config.instance.currentLevel.levelId === 0 ) {
+            let mediatorEvent = new MediatorEventModel();
+            mediatorEvent.eventType = MediatorEvents.filterPins;
+            mediatorEvent.airportId = pin.id;
+            Config.instance.mediator.stateChanged( mediatorEvent );
+        }
     }
 
     _generatePin ( pin ) {

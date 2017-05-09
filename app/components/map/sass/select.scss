@@ -1,6 +1,10 @@
-select {
-    display: block;
+.filter-select {
+    display: none;
     width: 200px;
     height: 30px;
     margin: 0 0 10px;
+
+    &.is-visible {
+        display: block;
+    }
 }
