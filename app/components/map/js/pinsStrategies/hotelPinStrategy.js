@@ -4,7 +4,7 @@ import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
 import CardHotelTemplate from '../../templates/cardHotel.hbs';
-import CardHotelDetailsTemplate from '../../templates/cardHotel.hbs';
+import CardHotelDetailsTemplate from '../../templates/cardHotelDetails.hbs';
 import GenerateContentModel from '../models/generateContentModel';
 
 export default class HotelPinStrategy extends AbstractPinStrategy {

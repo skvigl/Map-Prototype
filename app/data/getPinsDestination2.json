@@ -3,7 +3,8 @@
     {
       "id": "a3",
       "type": "Airport",
-      "title": "AIRPORT MAJ"
+      "title": "AIRPORT MAJ",
+      "icon": "plane"
     },
     {
       "id": "c1",

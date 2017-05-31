@@ -3,17 +3,20 @@
     {
       "id": "p1",
       "type": "Poi",
-      "title": "POI1"
+      "title": "POI1",
+      "icon": "camera"
     },
     {
       "id": "p2",
       "type": "Poi",
-      "title": "POI2"
+      "title": "POI2",
+      "icon": "camera"
     },
     {
       "id": "p3",
       "type": "Poi",
-      "title": "POI3"
+      "title": "POI3",
+      "icon": "cutlery"
     }
   ]
 }

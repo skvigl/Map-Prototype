@@ -2,10 +2,12 @@
     $block: '.marker';
     display: none;
     vertical-align: middle;
+    min-width: 29px;
     margin: 5px;
     padding: 5px;
     background-color: lightsteelblue;
     color: white;
+    text-align: center;
     cursor: pointer;
     user-select: none;
 

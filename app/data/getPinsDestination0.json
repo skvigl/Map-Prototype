@@ -3,22 +3,26 @@
     {
       "id": "a1",
       "type": "Airport",
-      "title": "London"
+      "title": "London",
+      "icon": "plane"
     },
     {
       "id": "a2",
       "type": "Airport",
-      "title": "Leeds"
+      "title": "Leeds",
+      "icon": "plane"
     },
     {
       "id": "a3",
       "type": "Airport",
-      "title": "Yorkshire"
+      "title": "Yorkshire",
+      "icon": "plane"
     },
     {
       "id": "a4",
       "type": "Airport",
-      "title": "Manchester"
+      "title": "Manchester",
+      "icon": "plane"
     },
     {
       "id": "d1",

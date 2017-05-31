@@ -198,6 +198,11 @@ export default class Mediator {
             }
             case MediatorEvents.hideDetails: {
                 let activePin = Config.instance.activePin;
+
+                if ( activePin ) {
+                    activePin.marker.classList.remove('is-active');
+                    activePin = null;
+                }
                 break;
             }
 

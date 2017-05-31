@@ -3,27 +3,32 @@
     {
       "id": "h1",
       "type": "Hotel",
-      "title": "HOTEL1"
+      "title": "HOTEL1",
+      "icon": "building-o"
     },
     {
       "id": "h2",
       "type": "Hotel",
-      "title": "HOTEL2"
+      "title": "HOTEL2",
+      "icon": "building-o"
     },
     {
       "id": "h3",
       "type": "Hotel",
-      "title": "HOTEL3"
+      "title": "HOTEL3",
+      "icon": "building-o"
     },
     {
       "id": "h4",
       "type": "Hotel",
-      "title": "HOTEL4"
+      "title": "HOTEL4",
+      "icon": "building-o"
     },
     {
       "id": "h5",
       "type": "Hotel",
-      "title": "HOTEL5"
+      "title": "HOTEL5",
+      "icon": "building-o"
     }
   ]
 }
