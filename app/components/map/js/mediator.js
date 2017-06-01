@@ -10,8 +10,7 @@ import PinsHelper from 'pinsHelper';
 import TabState from 'tabState';
 
 export default class Mediator {
-    constructor() {
-    }
+    constructor() {}
 
     stateChanged( eventModel ) {
 
@@ -135,6 +134,9 @@ export default class Mediator {
 
                     currentTabState.currentPage = getPinsByPageResponse.data.currentPage;
                     currentTabState.totalPages = getPinsByPageResponse.data.totalPages;
+
+                    //TODO: Show Loadmore Button
+                    tabSelect.setLoadmoreVisibility( currentTabState.currentPage < currentTabState.totalPages );
                 };
 
                 Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback );
@@ -192,8 +194,6 @@ export default class Mediator {
                     } );
 
                 }
-
-                //TODO back button: add to details view
                 break;
             }
             case MediatorEvents.hideDetails: {
@@ -260,4 +260,5 @@ export default class Mediator {
     //     this._initiators[ initiatorName ] = initiatorObj;
     // }
 }
+
 

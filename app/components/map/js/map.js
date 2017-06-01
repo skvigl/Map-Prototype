@@ -16,7 +16,6 @@ import FilterHolidayType from 'filterHolidayType';
 import AjaxHandler from 'ajaxHandler';
 import PinsHelper from 'pinsHelper';
 
-
 export default class Map {
     constructor() {
 

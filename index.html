@@ -15,13 +15,25 @@
     <div class="map__aside">
         <div class="tabs js-tabs">
             <ul class="tabs__nav js-tabs-nav">
-                <li class="tabs__li js-tab" data-name="overview">Overview</li>
-                <li class="tabs__li js-tab" data-name="pois">Poi</li>
-                <li class="tabs__li js-tab" data-name="hotels">Hotels</li>
+                <li class="tabs__li js-tab-nav" data-name="overview">Overview</li>
+                <li class="tabs__li js-tab-nav" data-name="pois">Poi</li>
+                <li class="tabs__li js-tab-nav" data-name="hotels">Hotels</li>
             </ul>
-            <div class="tabs__content js-content" data-name="overview"></div>
-            <div class="tabs__content js-content" data-name="pois"></div>
-            <div class="tabs__content js-content" data-name="hotels"></div>
+            <div class="tabs__content js-tab" data-name="overview">
+                <div data-container="content"></div>
+            </div>
+            <div class="tabs__content js-tab" data-name="pois">
+                <div data-container="content"></div>
+                <div class="tabs__loadmore" data-container="loadmore">
+                    <button class="loadmore js-loadmore" type="button">Loadmore</button>
+                </div>
+            </div>
+            <div class="tabs__content js-tab" data-name="hotels">
+                <div data-container="content"></div>
+                <div data-container="loadmore">
+                    <button class="loadmore js-loadmore" type="button">Loadmore</button>
+                </div>
+            </div>
             <div class="tabs__details">
                 <div class="js-details"></div>
                 <button class="tabs__hide-details js-hide-details" type="button">Back</button>
