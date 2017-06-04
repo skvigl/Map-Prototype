@@ -1,0 +1,31 @@
+.btn {
+    display: inline-block;
+    vertical-align: middle;
+
+    &--base {
+        padding: 6px 10px;
+        background-color: $color-white;
+        border: 2px solid $color-generic;
+        color: $color-text-base;
+        font-family: Roboto, Arial, sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        outline: none;
+
+        &:hover,
+        &:focus {
+            background-color: $color-generic;
+            color: $color-white;
+        }
+
+        &:active {
+            background-color: lighten($color-generic, 5%);
+        }
+    }
+
+
+    &--wide {
+        width: 100%;
+    }
+}
+

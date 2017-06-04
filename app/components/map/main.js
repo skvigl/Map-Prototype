@@ -1,7 +1,8 @@
 'use strict';
 
-import Styles from './sass/main.scss';
-import Map from './js/map';
+import './sass/main.scss';
+import Config from './js/config';
+Config.instance;
 
-let map = new Map();
-map.init();
+
+

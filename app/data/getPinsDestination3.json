@@ -9,42 +9,50 @@
     {
       "id": "h1",
       "type": "Hotel",
-      "title": "Hotel1"
+      "title": "Hotel1",
+      "icon": "building-o"
     },
     {
       "id": "h2",
       "type": "Hotel",
-      "title": "Hotel2"
+      "title": "Hotel2",
+      "icon": "building-o"
     },
     {
       "id": "h3",
       "type": "Hotel",
-      "title": "Hotel3"
+      "title": "Hotel3",
+      "icon": "building-o"
     },
     {
       "id": "h4",
       "type": "Hotel",
-      "title": "Hotel4"
+      "title": "Hotel4",
+      "icon": "building-o"
     },
     {
       "id": "h5",
       "type": "Hotel",
-      "title": "Hotel5"
+      "title": "Hotel5",
+      "icon": "building-o"
     },
     {
       "id": "p1",
       "type": "Poi",
-      "title": "Poi1"
+      "title": "Poi1",
+      "icon": "camera"
     },
     {
       "id": "p2",
       "type": "Poi",
-      "title": "Poi2"
+      "title": "Poi2",
+      "icon": "camera"
     },
     {
       "id": "p3",
       "type": "Poi",
-      "title": "Poi3"
+      "title": "Poi3",
+      "icon": "cutlery"
     }
   ]
 }

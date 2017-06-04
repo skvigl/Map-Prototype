@@ -3,71 +3,24 @@
 import Config from './config';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
-import HolidayTypeNames from './enums/holidayTypeNames';
 import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
-import LevelsFactory from './levelsStrategies/levelsFactory';
-import TabsFactory from './tabsStrategies/tabsFactory';
-import PinsFactory from './pinsStrategies/pinsFactory';
-import Mediator from 'mediator';
-import TabSelect from 'tabSelect';
-import FilterAirport from 'filterAirport';
-import FilterHolidayType from 'filterHolidayType';
-import AjaxHandler from 'ajaxHandler';
-import PinsHelper from 'pinsHelper';
+import PinsHelper from 'helpers/pinsHelper';
 
 export default class Map {
     constructor() {
-
+        this.init();
     }
 
     init() {
-        //TODO: Create initialisation for components
         //TODO: Refactor config object structure
+        //Config.init( this );
+
         this.listeners = {};
-        Config.instance.map = this;
         this.viewNode = document.querySelector( '.js-map' );
         this.gmap = {};
         this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap' );
         this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
-        Config.instance.tabSelect = new TabSelect();
-        Config.instance.filterAirport = new FilterAirport();
-        Config.instance.filterHolidayType = new FilterHolidayType();
-        Config.instance.ajaxHandler = new AjaxHandler();
-        Config.instance.mediator = new Mediator();
-        Config.instance.currentHolidayType = HolidayTypeNames.beach;
-
-        Config.instance.levelCollections.forEach( ( level ) => {
-            level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
-            level.tabs = level.strategy.getTabs();
-        } );
-
-        Config.instance.tabStrategies = {
-            [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
-            [ TabNames.pois ]: TabsFactory.getTabStrategy( TabNames.pois ),
-            [ TabNames.hotels ]: TabsFactory.getTabStrategy( TabNames.hotels ),
-            [ TabNames.villas ]: TabsFactory.getTabStrategy( TabNames.villas )
-        };
-
-        Config.instance.pinStrategies = {
-            [ PinNames.airport ]: PinsFactory.getPinStrategy( PinNames.airport ),
-            [ PinNames.destination ]: PinsFactory.getPinStrategy( PinNames.destination ),
-            [ PinNames.childDestination ]: PinsFactory.getPinStrategy( PinNames.childDestination ),
-            [ PinNames.poi ]: PinsFactory.getPinStrategy( PinNames.poi ),
-            [ PinNames.hotel ]: PinsFactory.getPinStrategy( PinNames.hotel )
-        };
-
-        Config.instance.tabSelect.init();
-        Config.instance.tabSelect.setMediator( Config.instance.mediator );
-        Config.instance.filterAirport.setMediator( Config.instance.mediator );
-        Config.instance.filterHolidayType.setMediator( Config.instance.mediator );
-
-        Config.instance.filterParams = {
-            airportId: Config.instance.filterAirport.getValue(),
-            holidayType: Config.instance.filterHolidayType.getValue()
-        };
-
-        console.log( Config.instance );
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;

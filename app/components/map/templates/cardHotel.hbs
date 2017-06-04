@@ -1,7 +1,11 @@
-<div class="card card--hotel {{ modifierMarkerList}} js-view" data-id="{{ id }}">
+<div class="card card--hotel {{ modifierMarkerList}}" data-id="{{ id }}">
     <div class="card__figure">
         <img class="image-cover" src="{{imgURL}}" alt="">
-        <div class="card__stars">* * *</div>
+        <div class="card__stars">
+            {{#each stars}}
+                <i class='fa fa-star'></i>
+            {{/each}}
+        </div>
     </div>
     <div class="card__content">
         <div class="card__heading">{{ title }}</div>

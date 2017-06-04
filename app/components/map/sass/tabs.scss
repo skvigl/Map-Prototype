@@ -65,14 +65,21 @@
         height: 100%;
         padding: 10px;
         background-color: #e9ebee;
-
-
     }
 
     &__hide-details {
         position: absolute;
         left: 20px;
         top: 20px;
+    }
+
+    &__loadmore {
+        display: none;
+        padding: 30px 0 0;
+
+        &.is-visible {
+            display: block;
+        }
     }
 
     &.is-details-visible {

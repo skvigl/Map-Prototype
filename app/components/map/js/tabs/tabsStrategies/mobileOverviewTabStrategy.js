@@ -1,9 +1,9 @@
 "use strict";
 
-import Config from '../config';
+import Config from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
-import PinNames from '../enums/pinNames';
-import HolidayTypeNames from '../enums/holidayTypeNames';
+import PinNames from '../../enums/pinNames';
+import HolidayTypeNames from '../../enums/holidayTypeNames';
 import TabContent from '../tabContent';
 
 export default class MobileOverviewTabStrategy extends AbstractTabStrategy {

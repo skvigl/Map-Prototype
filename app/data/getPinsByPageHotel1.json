@@ -1,14 +1,20 @@
 {
   "pins": [
     {
-      "id": "h3",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+      "id": "h1",
+      "summary": "Lorem ipsum dolor sit amet.",
+      "imgURL": "/app/images/hotel-1.jpg",
+      "stars": ["*","*","*","*"]
     },
     {
-      "id": "h4",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!"
+      "id": "h2",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
+      "imgURL": "/app/images/hotel-2.jpg",
+      "stars": ["*","*","*"]
+
     }
   ],
-  "currentPage":2,
-  "totalPages":2
+  "currentPage":1,
+  "totalPages":3
 }
+

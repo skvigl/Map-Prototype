@@ -1,9 +1,9 @@
 'use strict';
 
-import Config from '../config';
-import TabNames from '../enums/tabNames';
+import Config from '../../config';
+import TabNames from '../../enums/tabNames';
 import MobileOverviewTabStrategy from './mobileOverviewTabStrategy';
-import OverviewTabStrategy from './OverviewTabStrategy';
+import OverviewTabStrategy from './overviewTabStrategy';
 import PoiTabStrategy from './poiTabStrategy';
 import HotelTabStrategy from './hotelTabStrategy';
 import VillaTabStrategy from './villaTabStrategy';

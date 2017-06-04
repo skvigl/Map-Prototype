@@ -1,7 +1,7 @@
 "use strict";
 
-import MediatorEvents from './enums/mediatorEvents';
-import MediatorEventModel from './models/mediatorEventModel';
+import MediatorEvents from '../enums/mediatorEvents';
+import MediatorEventModel from '../models/mediatorEventModel';
 
 export default class TabSelect {
     constructor() {
@@ -10,6 +10,8 @@ export default class TabSelect {
         this._currentTabName = '';
         this._btnHideDetails = this._elem.querySelector( '.js-hide-details' );
         this._mediator = null;
+
+        this.init();
     }
 
     init() {
@@ -43,7 +45,7 @@ export default class TabSelect {
             );
         }
 
-        console.log( this );
+        //console.log( this );
     }
 
     getCurrentTabName() {

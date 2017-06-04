@@ -1,12 +1,12 @@
 'use strict';
 
-import Config from './config';
-import MediatorEvents from './enums/mediatorEvents';
-import MediatorEventModel from './models/mediatorEventModel';
+import Config from '../config';
+import MediatorEvents from '../enums/mediatorEvents';
+import MediatorEventModel from '../models/mediatorEventModel';
 
-export default class FilterHolidayType {
-    constructor(){
-        this._elem = document.querySelector( '.js-filter-holiday-type' );
+export default class FilterAirport {
+    constructor() {
+        this._elem = document.querySelector( '.js-filter-airport' );
         this._mediator = null;
 
         this.attachEvents();
@@ -15,22 +15,26 @@ export default class FilterHolidayType {
     attachEvents() {
         this._elem.addEventListener(
             'change',
-            event => this._onChangeHandler(event)
+            event => this._onChangeHandler( event )
         );
-    }
-
-    setMediator( mediator ) {
-        this._mediator = mediator;
     }
 
     getValue() {
         return this._elem.value;
     }
 
+    setValue( value ) {
+        return this._elem.value = value;
+    }
+
+    setMediator( mediator ) {
+        this._mediator = mediator;
+    }
+
     _onChangeHandler( event ) {
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.filterPins;
-        mediatorEvent.holidayType = event.target.value;
+        mediatorEvent.airportId = event.target.value;
         Config.instance.mediator.stateChanged( mediatorEvent );
     }
 

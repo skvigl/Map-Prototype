@@ -4,34 +4,39 @@
     "type": "Hotel",
     "title": "HOTEL1",
     "summary": "Lorem ipsum dolor sit amet.",
-    "imgURL": "/app/images/hotel-1.jpg"
+    "imgURL": "/app/images/hotel-1.jpg",
+    "stars": ["*","*","*","*"]
   },
   {
     "id": "h2",
     "type": "Hotel",
     "title": "HOTEL2",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
-    "imgURL": "/app/images/hotel-2.jpg"
+    "imgURL": "/app/images/hotel-2.jpg",
+    "stars": ["*","*","*"]
   },
   {
     "id": "h3",
     "type": "Hotel",
     "title": "HOTEL3",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
-    "imgURL": "/app/images/hotel-3.jpg"
+    "imgURL": "/app/images/hotel-3.jpg",
+    "stars": ["*","*"]
   },
   {
     "id": "h4",
     "type": "Hotel",
     "title": "HOTEL4",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!",
-    "imgURL": "/app/images/hotel-5.jpg"
+    "imgURL": "/app/images/hotel-4.jpg",
+    "stars": ["*","*","*","*"]
   },
   {
     "id": "h5",
     "type": "Hotel",
     "title": "HOTEL5",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!",
-    "imgURL": "/app/images/hotel-5.jpg"
+    "imgURL": "/app/images/hotel-5.jpg",
+    "stars": ["*","*","*"]
   }
 ]

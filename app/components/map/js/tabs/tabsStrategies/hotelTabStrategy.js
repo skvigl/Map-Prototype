@@ -1,8 +1,8 @@
 "use strict";
 
-import Config from '../config';
+import Config from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
-import PinNames from '../enums/pinNames';
+import PinNames from '../../enums/pinNames';
 import TabContent from '../tabContent';
 
 export default class HotelTabStrategy extends AbstractTabStrategy {

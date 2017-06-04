@@ -23,14 +23,6 @@
             display: none;
         }
     }
-
-    &__loadmore {
-        display: none;
-
-        &.is-visible {
-            display: block;
-        }
-    }
 }
 
 .loadmore {

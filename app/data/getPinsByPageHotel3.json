@@ -1,0 +1,12 @@
+{
+  "pins": [
+    {
+      "id": "h5",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!",
+      "imgURL": "/app/images/hotel-5.jpg",
+      "stars": ["*","*","*"]
+    }
+  ],
+  "currentPage":3,
+  "totalPages":3
+}

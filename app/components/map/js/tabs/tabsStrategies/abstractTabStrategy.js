@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../config';
+import Config from '../../config';
 import TabContent from '../tabContent';
 
 export default class AbstractTabStrategy {

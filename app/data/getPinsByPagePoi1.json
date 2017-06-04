@@ -1,10 +1,17 @@
 {
   "pins": [
     {
-      "id": "p3",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?"
+      "id": "p1",
+      "summary": "Lorem ipsum dolor sit amet.",
+      "imgURL": "/app/images/poi-1.jpg"
+    },
+    {
+      "id": "p2",
+      "summary": "Lorem ipsum dolor sit amet. Dollar stopicot",
+      "imgURL": "/app/images/poi-2.jpg"
     }
   ],
-  "currentPage":2,
+  "currentPage":1,
   "totalPages":2
 }
+

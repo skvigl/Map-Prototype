@@ -6,8 +6,8 @@ import TabNames from './enums/tabNames';
 import HolidayTypeNames from './enums/holidayTypeNames';
 import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
-import PinsHelper from 'pinsHelper';
-import TabState from 'tabState';
+import PinsHelper from 'helpers/pinsHelper';
+import TabState from 'tabs/tabState';
 
 export default class Mediator {
     constructor() {}
@@ -21,10 +21,7 @@ export default class Mediator {
                     Config.instance.currentLocation = eventModel.targetPin;
                 }
 
-                //TODO: Move to config init method clear
-                Config.instance.filterParams.airportId = 'default';
-                Config.instance.filterAirport.setValue('default');
-
+                Config.clearFilters();
                 Config.instance.filterAirport.updateVisibility( eventModel.level );
                 Config.instance.filterHolidayType.updateVisibility( eventModel.level );
 
@@ -98,10 +95,10 @@ export default class Mediator {
 
                 } );
 
-                if ( !currentTabStrategy.hasDetails() || currentTabState.currentPage !== 0 )
+                if ( !currentTabStrategy.hasDetails() || currentTabState.currentPage !== 1 )
                     return;
 
-                let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 0 );
+                let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 1 );
 
                 getPinsByPageRequest.then( ( response ) => {
 
@@ -113,33 +110,11 @@ export default class Mediator {
                 } );
 
                 let pinsDetailsCallback = function pinsCallback( getPinsResponse, getPinsByPageResponse ) {
-                    let pinsByPage = [];
-                    getPinsByPageResponse.data.pins.forEach( ( pin ) => {
-                        let existingPin = PinsHelper.findPin( pin.id );
-
-                        if ( existingPin ) {
-                            pinsByPage.push( existingPin );
-                        }
-                    } );
-
-                    let content = Config.instance.currentTab.generateContent( pinsByPage ),
-                        tabSelect = Config.instance.tabSelect;
-
-                    //tabSelect.clearTabsContent();
-                    tabSelect.updateTabContent( content );
-                    Config.instance.map.drawAllPins();
-
-                    let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-                    let currentTabState = Config.instance.tabStates[currentTabName];
-
-                    currentTabState.currentPage = getPinsByPageResponse.data.currentPage;
-                    currentTabState.totalPages = getPinsByPageResponse.data.totalPages;
-
-                    //TODO: Show Loadmore Button
-                    tabSelect.setLoadmoreVisibility( currentTabState.currentPage < currentTabState.totalPages );
+                    this._drawPinsDetails( getPinsByPageResponse );
+                    this._updateTabState( getPinsByPageResponse );
                 };
 
-                Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback );
+                Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind(this) );
                 break;
             }
             case MediatorEvents.airportPinClicked: {
@@ -216,11 +191,29 @@ export default class Mediator {
                     Config.instance.filterParams.holidayType = eventModel.holidayType;
                 }
 
-                //PinsHelper.filterPins();
                 Config.instance.map.updatePinsVisibility();
-                //console.log( Config.instance.pinsArray );
-
                 console.log( 'filtering' );
+                break;
+            }
+
+            case MediatorEvents.loadmorePinsDetails: {
+
+                let currentTabName = Config.instance.tabSelect.getCurrentTabName();
+                let currentTabState = Config.instance.tabStates[currentTabName];
+                let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
+
+                let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, currentTabState.currentPage + 1 );
+
+                getPinsByPageRequest.then( ( response ) => {
+
+                    if ( !response.data ) {
+                        return;
+                    }
+
+                    this._updatePins( response.data.pins );
+                    this._drawPinsDetails( response );
+                    this._updateTabState( response );
+                } );
                 break;
             }
 
@@ -256,9 +249,32 @@ export default class Mediator {
         } );
     }
 
-    // addInitiator( initiatorName, initiatorObj ) {
-    //     this._initiators[ initiatorName ] = initiatorObj;
-    // }
+    _drawPinsDetails( response ) {
+        let pinsByPage = [];
+
+        response.data.pins.forEach( ( pin ) => {
+            let existingPin = PinsHelper.findPin( pin.id );
+
+            if ( existingPin ) {
+                pinsByPage.push( existingPin );
+            }
+        } );
+
+        let content = Config.instance.currentTab.generateContent( pinsByPage );
+
+        Config.instance.tabSelect.updateTabContent( content );
+        Config.instance.map.drawAllPins();
+    }
+
+    _updateTabState( response ) {
+        let currentTabName = Config.instance.tabSelect.getCurrentTabName();
+        let currentTabState = Config.instance.tabStates[currentTabName];
+
+        currentTabState.currentPage = response.data.currentPage;
+        currentTabState.totalPages = response.data.totalPages;
+
+        Config.instance.tabSelect.setLoadmoreVisibility( currentTabState.currentPage < currentTabState.totalPages );
+    }
 }
 
 

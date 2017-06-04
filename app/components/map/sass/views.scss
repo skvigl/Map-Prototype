@@ -103,7 +103,7 @@
 }
 
 .card {
-    $block: '.card';
+    $this: &;
     display: none;
     background-color: whitesmoke;
 
@@ -158,24 +158,29 @@
 
     &--poi {
 
-        #{$block}__figure {
+        #{$this}__figure {
             background-color: cornflowerblue;
         }
 
-        #{$block}__heading {
+        #{$this}__heading {
             color: cornflowerblue;
         }
 
-        #{$block}__footer {
+        #{$this}__footer {
             border-color: cornflowerblue;
         }
 
-        #{$block}__btn {
+        #{$this}__btn {
             color: darken(cornflowerblue, 5%);
 
-            &:hover {
+            &:hover,
+            &:focus {
                 background-color: cornflowerblue;
                 color: white;
+            }
+
+            &:active {
+                background-color: lighten(cornflowerblue, 5%);
             }
         }
 
@@ -186,35 +191,58 @@
 
     &--hotel {
 
-        #{$block}__figure {
+        #{$this}__figure {
             background-color: goldenrod;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: linear-gradient( to right bottom, transparent 65%, rgba(0,0,0,0.15) );
+            }
         }
 
-        #{$block}__stars {
+        #{$this}__stars {
             position: absolute;
             right: 10px;
             bottom: 10px;
+            z-index: 10;
+            color: $color-white;
         }
 
-        #{$block}__heading {
+        #{$this}__heading {
             color: goldenrod;
         }
 
-        #{$block}__footer {
+        #{$this}__footer {
             border-color: goldenrod;
         }
 
-        #{$block}__btn {
+        #{$this}__btn {
             color: darken(goldenrod, 5%);
 
-            &:hover {
+            &:hover,
+            &:focus {
                 background-color: goldenrod;
                 color: white;
+            }
+            &:active {
+                background-color: lighten(goldenrod, 5%);
             }
         }
 
         &__btn:first-child {
             border-color: goldenrod;
+        }
+    }
+
+    &--details {
+        #{$this}__btn {
+            border-right: none;
         }
     }
 }
