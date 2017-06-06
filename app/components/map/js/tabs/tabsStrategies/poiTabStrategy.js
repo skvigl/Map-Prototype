@@ -9,7 +9,6 @@ export default class PoiTabStrategy extends AbstractTabStrategy {
     constructor( name ) {
         let allowedPinTypes = [
             PinNames.poi
-            //PinFactory.getPinStrategy( PinNames.poi )
         ];
         super( allowedPinTypes, name );
     }
@@ -19,7 +18,6 @@ export default class PoiTabStrategy extends AbstractTabStrategy {
             case 1:
             case 2:
             case 3:
-                console.log( 'draw all pois' );
                 return new TabContent( null , this._generateCards( pins ) );
         }
     }

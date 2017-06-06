@@ -16,9 +16,10 @@
     }
 
     &--airport {
-        background-color: dimgray;
+        background-color: $color-airport;
 
-        &.is-hover {
+        &.is-hover,
+        &.is-active {
             #{$block}__title {
                 display: inline-block;
             }
@@ -42,7 +43,7 @@
     }
 
     &.is-active {
-        background-color: #555; //TODO: find a text for color;
+        background-color: #444;
         transform: scale(1.2);
     }
 }

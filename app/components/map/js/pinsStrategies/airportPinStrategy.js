@@ -22,11 +22,21 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
+        let activePin = Config.instance.activePin;
+
+        if ( activePin && activePin.marker ) {
+            activePin.marker.classList.remove( 'is-active' );
+        }
+
+        if ( pin && pin.marker ) {
+            pin.marker.classList.add( 'is-active' );
+        }
 
         if ( Config.instance.currentLevel.levelId === 0 ) {
             let mediatorEvent = new MediatorEventModel();
             mediatorEvent.eventType = MediatorEvents.filterPins;
             mediatorEvent.airportId = pin.id;
+            mediatorEvent.targetPin = pin;
             Config.instance.mediator.stateChanged( mediatorEvent );
         }
     }

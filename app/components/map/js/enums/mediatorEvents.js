@@ -12,10 +12,6 @@ export default class MediatorEvents {
         return 'TAB_CHANGED';
     }
 
-    static get airportPinClicked() {
-        return 'AIRPORT_PIN_CLICKED';
-    }
-
     static get destinationPinClicked() {
         return 'DESTINATION_PIN_CLICKED';
     }

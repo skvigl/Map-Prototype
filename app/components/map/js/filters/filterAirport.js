@@ -24,7 +24,9 @@ export default class FilterAirport {
     }
 
     setValue( value ) {
-        return this._elem.value = value;
+        if ( this._elem.value !== value ) {
+            this._elem.value = value;
+        }
     }
 
     setMediator( mediator ) {

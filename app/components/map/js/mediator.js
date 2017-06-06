@@ -117,10 +117,6 @@ export default class Mediator {
                 Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind(this) );
                 break;
             }
-            case MediatorEvents.airportPinClicked: {
-                Config.instance.activePin = eventModel.targetPin;
-                break;
-            }
             case MediatorEvents.destinationPinClicked: {
                 let currentLevelId = Config.instance.currentLevel.levelId;
 
@@ -182,6 +178,17 @@ export default class Mediator {
             }
 
             case MediatorEvents.filterPins: {
+                let targetPin = eventModel.targetPin;
+                console.log(Config.instance.activePin);
+
+                if ( !eventModel.targetPin ) {
+                    targetPin = PinsHelper.findPin( eventModel.airportId );
+                }
+
+                if ( targetPin ) {
+                    Config.instance.activePin = targetPin;
+                    Config.instance.filterAirport.setValue( targetPin.id );
+                }
 
                 if ( eventModel.airportId ) {
                     Config.instance.filterParams.airportId = eventModel.airportId;
@@ -192,7 +199,7 @@ export default class Mediator {
                 }
 
                 Config.instance.map.updatePinsVisibility();
-                console.log( 'filtering' );
+                console.log( 'filtered' );
                 break;
             }
 

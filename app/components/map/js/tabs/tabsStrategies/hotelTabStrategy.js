@@ -18,7 +18,6 @@ export default class HotelTabStrategy extends AbstractTabStrategy {
             case 1:
             case 2:
             case 3:
-                console.log( 'draw all hotel' );
                 return new TabContent( null , this._generateCards( pins ) );
         }
     }
