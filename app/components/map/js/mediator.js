@@ -10,7 +10,8 @@ import PinsHelper from 'helpers/pinsHelper';
 import TabState from 'tabs/tabState';
 
 export default class Mediator {
-    constructor() {}
+    constructor() {
+    }
 
     stateChanged( eventModel ) {
 
@@ -114,7 +115,7 @@ export default class Mediator {
                     this._updateTabState( getPinsByPageResponse );
                 };
 
-                Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind(this) );
+                Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind( this ) );
                 break;
             }
             case MediatorEvents.destinationPinClicked: {
@@ -171,15 +172,20 @@ export default class Mediator {
                 let activePin = Config.instance.activePin;
 
                 if ( activePin ) {
-                    activePin.marker.classList.remove('is-active');
+                    Config.instance.pinStrategies[activePin.type].removeActiveClass( activePin );
                     activePin = null;
                 }
                 break;
             }
 
             case MediatorEvents.filterPins: {
-                let targetPin = eventModel.targetPin;
-                console.log(Config.instance.activePin);
+                let activePin = Config.instance.activePin,
+                    targetPin = eventModel.targetPin;
+
+                if ( activePin ) {
+                    Config.instance.pinStrategies[activePin.type].removeActiveClass( activePin );
+                    activePin = null;
+                }
 
                 if ( !eventModel.targetPin ) {
                     targetPin = PinsHelper.findPin( eventModel.airportId );
@@ -187,19 +193,26 @@ export default class Mediator {
 
                 if ( targetPin ) {
                     Config.instance.activePin = targetPin;
+                    Config.instance.pinStrategies[targetPin.type].addActiveClass( targetPin );
                     Config.instance.filterAirport.setValue( targetPin.id );
                 }
 
-                if ( eventModel.airportId ) {
-                    Config.instance.filterParams.airportId = eventModel.airportId;
+                let filterParams = Config.instance.filterParams,
+                    isNewParams = false;
+
+                if ( eventModel.airportId && filterParams.airportId !== eventModel.airportId ) {
+                    filterParams.airportId = eventModel.airportId;
+                    isNewParams = true;
                 }
 
-                if ( eventModel.holidayType ) {
-                    Config.instance.filterParams.holidayType = eventModel.holidayType;
+                if ( eventModel.holidayType && filterParams.holidayType !== eventModel.holidayType ) {
+                    filterParams.holidayType = eventModel.holidayType;
+                    isNewParams = true;
                 }
 
-                Config.instance.map.updatePinsVisibility();
-                console.log( 'filtered' );
+                if ( isNewParams ) {
+                    Config.instance.map.updatePinsVisibility();
+                }
                 break;
             }
 

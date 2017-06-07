@@ -110,6 +110,10 @@ export default class Map {
             this.listeners.onPinClickHandler = event => this._onPinClickHandler( event, 'js-marker' )
         );
         this.viewNode.addEventListener(
+            'click',
+            this.listeners.onPinClickHandler = event => this._onPinClickHandler( event, 'js-view' )
+        );
+        this.viewNode.addEventListener(
             'mouseover',
             ( event, cssClass ) => this._onPinMouseoverHandler( event, 'js-marker' )
         );

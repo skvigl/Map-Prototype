@@ -106,6 +106,18 @@ export default class AbstractPinStrategy {
         return true;
     }
 
+    addActiveClass( pin ) {
+        if ( pin && pin.marker ) {
+            pin.marker.classList.add( 'is-active' );
+        }
+    }
+
+    removeActiveClass( pin ) {
+        if ( pin && pin.marker ) {
+            pin.marker.classList.remove( 'is-active' );
+        }
+    }
+
     _generateContent( params ) {
 
         if ( !params.pin[params.key] ) {
