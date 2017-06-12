@@ -14,7 +14,9 @@
       "holidayType": "beachHoliday",
       "title": "Majorca",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-6.jpg"
+      "imgURL": "/app/images/destination-6.jpg",
+      "lat": 39.614114,
+      "lng": 2.986620
     },
     {
       "id": "d7",
@@ -22,7 +24,9 @@
       "holidayType": "beachHoliday",
       "title": "Minorca",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-7.jpg"
+      "imgURL": "/app/images/destination-7.jpg",
+      "lat": 39.976116,
+      "lng": 4.059797
     },
     {
       "id": "d8",
@@ -30,23 +34,28 @@
       "holidayType": "beachHoliday",
       "title": "Ibiza",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-3.jpg"
+      "imgURL": "/app/images/destination-3.jpg",
+      "lat": 38.986208,
+      "lng": 1.353296
     },
     {
       "id": "c1",
       "type": "ChildDestination",
       "holidayType": "beachHoliday",
       "title": "Alcudia",
-      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem."
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "lat": 39.849094,
+      "lng": 3.129189
     },
     {
       "id": "c2",
       "type": "ChildDestination",
       "holidayType": "villas",
       "title": "Alcudia",
-      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem."
+      "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
+      "lat": 39.849094,
+      "lng": 3.129189
     }
-
   ]
 }
 

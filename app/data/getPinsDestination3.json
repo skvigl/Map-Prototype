@@ -12,49 +12,65 @@
       "id": "h1",
       "type": "Hotel",
       "title": "Hotel1",
-      "icon": "building-o"
+      "icon": "building-o",
+      "lat": 39.545423,
+      "lng": 2.435199
     },
     {
       "id": "h2",
       "type": "Hotel",
       "title": "Hotel2",
-      "icon": "building-o"
+      "icon": "building-o",
+      "lat": 39.685066,
+      "lng": 2.513476
     },
     {
       "id": "h3",
       "type": "Hotel",
       "title": "Hotel3",
-      "icon": "building-o"
+      "icon": "building-o",
+      "lat": 39.851078,
+      "lng": 3.130095
     },
     {
       "id": "h4",
       "type": "Hotel",
       "title": "Hotel4",
-      "icon": "building-o"
+      "icon": "building-o",
+      "lat": 39.764644,
+      "lng": 3.159904
     },
     {
       "id": "h5",
       "type": "Hotel",
       "title": "Hotel5",
-      "icon": "building-o"
+      "icon": "building-o",
+      "lat": 39.874293,
+      "lng": 3.173774
     },
     {
       "id": "p1",
       "type": "Poi",
       "title": "Poi1",
-      "icon": "camera"
+      "icon": "camera",
+      "lat": 39.840806,
+      "lng": 3.114684
     },
     {
       "id": "p2",
       "type": "Poi",
       "title": "Poi2",
-      "icon": "camera"
+      "icon": "camera",
+      "lat": 39.842482,
+      "lng": 3.166484
     },
     {
       "id": "p3",
       "type": "Poi",
       "title": "Poi3",
-      "icon": "cutlery"
+      "icon": "cutlery",
+      "lat": 39.865162,
+      "lng": 3.128853
     }
   ]
 }

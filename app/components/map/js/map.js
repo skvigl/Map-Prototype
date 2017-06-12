@@ -38,7 +38,6 @@ export default class Map {
     }
 
     drawAllPins() {
-
         Config.instance.currentTab.getPinStrategies().forEach( strategy => {
             this._drawPinsByStrategy( strategy );
         } );
@@ -46,6 +45,9 @@ export default class Map {
     }
 
     removeAllPins() {
+        Config.instance.pinsArray.forEach( pin => {
+            Config.instance.googleMap.removeMarker( pin );
+        });
         this.gmap.viewNode.innerHTML = '';
     }
 

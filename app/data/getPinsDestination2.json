@@ -14,7 +14,9 @@
       "holidayType": "beachHoliday",
       "title": "Alcudia",
       "summary": "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, dolorem.",
-      "imgURL": "/app/images/destination-5.jpg"
+      "imgURL": "/app/images/destination-5.jpg",
+      "lat": 39.849094,
+      "lng": 3.129189
     }
   ]
 }

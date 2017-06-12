@@ -25,6 +25,11 @@ export default class GoogleMap {
         } )
     }
 
+    removeMarker( pin ) {
+        console.log( pin.gmarker );
+        pin.gmarker.setMap( null );
+    }
+
 }
 
 
