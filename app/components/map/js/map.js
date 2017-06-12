@@ -19,7 +19,6 @@ export default class Map {
         this.listeners = {};
         this.viewNode = document.querySelector( '.js-map' );
         this.gmap = {};
-        this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap1' );
         this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
 
         let mediatorEvent = new MediatorEventModel();
@@ -48,7 +47,6 @@ export default class Map {
         Config.instance.pinsArray.forEach( pin => {
             Config.instance.googleMap.removeMarker( pin );
         });
-        this.gmap.viewNode.innerHTML = '';
     }
 
     hideAllPins() {
@@ -79,7 +77,6 @@ export default class Map {
         pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
-            this.gmap.viewNode.appendChild( pin.marker );
             Config.instance.googleMap.addMarker( pin );
         } );
     }

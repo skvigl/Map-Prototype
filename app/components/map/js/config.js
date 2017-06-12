@@ -56,12 +56,11 @@ export default class Config {
     static get instance() {
         if ( !this._instance ) {
             this._instance = new Config();
-            this._instance.init();
         }
         return this._instance._config;
     }
 
-    init() {
+    static init() {
         Config.instance.mediator = new Mediator();
         Config.instance.tabSelect = new TabSelect();
         Config.instance.filterAirport = new FilterAirport();
@@ -109,6 +108,6 @@ export default class Config {
     }
 }
 
-window.initMap = function initMap(  ) {
-    Config.instance.googleMap.init();
+window.initMap = function initMap() {
+    Config.init();
 };

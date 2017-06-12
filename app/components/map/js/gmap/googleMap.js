@@ -3,6 +3,7 @@
 export default class GoogleMap {
     constructor(){
         this.map = null;
+        this.init();
     }
 
     init() {
@@ -11,23 +12,28 @@ export default class GoogleMap {
                 lat: 47.7,
                 lng: 5.4
             },
-            zoom: 4
+            zoom: 4,
+            disableDefaultUI: true,
+            zoomControl: true
         });
     }
 
+    setOptions( options ) {
+        this.map.setOptions(options);
+    }
+
     addMarker( pin ) {
-        pin.gmarker = new google.maps.Marker( {
+        pin.richMarker = new RichMarker({
             map: this.map,
-            position: {
-                lat: pin.lat || 0,
-                lng: pin.lng || 0
-            }
-        } )
+            position: new google.maps.LatLng(pin.lat || 0, pin.lng || 0),
+            content: pin.marker,
+            flat: true,
+            anchor: RichMarkerPosition.MIDDLE
+        });
     }
 
     removeMarker( pin ) {
-        console.log( pin.gmarker );
-        pin.gmarker.setMap( null );
+        pin.richMarker.setMap( null );
     }
 
 }

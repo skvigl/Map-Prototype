@@ -1,4 +1,9 @@
 {
+  "mapOptions": {
+    "lat": 47.7,
+    "lng": 5.4,
+    "zoom": 4
+  },
   "pins": [
     {
       "id": "a1",
