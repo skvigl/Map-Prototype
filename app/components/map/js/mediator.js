@@ -37,12 +37,22 @@ export default class Mediator {
                     Config.instance.map.removeAllPins();
                     Config.instance.tabSelect.clearTabsContent();
 
+                    let mapOptions = response.data.mapOptions;
+
+                    Config.instance.googleMap.setOptions({
+                        center: {
+                            'lat': mapOptions.lat,
+                            'lng': mapOptions.lng,
+                        },
+                        zoom: mapOptions.zoom
+                    });
+
                     Config.instance.currentLevel = Config.instance.levelCollections[eventModel.level];
                     Config.instance.pinsArray = response.data.pins;
 
-                    let tabName = eventModel.tabName ? eventModel.tabName : TabNames.overview;
+                    let tabName = eventModel.tabName ? eventModel.tabName : TabNames.overview,
+                        currentTab = Config.instance.tabStrategies[tabName];
 
-                    let currentTab = Config.instance.tabStrategies[tabName];
                     Config.instance.currentTab = currentTab;
                     currentTab.updatePinStrategies();
 
