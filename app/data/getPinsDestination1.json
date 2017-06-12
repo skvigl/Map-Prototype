@@ -4,7 +4,9 @@
       "id": "a3",
       "type": "Airport",
       "title": "AIRPORT MAJ",
-      "icon": "plane"
+      "icon": "plane",
+      "lat": 39.551956,
+      "lng": 2.736476
     },
     {
       "id": "d6",

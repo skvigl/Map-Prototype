@@ -4,19 +4,25 @@
       "id": "p1",
       "type": "Poi",
       "title": "POI1",
-      "icon": "camera"
+      "icon": "camera",
+      "lat": 39.840806,
+      "lng": 3.114684
     },
     {
       "id": "p2",
       "type": "Poi",
       "title": "POI2",
-      "icon": "camera"
+      "icon": "camera",
+      "lat": 39.842482,
+      "lng": 3.166484
     },
     {
       "id": "p3",
       "type": "Poi",
       "title": "POI3",
-      "icon": "cutlery"
+      "icon": "cutlery",
+      "lat": 39.865162,
+      "lng": 3.128853
     }
   ]
 }

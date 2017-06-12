@@ -4,20 +4,26 @@
     "type": "Poi",
     "title": "POI1",
     "summary": "Lorem ipsum dolor sit amet.",
-    "imgURL": "/app/images/poi-1.jpg"
+    "imgURL": "/app/images/poi-1.jpg",
+    "lat": 39.840806,
+    "lng": 3.114684
   },
   {
     "id": "p2",
     "type": "Poi",
     "title": "POI2",
     "summary": "Lorem ipsum dolor sit amet.",
-    "imgURL": "/app/images/poi-2.jpg"
+    "imgURL": "/app/images/poi-2.jpg",
+    "lat": 39.842482,
+    "lng": 3.166484
   },
   {
     "id": "p3",
     "type": "Poi",
     "title": "POI3",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
-    "imgURL": "/app/images/poi-3.jpg"
+    "imgURL": "/app/images/poi-3.jpg",
+    "lat": 39.865162,
+    "lng": 3.128853
   }
 ]

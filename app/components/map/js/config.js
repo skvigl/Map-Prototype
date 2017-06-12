@@ -12,6 +12,7 @@ import TabSelect from './tabs/tabSelect';
 import FilterAirport from './filters/filterAirport';
 import FilterHolidayType from './filters/filterHolidayType';
 import AjaxHandler from './ajaxHandler';
+import GoogleMap from './gmap/googleMap';
 
 export default class Config {
 
@@ -66,8 +67,8 @@ export default class Config {
         Config.instance.filterAirport = new FilterAirport();
         Config.instance.filterHolidayType = new FilterHolidayType();
         Config.instance.ajaxHandler = new AjaxHandler();
-
         Config.instance.currentHolidayType = HolidayTypeNames.beach;
+        Config.instance.googleMap = new GoogleMap();
 
         Config.instance.levelCollections.forEach( ( level ) => {
             level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
@@ -99,7 +100,6 @@ export default class Config {
         };
 
         Config.instance.map = new Map();
-
         console.log( Config.instance );
     }
 
@@ -108,3 +108,7 @@ export default class Config {
         Config.instance.filterAirport.setValue('default');
     }
 }
+
+window.initMap = function initMap(  ) {
+    Config.instance.googleMap.init();
+};

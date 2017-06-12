@@ -19,7 +19,7 @@ export default class Map {
         this.listeners = {};
         this.viewNode = document.querySelector( '.js-map' );
         this.gmap = {};
-        this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap' );
+        this.gmap.viewNode = this.viewNode.querySelector( '.js-gmap1' );
         this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
 
         let mediatorEvent = new MediatorEventModel();
@@ -78,6 +78,7 @@ export default class Map {
 
         pins.forEach( pin => {
             this.gmap.viewNode.appendChild( pin.marker );
+            Config.instance.googleMap.addMarker( pin );
         } );
     }
 

@@ -5,7 +5,9 @@
     "title": "HOTEL1",
     "summary": "Lorem ipsum dolor sit amet.",
     "imgURL": "/app/images/hotel-1.jpg",
-    "stars": ["*","*","*","*"]
+    "stars": ["*","*","*","*"],
+    "lat": 39.545423,
+    "lng": 2.435199
   },
   {
     "id": "h2",
@@ -13,7 +15,9 @@
     "title": "HOTEL2",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
     "imgURL": "/app/images/hotel-2.jpg",
-    "stars": ["*","*","*"]
+    "stars": ["*","*","*"],
+    "lat": 39.685066,
+    "lng": 2.513476
   },
   {
     "id": "h3",
@@ -21,7 +25,9 @@
     "title": "HOTEL3",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, magnam?",
     "imgURL": "/app/images/hotel-3.jpg",
-    "stars": ["*","*"]
+    "stars": ["*","*"],
+    "lat": 39.851078,
+    "lng": 3.130095
   },
   {
     "id": "h4",
@@ -29,7 +35,9 @@
     "title": "HOTEL4",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!",
     "imgURL": "/app/images/hotel-4.jpg",
-    "stars": ["*","*","*","*"]
+    "stars": ["*","*","*","*"],
+    "lat": 39.764644,
+    "lng": 3.159904
   },
   {
     "id": "h5",
@@ -37,6 +45,8 @@
     "title": "HOTEL5",
     "summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque itaque non odit porro velit!",
     "imgURL": "/app/images/hotel-5.jpg",
-    "stars": ["*","*","*"]
+    "stars": ["*","*","*"],
+    "lat": 39.874293,
+    "lng": 3.173774
   }
 ]

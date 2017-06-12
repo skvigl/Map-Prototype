@@ -4,25 +4,33 @@
       "id": "a1",
       "type": "Airport",
       "title": "London",
-      "icon": "plane"
+      "icon": "plane",
+      "lat": 51.478248,
+      "lng": -0.067701
     },
     {
       "id": "a2",
       "type": "Airport",
       "title": "Leeds",
-      "icon": "plane"
+      "icon": "plane",
+      "lat": 53.842147,
+      "lng": -1.563200
     },
     {
       "id": "a3",
       "type": "Airport",
-      "title": "Yorkshire",
-      "icon": "plane"
+      "title": "Bristol",
+      "icon": "plane",
+      "lat": 51.332831,
+      "lng": -2.449623
     },
     {
       "id": "a4",
       "type": "Airport",
       "title": "Manchester",
-      "icon": "plane"
+      "icon": "plane",
+      "lat": 53.585371,
+      "lng": -2.045661
     },
     {
       "id": "d1",
