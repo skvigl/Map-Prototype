@@ -1,6 +1,6 @@
 'use strict';
 
-import Config from '../config';
+import { config } from '../config';
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
@@ -37,7 +37,7 @@ export default class FilterAirport {
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.filterPins;
         mediatorEvent.airportId = event.target.value;
-        Config.instance.mediator.stateChanged( mediatorEvent );
+        config.mediator.stateChanged( mediatorEvent );
     }
 
     updateVisibility( level ) {

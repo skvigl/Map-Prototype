@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../config';
+import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
@@ -50,12 +50,12 @@ export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.destinationPinClicked;
         mediatorEvent.targetPin = pin;
-        Config.instance.mediator.stateChanged( mediatorEvent );
+        config.mediator.stateChanged( mediatorEvent );
     }
 
     checkPinVisibility( pin ) {
         let pinVisiblity = true,
-            holidayType = Config.instance.filterParams.holidayType;
+            holidayType = config.filters.currentHolidayType;
 
         if ( holidayType !== undefined ) {
             if ( pinVisiblity && pin.holidayType !== holidayType ) {

@@ -1,6 +1,6 @@
 'use strict';
 
-import Config from '../../config';
+import { config } from '../../config';
 import TabNames from '../../enums/tabNames';
 import MobileOverviewTabStrategy from './mobileOverviewTabStrategy';
 import OverviewTabStrategy from './overviewTabStrategy';
@@ -16,7 +16,7 @@ export default class TabsFactory {
 
         switch ( name ) {
             case TabNames.overview:
-                if ( Config.instance.isMobile ) {
+                if ( config.isMobile ) {
                     return new MobileOverviewTabStrategy(
                         TabNames.overview
                     );

@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../../config';
+import { config } from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import PinNames from '../../enums/pinNames';
 import TabContent from '../tabContent';
@@ -13,7 +13,7 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
     updatePinStrategies() {
         let allowedPinStratagies = null,
-            currentLevel = Config.instance.currentLevel,
+            currentLevel = config.currentLevel,
             levelId = 0;
 
         if ( currentLevel && currentLevel.levelId ) {
@@ -54,7 +54,7 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
     generateContent() {
 
-        switch ( Config.instance.currentLevel.levelId ) {
+        switch ( config.currentLevel.levelId ) {
             case 0:
                 return new TabContent( null, this._generateCards() );
             case 1:
@@ -75,6 +75,6 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
     }
 
     _generateLocationInfo () {
-        return Config.instance.pinStrategies[PinNames.destination].generateLocationInfo();
+        return config.pinStrategies[PinNames.destination].generateLocationInfo();
     }
 }

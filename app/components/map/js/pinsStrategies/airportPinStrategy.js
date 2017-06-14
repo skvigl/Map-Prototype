@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../config';
+import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
@@ -23,9 +23,9 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
 
     onPinClick( pin ) {
 
-        if ( Config.instance.currentLevel.levelId === 0 ) {
+        if ( config.currentLevel.levelId === 0 ) {
 
-            let activePin = Config.instance.activePin;
+            let activePin = config.activePin;
 
             if ( activePin && activePin.marker ) {
                 activePin.marker.classList.remove( 'is-active' );
@@ -39,7 +39,7 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
             mediatorEvent.eventType = MediatorEvents.filterPins;
             mediatorEvent.airportId = pin.id;
             mediatorEvent.targetPin = pin;
-            Config.instance.mediator.stateChanged( mediatorEvent );
+            config.mediator.stateChanged( mediatorEvent );
         }
     }
 

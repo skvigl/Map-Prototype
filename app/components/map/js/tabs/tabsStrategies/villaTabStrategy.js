@@ -1,6 +1,5 @@
 "use strict";
 
-import Config from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import PinNames from '../../enums/pinNames';
 import TabContent from '../tabContent';
@@ -14,7 +13,7 @@ export default class VillaTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent( pins ) {
-        switch ( Config.instance.currentLevel.levelId ) {
+        switch ( config.currentLevel.levelId ) {
             case 0:
                 console.log( 'tab is hidden' );
                 break;

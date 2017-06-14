@@ -63,7 +63,7 @@ export default class TabSelect {
     // }
 
     // update() {
-    //     this._currentTabName = Config.instance.currentTab.getName();
+    //     this._currentTabName = config.currentTab.getName();
     //     this._updateTabNavigation();
     //     this._clearTabsContent();
     //     this._setActiveTab();
@@ -181,7 +181,7 @@ export default class TabSelect {
     }
 
     // _updateTabNavigation() {
-    //     let currentLevel = Config.instance.currentLevel;
+    //     let currentLevel = config.currentLevel;
     //
     //     for( let tab in this._tabs ) {
     //

@@ -1,6 +1,6 @@
 'use strict';
 
-import Config from '../config';
+import { config } from '../config';
 import MobileZeroLevelStrategy from './mobileZeroLevelStrategy';
 import MobileNestedLevelStrategy from './mobileNestedLevelStrategy';
 import ZeroLevelStrategy from './ZeroLevelStrategy';
@@ -10,10 +10,10 @@ export default class LevelsFactory {
     constructor() {
     }
 
-    static getLevelStrategies( level ) {
+    static getLevelStrategies( levelId ) {
 
-        if ( Config.instance.isMobile ) {
-            switch ( level ) {
+        if ( config.isMobile ) {
+            switch ( levelId ) {
                 case 0:
                     return new MobileZeroLevelStrategy();
                 case 1:
@@ -22,7 +22,7 @@ export default class LevelsFactory {
                     return new MobileNestedLevelStrategy();
             }
         } else {
-            switch ( level ) {
+            switch ( levelId ) {
                 case 0:
                     return new ZeroLevelStrategy();
                 case 1:

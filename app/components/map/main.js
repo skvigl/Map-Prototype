@@ -2,7 +2,5 @@
 
 import './sass/main.scss';
 import Config from './js/config';
-Config.instance;
-
 
 

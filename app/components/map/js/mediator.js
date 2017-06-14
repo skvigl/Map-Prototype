@@ -1,6 +1,6 @@
 'use strict';
 
-import Config from './config';
+import { Config, config } from './config';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import HolidayTypeNames from './enums/holidayTypeNames';
@@ -19,14 +19,14 @@ export default class Mediator {
             case MediatorEvents.levelChanged: {
 
                 if ( eventModel.targetPin ) {
-                    Config.instance.currentLocation = eventModel.targetPin;
+                    config.currentLocation = eventModel.targetPin;
                 }
 
                 Config.clearFilters();
-                Config.instance.filterAirport.updateVisibility( eventModel.level );
-                Config.instance.filterHolidayType.updateVisibility( eventModel.level );
+                config.filters.filterAirport.updateVisibility( eventModel.level );
+                config.filters.filterHolidayType.updateVisibility( eventModel.level );
 
-                let getPinsRequest = Config.instance.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
+                let getPinsRequest = config.ajaxHandler.getPins( eventModel.pinType, eventModel.level );
 
                 getPinsRequest.then( function ( response ) {
 
@@ -34,12 +34,12 @@ export default class Mediator {
                         return;
                     }
 
-                    Config.instance.map.removeAllPins();
-                    Config.instance.tabSelect.clearTabsContent();
+                    config.map.removeAllPins();
+                    config.tabSelect.clearTabsContent();
 
                     let mapOptions = response.data.mapOptions;
 
-                    Config.instance.googleMap.setOptions({
+                    config.googleMap.setOptions({
                         center: {
                             'lat': mapOptions.lat,
                             'lng': mapOptions.lng,
@@ -47,61 +47,61 @@ export default class Mediator {
                         zoom: mapOptions.zoom
                     });
 
-                    Config.instance.currentLevel = Config.instance.levelCollections[eventModel.level];
-                    Config.instance.pinsArray = response.data.pins;
+                    config.currentLevel = config.levelCollections[eventModel.level];
+                    config.pinsArray = response.data.pins;
 
                     let tabName = eventModel.tabName ? eventModel.tabName : TabNames.overview,
-                        currentTab = Config.instance.tabStrategies[tabName];
+                        currentTab = config.tabStrategies[tabName];
 
-                    Config.instance.currentTab = currentTab;
+                    config.currentTab = currentTab;
                     currentTab.updatePinStrategies();
 
-                    let currentLevel = Config.instance.currentLevel,
-                        tabSelect = Config.instance.tabSelect;
+                    let currentLevel = config.currentLevel,
+                        tabSelect = config.tabSelect;
 
                     tabSelect.setTabsVisibility( currentLevel.tabs );
                     tabSelect.setActiveTab( tabName );
 
-                    Config.instance.tabStates = {};
+                    config.tabStates = {};
                     for ( let tabIndex in currentLevel.tabs ) {
                         let tabName = currentLevel.tabs[tabIndex];
-                        Config.instance.tabStates[tabName] = new TabState();
+                        config.tabStates[tabName] = new TabState();
                     }
 
-                    Config.instance.tabStates[tabName].hasPins = true;
+                    config.tabStates[tabName].hasPins = true;
 
                     let content = currentTab.generateContent();
-                    Config.instance.tabSelect.updateTabContent( content );
-                    Config.instance.map.updateBtnBackToLevelVisibility( Config.instance.locationsHistory.length );
+                    config.tabSelect.updateTabContent( content );
+                    config.map.updateBtnBackToLevelVisibility( config.locationsHistory.length );
 
-                    Config.instance.map.drawAllPins();
+                    config.map.drawAllPins();
                 } );
                 break;
             }
             case MediatorEvents.tabChanged: {
-                let currentLevelId = Config.instance.currentLevel.levelId;
-                let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-                let currentTabStrategy = Config.instance.tabStrategies[currentTabName];
-                Config.instance.currentTab = currentTabStrategy;
-                let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
+                let currentLevelId = config.currentLevel.levelId;
+                let currentTabName = config.tabSelect.getCurrentTabName();
+                let currentTabStrategy = config.tabStrategies[currentTabName];
+                config.currentTab = currentTabStrategy;
+                let pinType = this.getTargetPinType( config.currentTab.getPinStrategies(), currentTabName );
 
-                let currentTabState = Config.instance.tabStates[currentTabName];
-                Config.instance.map.hideAllPins();
+                let currentTabState = config.tabStates[currentTabName];
+                config.map.hideAllPins();
 
                 if ( currentTabState.hasPins ) {
-                    Config.instance.map.drawAllPins();
+                    config.map.drawAllPins();
                     return;
                 }
 
-                let getPinsRequest = Config.instance.ajaxHandler.getPins( pinType, currentLevelId );
+                let getPinsRequest = config.ajaxHandler.getPins( pinType, currentLevelId );
 
                 getPinsRequest.then( ( response ) => {
 
                     if ( !response.data ) {
                         return;
                     }
-                    let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-                    Config.instance.tabStates[currentTabName].hasPins = true;
+                    let currentTabName = config.tabSelect.getCurrentTabName();
+                    config.tabStates[currentTabName].hasPins = true;
                     this._updatePins( response.data.pins );
 
                 } );
@@ -109,7 +109,7 @@ export default class Mediator {
                 if ( !currentTabStrategy.hasDetails() || currentTabState.currentPage !== 1 )
                     return;
 
-                let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, 1 );
+                let getPinsByPageRequest = config.ajaxHandler.getPinsByPage( pinType, 1 );
 
                 getPinsByPageRequest.then( ( response ) => {
 
@@ -125,16 +125,16 @@ export default class Mediator {
                     this._updateTabState( getPinsByPageResponse );
                 };
 
-                Config.instance.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind( this ) );
+                config.ajaxHandler.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind( this ) );
                 break;
             }
             case MediatorEvents.destinationPinClicked: {
-                let currentLevelId = Config.instance.currentLevel.levelId;
+                let currentLevelId = config.currentLevel.levelId;
 
-                Config.instance.currentLocation.levelId = currentLevelId;
-                Config.instance.locationsHistory.push( Config.instance.currentLocation );
-                Config.instance.currentLocation = Object.assign( {}, eventModel.targetPin );
-                Config.instance.currentLocation.view = null;
+                config.currentLocation.levelId = currentLevelId;
+                config.locationsHistory.push( config.currentLocation );
+                config.currentLocation = Object.assign( {}, eventModel.targetPin );
+                config.currentLocation.view = null;
 
                 if ( eventModel.targetPin.holidayType === HolidayTypeNames.city ) {
                     currentLevelId = 3;
@@ -151,16 +151,16 @@ export default class Mediator {
             }
             case MediatorEvents.pinClicked: {
                 let activePin = eventModel.targetPin,
-                    tabSelect = Config.instance.tabSelect;
+                    tabSelect = config.tabSelect;
 
-                Config.instance.activePin = activePin;
+                config.activePin = activePin;
 
                 if ( activePin.detailsView ) {
-                    let content = Config.instance.currentTab.getDetailsCard( activePin );
+                    let content = config.currentTab.getDetailsCard( activePin );
 
                     tabSelect.updateTabContent( content );
                 } else {
-                    let getPinDetailsRequest = Config.instance.ajaxHandler.getPinDetails( [activePin.id], activePin.type );
+                    let getPinDetailsRequest = config.ajaxHandler.getPinDetails( [activePin.id], activePin.type );
 
                     getPinDetailsRequest.then( response => {
 
@@ -170,7 +170,7 @@ export default class Mediator {
 
                         this._updatePins( response.data );
 
-                        let content = Config.instance.currentTab.generateDetailsCard( activePin );
+                        let content = config.currentTab.generateDetailsCard( activePin );
 
                         tabSelect.updateTabContent( content );
                     } );
@@ -179,60 +179,63 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.hideDetails: {
-                let activePin = Config.instance.activePin;
+                let activePin = config.activePin;
 
                 if ( activePin ) {
-                    Config.instance.pinStrategies[activePin.type].removeActiveClass( activePin );
+                    config.pinStrategies[activePin.type].removeActiveClass( activePin );
                     activePin = null;
                 }
                 break;
             }
 
             case MediatorEvents.filterPins: {
-                let activePin = Config.instance.activePin,
+                let activePin = config.activePin,
                     targetPin = eventModel.targetPin;
 
-                if ( activePin ) {
-                    Config.instance.pinStrategies[activePin.type].removeActiveClass( activePin );
-                    activePin = null;
+                if ( eventModel.airportId ) {
+
+                    if ( activePin ) {
+                        config.pinStrategies[activePin.type].removeActiveClass( activePin );
+                        activePin = null;
+                    }
+
+                    if ( !eventModel.targetPin ) {
+                        targetPin = PinsHelper.findPin( eventModel.airportId );
+                    }
+
+                    if ( targetPin ) {
+                        config.activePin = targetPin;
+                        config.pinStrategies[targetPin.type].addActiveClass( targetPin );
+                        config.filterAirport.setValue( targetPin.id );
+                    }
                 }
 
-                if ( !eventModel.targetPin ) {
-                    targetPin = PinsHelper.findPin( eventModel.airportId );
-                }
-
-                if ( targetPin ) {
-                    Config.instance.activePin = targetPin;
-                    Config.instance.pinStrategies[targetPin.type].addActiveClass( targetPin );
-                    Config.instance.filterAirport.setValue( targetPin.id );
-                }
-
-                let filterParams = Config.instance.filterParams,
+                let filterParams = config.filters,
                     isNewParams = false;
 
-                if ( eventModel.airportId && filterParams.airportId !== eventModel.airportId ) {
-                    filterParams.airportId = eventModel.airportId;
+                if ( eventModel.airportId && filterParams.currentAirportId !== eventModel.airportId ) {
+                    filterParams.currentAirportId = eventModel.airportId;
                     isNewParams = true;
                 }
 
-                if ( eventModel.holidayType && filterParams.holidayType !== eventModel.holidayType ) {
-                    filterParams.holidayType = eventModel.holidayType;
+                if ( eventModel.holidayType && filterParams.currentHolidayType !== eventModel.holidayType ) {
+                    filterParams.currentHolidayType = eventModel.holidayType;
                     isNewParams = true;
                 }
 
                 if ( isNewParams ) {
-                    Config.instance.map.updatePinsVisibility();
+                    config.map.updatePinsVisibility();
                 }
                 break;
             }
 
             case MediatorEvents.loadmorePinsDetails: {
 
-                let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-                let currentTabState = Config.instance.tabStates[currentTabName];
-                let pinType = this.getTargetPinType( Config.instance.currentTab.getPinStrategies(), currentTabName );
+                let currentTabName = config.tabSelect.getCurrentTabName();
+                let currentTabState = config.tabStates[currentTabName];
+                let pinType = this.getTargetPinType( config.currentTab.getPinStrategies(), currentTabName );
 
-                let getPinsByPageRequest = Config.instance.ajaxHandler.getPinsByPage( pinType, currentTabState.currentPage + 1 );
+                let getPinsByPageRequest = config.ajaxHandler.getPinsByPage( pinType, currentTabState.currentPage + 1 );
 
                 getPinsByPageRequest.then( ( response ) => {
 
@@ -274,7 +277,7 @@ export default class Mediator {
             if ( targetPin ) {
                 PinsHelper.mergePin( targetPin, pin );
             } else {
-                Config.instance.pinsArray.push( pin );
+                config.pinsArray.push( pin );
             }
         } );
     }
@@ -290,20 +293,20 @@ export default class Mediator {
             }
         } );
 
-        let content = Config.instance.currentTab.generateContent( pinsByPage );
+        let content = config.currentTab.generateContent( pinsByPage );
 
-        Config.instance.tabSelect.updateTabContent( content );
-        Config.instance.map.drawAllPins();
+        config.tabSelect.updateTabContent( content );
+        config.map.drawAllPins();
     }
 
     _updateTabState( response ) {
-        let currentTabName = Config.instance.tabSelect.getCurrentTabName();
-        let currentTabState = Config.instance.tabStates[currentTabName];
+        let currentTabName = config.tabSelect.getCurrentTabName();
+        let currentTabState = config.tabStates[currentTabName];
 
         currentTabState.currentPage = response.data.currentPage;
         currentTabState.totalPages = response.data.totalPages;
 
-        Config.instance.tabSelect.setLoadmoreVisibility( currentTabState.currentPage < currentTabState.totalPages );
+        config.tabSelect.setLoadmoreVisibility( currentTabState.currentPage < currentTabState.totalPages );
     }
 }
 

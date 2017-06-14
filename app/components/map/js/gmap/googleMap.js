@@ -36,6 +36,10 @@ export default class GoogleMap {
         pin.richMarker.setMap( null );
     }
 
+    setCenter( position ) {
+        this.map.setCenter( position );
+    }
+
 }
 
 

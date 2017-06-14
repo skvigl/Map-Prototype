@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../../config';
+import { config } from '../../config';
 import TabContent from '../tabContent';
 
 export default class AbstractTabStrategy {
@@ -30,7 +30,7 @@ export default class AbstractTabStrategy {
     generateDetailsCard( pin ) {
 
         if ( !pin.detailsView ) {
-            Config.instance.pinStrategies[ pin.type ].generateDetailsContent( pin );
+            config.pinStrategies[ pin.type ].generateDetailsContent( pin );
         }
 
         return new TabContent( null, null , pin.detailsView );
@@ -44,7 +44,7 @@ export default class AbstractTabStrategy {
         let cards = [];
 
         this._pinStrategies.forEach( strategy => {
-            let newContent = Config.instance.pinStrategies[ strategy ].generateMultipleContent( pins );
+            let newContent = config.pinStrategies[ strategy ].generateMultipleContent( pins );
 
             if ( newContent ) {
                 cards = cards.concat( newContent );

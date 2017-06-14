@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../../config';
+import { config } from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import PinNames from '../../enums/pinNames';
 import TabContent from '../tabContent';
@@ -14,7 +14,7 @@ export default class HotelTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent( pins ) {
-        switch ( Config.instance.currentLevel.levelId ) {
+        switch ( config.currentLevel.levelId ) {
             case 1:
             case 2:
             case 3:

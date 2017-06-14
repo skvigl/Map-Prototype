@@ -1,6 +1,6 @@
 'use strict';
 
-import Config from '../config';
+import { config } from '../config';
 
 export default class PinsHelper {
     constructor() {
@@ -13,7 +13,7 @@ export default class PinsHelper {
             return null;
         }
 
-        let pins = Config.instance.pinsArray;
+        let pins = config.pinsArray;
 
         for ( let i = 0, imax = pins.length; i < imax; i++ ) {
             if ( pins[i].id === id ) {

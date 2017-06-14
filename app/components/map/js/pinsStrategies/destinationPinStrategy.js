@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../config';
+import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
 import HolidayTypeNames from '../enums/holidayTypeNames';
@@ -37,7 +37,7 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
     }
 
     generateLocationInfo() {
-        let locationPin = Config.instance.currentLocation;
+        let locationPin = config.currentLocation;
 
         if ( locationPin.view ) {
             return locationPin.view;
@@ -80,13 +80,13 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.destinationPinClicked;
         mediatorEvent.targetPin = pin;
-        Config.instance.mediator.stateChanged( mediatorEvent );
+        config.mediator.stateChanged( mediatorEvent );
     }
 
     checkPinVisibility( pin ) {
         let pinVisiblity = true,
-            airportId = Config.instance.filterParams.airportId,
-            holidayType = Config.instance.filterParams.holidayType;
+            airportId = config.filters.currentAirportId,
+            holidayType = config.filters.currentHolidayType;
 
         if ( airportId !== undefined && airportId !== 'default' ) {
             if ( pinVisiblity && pin.allowedAirportIds && pin.allowedAirportIds.indexOf( airportId ) === -1 ) {

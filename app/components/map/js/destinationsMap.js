@@ -1,6 +1,6 @@
 'use strict';
 
-import Config from './config';
+import { config } from './config';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import MediatorEvents from './enums/mediatorEvents';
@@ -26,7 +26,7 @@ export default class Map {
         mediatorEvent.level = 0;
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.tabName = TabNames.overview;
-        Config.instance.mediator.stateChanged( mediatorEvent );
+        config.mediator.stateChanged( mediatorEvent );
 
         this._attachEvents();
     }
@@ -37,20 +37,20 @@ export default class Map {
     }
 
     drawAllPins() {
-        Config.instance.currentTab.getPinStrategies().forEach( strategy => {
+        config.currentTab.getPinStrategies().forEach( strategy => {
             this._drawPinsByStrategy( strategy );
         } );
-        Config.instance.map.updatePinsVisibility();
+        config.map.updatePinsVisibility();
     }
 
     removeAllPins() {
-        Config.instance.pinsArray.forEach( pin => {
-            Config.instance.googleMap.removeMarker( pin );
+        config.pinsArray.forEach( pin => {
+            config.googleMap.removeMarker( pin );
         });
     }
 
     hideAllPins() {
-        Config.instance.pinsArray.forEach( pin => {
+        config.pinsArray.forEach( pin => {
             if ( pin.marker ) {
                 pin.marker.classList.remove( 'is-visible' );
             }
@@ -58,7 +58,7 @@ export default class Map {
     }
 
     updatePinsVisibility() {
-        Config.instance.currentTab.getPinStrategies().forEach( strategy => {
+        config.currentTab.getPinStrategies().forEach( strategy => {
             this._updatePinsVisibilityByStrategy( strategy );
         } );
     }
@@ -73,16 +73,16 @@ export default class Map {
     }
 
     _drawPinsByStrategy( strategy ) {
-        let currentPinStrategy = Config.instance.pinStrategies[strategy],
+        let currentPinStrategy = config.pinStrategies[strategy],
         pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
-            Config.instance.googleMap.addMarker( pin );
+            config.googleMap.addMarker( pin );
         } );
     }
 
     _updatePinsVisibilityByStrategy( strategy ) {
-        let currentPinStrategy = Config.instance.pinStrategies[strategy],
+        let currentPinStrategy = config.pinStrategies[strategy],
             pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
@@ -133,6 +133,10 @@ export default class Map {
             'click',
             this.listeners.onBtnLevelBackClickHandler = event => this._onBtnLevelBackClickHandler( event, 'js-back-to-level' )
         );
+        this.viewNode.addEventListener(
+            'click',
+            this.listeners.onClickBtnViewOnMapHandler = event => this._onClickBtnViewOnMapHandler( event, 'js-view-on-map')
+        );
     }
 
     _detachEvents() {
@@ -140,8 +144,8 @@ export default class Map {
             'click',
             this.listeners.onPinClickHandler
         );
-        // Config.instance.map.removeEventListener('click', event => this._onPinClickHandler(event) );
-        // Config.instance.map.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
+        // config.map.removeEventListener('click', event => this._onPinClickHandler(event) );
+        // config.map.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
         this.listeners = null;
     }
 
@@ -152,7 +156,7 @@ export default class Map {
             return false;
         }
 
-        Config.instance.pinStrategies[pin.type].onPinClick( pin );
+        config.pinStrategies[pin.type].onPinClick( pin );
     }
 
     _onPinMouseoverHandler( event, cssClass ) {
@@ -162,7 +166,7 @@ export default class Map {
             return false;
         }
 
-        Config.instance.pinStrategies[pin.type].onPinMouseover( pin );
+        config.pinStrategies[pin.type].onPinMouseover( pin );
     }
 
     _onPinMouseoutHandler( event, cssClass ) {
@@ -172,7 +176,7 @@ export default class Map {
             return false;
         }
 
-        Config.instance.pinStrategies[pin.type].onPinMouseout( pin );
+        config.pinStrategies[pin.type].onPinMouseout( pin );
     }
 
     _onBtnLevelBackClickHandler( event, cssClass ) {
@@ -182,7 +186,7 @@ export default class Map {
             return false;
         }
 
-        let targetLocation = Config.instance.locationsHistory.pop();
+        let targetLocation = config.locationsHistory.pop();
 
         if ( !targetLocation ) {
             return false;
@@ -193,7 +197,30 @@ export default class Map {
         mediatorEvent.level = targetLocation.levelId;
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.targetPin = targetLocation;
-        Config.instance.mediator.stateChanged( mediatorEvent );
+        config.mediator.stateChanged( mediatorEvent );
+    }
+
+    _onClickBtnViewOnMapHandler( event, cssClass ){
+        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
+
+        if ( !target ) {
+            return false;
+        }
+
+        console.log('view on map handler');
+
+        let pin = this._getEventTargetPin( event, cssClass );
+
+        if ( !pin ) {
+            return false;
+        }
+
+        config.googleMap.setCenter({
+            lat: pin.lat,
+            lng: pin.lng
+        });
+        //TODO: remove active pin styles, stroe active pin
+        config.pinStrategies[pin.type].addActiveClass( pin );
     }
 
     _findNodeByCssClass( currentNode, rootClass, cssClass ) {

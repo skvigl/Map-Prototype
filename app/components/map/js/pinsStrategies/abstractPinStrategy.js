@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../config';
+import { config } from '../config';
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
@@ -13,7 +13,7 @@ export default class AbstractPinStrategy {
         let pins = [];
 
         if ( pinsArray === undefined ) {
-            pinsArray = Config.instance.pinsArray;
+            pinsArray = config.pinsArray;
         }
 
         pinsArray.forEach( ( pin ) => {
@@ -30,7 +30,7 @@ export default class AbstractPinStrategy {
             view = null;
 
         if ( pinsArray === undefined ) {
-            pinsArray = Config.instance.pinsArray;
+            pinsArray = config.pinsArray;
         }
 
         pinsArray.forEach( ( pin ) => {
@@ -55,7 +55,7 @@ export default class AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
-        let activePin = Config.instance.activePin;
+        let activePin = config.activePin;
 
         if ( activePin && activePin.marker ) {
             activePin.marker.classList.remove( 'is-active' );
@@ -69,7 +69,7 @@ export default class AbstractPinStrategy {
         mediatorEvent.eventType = MediatorEvents.pinClicked;
         mediatorEvent.targetPin = pin;
 
-        Config.instance.mediator.stateChanged( mediatorEvent );
+        config.mediator.stateChanged( mediatorEvent );
     }
 
     onPinMouseover( pin ) {

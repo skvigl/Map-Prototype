@@ -1,6 +1,6 @@
 "use strict";
 
-import Config from '../../config';
+import { config } from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import PinNames from '../../enums/pinNames';
 import HolidayTypeNames from '../../enums/holidayTypeNames';
@@ -13,8 +13,8 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     }
 
     updatePinStrategies() {
-        let currentLevel = Config.instance.currentLevel.levelId || 0,
-            currentHolidayType = Config.instance.currentHolidayType;
+        let currentLevel = config.currentLevel.levelId || 0,
+            currentHolidayType = config.currentHolidayType;
         let allowedPinStrategies = [
             PinNames.airport,
             PinNames.destination
@@ -28,7 +28,7 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent() {
-        switch ( Config.instance.currentLevel.levelId ) {
+        switch ( config.currentLevel.levelId ) {
             case 0:
             case 1:
             case 2:
