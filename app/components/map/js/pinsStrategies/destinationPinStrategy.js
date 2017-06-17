@@ -37,7 +37,7 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
     }
 
     generateLocationInfo() {
-        let locationPin = config.currentLocation;
+        let locationPin = config.pins.currentLocation;
 
         if ( locationPin.view ) {
             return locationPin.view;

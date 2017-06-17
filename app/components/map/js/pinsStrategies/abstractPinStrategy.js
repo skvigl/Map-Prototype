@@ -13,7 +13,7 @@ export default class AbstractPinStrategy {
         let pins = [];
 
         if ( pinsArray === undefined ) {
-            pinsArray = config.pinsArray;
+            pinsArray = config.pins.pinsArray;
         }
 
         pinsArray.forEach( ( pin ) => {
@@ -30,7 +30,7 @@ export default class AbstractPinStrategy {
             view = null;
 
         if ( pinsArray === undefined ) {
-            pinsArray = config.pinsArray;
+            pinsArray = config.pins.pinsArray;
         }
 
         pinsArray.forEach( ( pin ) => {
@@ -55,7 +55,7 @@ export default class AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
-        let activePin = config.activePin;
+        let activePin = config.pins.activePin;
 
         if ( activePin && activePin.marker ) {
             activePin.marker.classList.remove( 'is-active' );

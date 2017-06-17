@@ -12,16 +12,16 @@ export default class AjaxHandler {
 
     }
 
-    getPins( type, level ) {
+    getPins( type, levelId ) {
 
         //just for example purpose
-        let url = '/app/data/getPins' + type + level + '.json';
+        let url = '/app/data/getPins' + type + levelId + '.json';
 
         return axios( {
             url,
             data: {
                 type,
-                level
+                levelId
             }
         });
     }

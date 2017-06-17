@@ -13,7 +13,7 @@ export default class VillaTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent( pins ) {
-        switch ( config.currentLevel.levelId ) {
+        switch ( config.levels.currentLevel.id ) {
             case 0:
                 console.log( 'tab is hidden' );
                 break;

@@ -23,9 +23,9 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
 
     onPinClick( pin ) {
 
-        if ( config.currentLevel.levelId === 0 ) {
+        if ( config.levels.currentLevel.id === 0 ) {
 
-            let activePin = config.activePin;
+            let activePin = config.pins.activePin;
 
             if ( activePin && activePin.marker ) {
                 activePin.marker.classList.remove( 'is-active' );

@@ -1,6 +1,7 @@
 'use strict';
 
 import { config } from './config';
+import LevelNames from './enums/levelNames';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import MediatorEvents from './enums/mediatorEvents';
@@ -18,12 +19,12 @@ export default class Map {
 
         this.listeners = {};
         this.viewNode = document.querySelector( '.js-map' );
-        this.gmap = {};
+        //this.gmap = {};
         this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
-        mediatorEvent.level = 0;
+        mediatorEvent.levelName = LevelNames.world;
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.tabName = TabNames.overview;
         config.mediator.stateChanged( mediatorEvent );
@@ -37,20 +38,20 @@ export default class Map {
     }
 
     drawAllPins() {
-        config.currentTab.getPinStrategies().forEach( strategy => {
+        config.tabs.currentTab.getPinStrategies().forEach( strategy => {
             this._drawPinsByStrategy( strategy );
         } );
-        config.map.updatePinsVisibility();
+        config.maps.map.updatePinsVisibility();
     }
 
     removeAllPins() {
-        config.pinsArray.forEach( pin => {
-            config.googleMap.removeMarker( pin );
+        config.pins.pinsArray.forEach( pin => {
+            config.maps.googleMap.removeMarker( pin );
         });
     }
 
     hideAllPins() {
-        config.pinsArray.forEach( pin => {
+        config.pins.pinsArray.forEach( pin => {
             if ( pin.marker ) {
                 pin.marker.classList.remove( 'is-visible' );
             }
@@ -58,7 +59,7 @@ export default class Map {
     }
 
     updatePinsVisibility() {
-        config.currentTab.getPinStrategies().forEach( strategy => {
+        config.tabs.currentTab.getPinStrategies().forEach( strategy => {
             this._updatePinsVisibilityByStrategy( strategy );
         } );
     }
@@ -73,16 +74,16 @@ export default class Map {
     }
 
     _drawPinsByStrategy( strategy ) {
-        let currentPinStrategy = config.pinStrategies[strategy],
+        let currentPinStrategy = config.pins.pinStrategies[strategy],
         pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
-            config.googleMap.addMarker( pin );
+            config.maps.googleMap.addMarker( pin );
         } );
     }
 
     _updatePinsVisibilityByStrategy( strategy ) {
-        let currentPinStrategy = config.pinStrategies[strategy],
+        let currentPinStrategy = config.pins.pinStrategies[strategy],
             pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
@@ -156,7 +157,7 @@ export default class Map {
             return false;
         }
 
-        config.pinStrategies[pin.type].onPinClick( pin );
+        config.pins.pinStrategies[pin.type].onPinClick( pin );
     }
 
     _onPinMouseoverHandler( event, cssClass ) {
@@ -166,7 +167,7 @@ export default class Map {
             return false;
         }
 
-        config.pinStrategies[pin.type].onPinMouseover( pin );
+        config.pins.pinStrategies[pin.type].onPinMouseover( pin );
     }
 
     _onPinMouseoutHandler( event, cssClass ) {
@@ -176,7 +177,7 @@ export default class Map {
             return false;
         }
 
-        config.pinStrategies[pin.type].onPinMouseout( pin );
+        config.pins.pinStrategies[pin.type].onPinMouseout( pin );
     }
 
     _onBtnLevelBackClickHandler( event, cssClass ) {
@@ -186,7 +187,7 @@ export default class Map {
             return false;
         }
 
-        let targetLocation = config.locationsHistory.pop();
+        let targetLocation = config.levels.locationsHistory.pop();
 
         if ( !targetLocation ) {
             return false;
@@ -194,7 +195,7 @@ export default class Map {
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
-        mediatorEvent.level = targetLocation.levelId;
+        mediatorEvent.levelName = config.levels.order[ targetLocation.id ];
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.targetPin = targetLocation;
         config.mediator.stateChanged( mediatorEvent );
@@ -215,12 +216,12 @@ export default class Map {
             return false;
         }
 
-        config.googleMap.setCenter({
+        config.maps.googleMap.setCenter({
             lat: pin.lat,
             lng: pin.lng
         });
         //TODO: remove active pin styles, stroe active pin
-        config.pinStrategies[pin.type].addActiveClass( pin );
+        config.pins.pinStrategies[pin.type].addActiveClass( pin );
     }
 
     _findNodeByCssClass( currentNode, rootClass, cssClass ) {

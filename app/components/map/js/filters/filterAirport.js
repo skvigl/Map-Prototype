@@ -1,6 +1,7 @@
 'use strict';
 
 import { config } from '../config';
+import LevelNames from '../enums/levelNames';
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
@@ -40,8 +41,8 @@ export default class FilterAirport {
         config.mediator.stateChanged( mediatorEvent );
     }
 
-    updateVisibility( level ) {
-        if ( level > 0 ) {
+    updateVisibility( levelName ) {
+        if ( levelName !== LevelNames.world ) {
             this._elem.classList.remove('is-visible');
         } else {
             this._elem.classList.add('is-visible');

@@ -1,6 +1,7 @@
 'use strict';
 
 import { config } from '../config';
+import LevelNames from '../enums/levelNames';
 import MobileZeroLevelStrategy from './mobileZeroLevelStrategy';
 import MobileNestedLevelStrategy from './mobileNestedLevelStrategy';
 import ZeroLevelStrategy from './ZeroLevelStrategy';
@@ -10,24 +11,24 @@ export default class LevelsFactory {
     constructor() {
     }
 
-    static getLevelStrategies( levelId ) {
+    static getLevelStrategies( levelName ) {
 
-        if ( config.isMobile ) {
-            switch ( levelId ) {
-                case 0:
+        if ( config.maps.isMobile ) {
+            switch ( levelName ) {
+                case LevelNames.world:
                     return new MobileZeroLevelStrategy();
-                case 1:
-                case 2:
-                case 3:
+                case LevelNames.country:
+                case LevelNames.district:
+                case LevelNames.resort:
                     return new MobileNestedLevelStrategy();
             }
         } else {
-            switch ( levelId ) {
-                case 0:
+            switch ( levelName ) {
+                case LevelNames.world:
                     return new ZeroLevelStrategy();
-                case 1:
-                case 2:
-                case 3:
+                case LevelNames.country:
+                case LevelNames.district:
+                case LevelNames.resort:
                     return new NestedLevelStrategy();
             }
         }

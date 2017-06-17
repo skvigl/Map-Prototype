@@ -16,7 +16,7 @@ export default class TabsFactory {
 
         switch ( name ) {
             case TabNames.overview:
-                if ( config.isMobile ) {
+                if ( config.maps.isMobile ) {
                     return new MobileOverviewTabStrategy(
                         TabNames.overview
                     );

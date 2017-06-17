@@ -14,7 +14,7 @@ export default class HotelTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent( pins ) {
-        switch ( config.currentLevel.levelId ) {
+        switch ( config.levels.currentLevel.id ) {
             case 1:
             case 2:
             case 3:

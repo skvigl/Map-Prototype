@@ -13,7 +13,7 @@ export default class PinsHelper {
             return null;
         }
 
-        let pins = config.pinsArray;
+        let pins = config.pins.pinsArray;
 
         for ( let i = 0, imax = pins.length; i < imax; i++ ) {
             if ( pins[i].id === id ) {

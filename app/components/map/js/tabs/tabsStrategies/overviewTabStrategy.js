@@ -13,11 +13,11 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
     updatePinStrategies() {
         let allowedPinStratagies = null,
-            currentLevel = config.currentLevel,
+            currentLevel = config.levels.currentLevel,
             levelId = 0;
 
-        if ( currentLevel && currentLevel.levelId ) {
-            levelId = currentLevel.levelId;
+        if ( currentLevel && currentLevel.id ) {
+            levelId = currentLevel.id;
         }
 
         switch ( levelId ) {
@@ -54,7 +54,7 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
     generateContent() {
 
-        switch ( config.currentLevel.levelId ) {
+        switch ( config.levels.currentLevel.id ) {
             case 0:
                 return new TabContent( null, this._generateCards() );
             case 1:
@@ -75,6 +75,6 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
     }
 
     _generateLocationInfo () {
-        return config.pinStrategies[PinNames.destination].generateLocationInfo();
+        return config.pins.pinStrategies[PinNames.destination].generateLocationInfo();
     }
 }

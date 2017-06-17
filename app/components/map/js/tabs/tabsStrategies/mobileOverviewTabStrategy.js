@@ -13,7 +13,7 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     }
 
     updatePinStrategies() {
-        let currentLevel = config.currentLevel.levelId || 0,
+        let currentLevel = config.levels.currentLevel.id || 0,
             currentHolidayType = config.currentHolidayType;
         let allowedPinStrategies = [
             PinNames.airport,
@@ -28,7 +28,7 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent() {
-        switch ( config.currentLevel.levelId ) {
+        switch ( config.levels.currentLevel.id ) {
             case 0:
             case 1:
             case 2:

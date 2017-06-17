@@ -1,6 +1,7 @@
 'use strict';
 
-//import _ from 'lodash';
+
+import LevelNames from './enums/levelNames';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import HolidayTypeNames from './enums/holidayTypeNames';
@@ -20,16 +21,33 @@ export class Config {
     constructor() {
         this._config = {
             maps: {
-
+                googleMap: null,
+                map: null,
+                isMobile: false,
             },
             levels: {
-
+                currentLevel: null,
+                locationsHistory: [],
+                strategies: null,
+                order: [
+                    LevelNames.world,
+                    LevelNames.country,
+                    LevelNames.district,
+                    LevelNames.resort
+                ]
             },
             tabs: {
-
+                currentTab: null,
+                tabSelect: null,
+                tabStrategies: null,
+                tabStates: null
             },
             pins: {
-
+                activePin: null,
+                currentLocation: {},  //TODO Refactor first level logic
+                pinsArray: [],
+                pinStrategies: null,
+                ajaxHandler: null,
             },
             filters: {
                 filterAirport: null,
@@ -37,46 +55,7 @@ export class Config {
                 currentAirportId: 'default',
                 currentHolidayType: HolidayTypeNames.beach
             },
-            map: null,
-            currentLevel: {},
-            currentTab: {},
-            currentLocation: {},
-            locationsHistory: [],
-            activePin: null,
-            isMobile: false,
-            pinsArray: [],
-            levelCollections: [
-                // 0: {
-                //     id: 0
-                // },
-                // 1: {
-                //     id: 1
-                // },
-                // 2: {
-                //     id: 2
-                // },
-                // 3: {
-                //     id: 3
-                // }
-                {
-                    levelId: 0
-                },
-                {
-                    levelId: 1
-                },
-                {
-                    levelId: 2
-                },
-                {
-                    levelId: 3
-                }
-            ],
-            tabSelect: {},
-            mediator: {},
-            pinStrategies: {},
-            tabStrategies: {},
-            tabStates: {},
-
+            mediator: null
         };
     }
 
@@ -89,11 +68,11 @@ export class Config {
 
     static init() {
         config.mediator = new Mediator();
-        config.tabSelect = new TabSelect();
+        config.tabs.tabSelect = new TabSelect();
         config.filters.filterAirport = new FilterAirport();
         config.filters.filterHolidayType = new FilterHolidayType();
-        config.ajaxHandler = new AjaxHandler();
-        config.googleMap = new GoogleMap();
+        config.pins.ajaxHandler = new AjaxHandler();
+        config.maps.googleMap = new GoogleMap();
 
         //console.log(TabNames);
         // _.forEach(config.levelCollections, function( value, key ) {
@@ -111,19 +90,41 @@ export class Config {
         //
         // return;
 
-        config.levelCollections.forEach( ( level ) => {
-            level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
-            level.tabs = level.strategy.getTabs();
-        } );
+        config.levels.strategies = {
+            [ LevelNames.world ]: {
+                id: 0
+            },
+            [ LevelNames.country ]: {
+                id: 1
+            },
+            [ LevelNames.district ]: {
+                id: 2
+            },
+            [ LevelNames.resort ]: {
+                id: 3
+            }
+        };
 
-        config.tabStrategies = {
+        for(let levelName in config.levels.strategies) {
+            let level = config.levels.strategies[levelName];
+
+            level.strategy = LevelsFactory.getLevelStrategies( levelName );
+            level.tabs = level.strategy.getTabs();
+        }
+
+        // config.levels.strategies.forEach( ( level ) => {
+        //     level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
+        //     level.tabs = level.strategy.getTabs();
+        // } );
+
+        config.tabs.tabStrategies = {
             [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
             [ TabNames.pois ]: TabsFactory.getTabStrategy( TabNames.pois ),
             [ TabNames.hotels ]: TabsFactory.getTabStrategy( TabNames.hotels ),
             [ TabNames.villas ]: TabsFactory.getTabStrategy( TabNames.villas )
         };
 
-        config.pinStrategies = {
+        config.pins.pinStrategies = {
             [ PinNames.airport ]: PinsFactory.getPinStrategy( PinNames.airport ),
             [ PinNames.destination ]: PinsFactory.getPinStrategy( PinNames.destination ),
             [ PinNames.childDestination ]: PinsFactory.getPinStrategy( PinNames.childDestination ),
@@ -131,15 +132,14 @@ export class Config {
             [ PinNames.hotel ]: PinsFactory.getPinStrategy( PinNames.hotel )
         };
 
-        config.tabSelect.setMediator( config.mediator );
+        config.tabs.tabSelect.setMediator( config.mediator );
         config.filters.filterAirport.setMediator( config.mediator );
         config.filters.filterHolidayType.setMediator( config.mediator );
 
         config.filters.currentAirportId = config.filters.filterAirport.getValue();
         config.filters.currentHolidayType = config.filters.filterHolidayType.getValue();
 
-        config.map = new DestinationsMap();
-        console.log( config );
+        config.maps.map = new DestinationsMap();
     }
 
     static clearFilters() {
