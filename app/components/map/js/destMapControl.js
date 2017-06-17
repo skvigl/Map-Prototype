@@ -219,12 +219,19 @@ export default class DestMapControl {
             lng: pin.lng
         });
         //TODO: remove active pin styles, stroe active pin
+        let activePin = config.pins.activePin;
+
+        if ( activePin ) {
+            config.pins.strategies[activePin.type].removeActiveClass(activePin);
+        }
+
+        config.pins.activePin = pin;
         config.pins.strategies[pin.type].addActiveClass( pin );
     }
 
     _findNodeByCssClass( currentNode, rootClass, cssClass ) {
 
-        while ( !currentNode.classList.contains( rootClass ) ) {
+        while ( currentNode && !currentNode.classList.contains( rootClass ) ) {
             if ( currentNode.classList.contains( cssClass ) ) {
                 return currentNode;
             }

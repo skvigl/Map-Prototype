@@ -15,6 +15,7 @@ export default class GoogleMap {
             disableDefaultUI: true,
             zoomControl: true
         });
+
     }
 
     setOptions( options ) {
@@ -38,7 +39,6 @@ export default class GoogleMap {
     setCenter( position ) {
         this.map.setCenter( position );
     }
-
 }
 
 
