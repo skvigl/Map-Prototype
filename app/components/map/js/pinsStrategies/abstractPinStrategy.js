@@ -80,6 +80,7 @@ export default class AbstractPinStrategy {
 
         if ( pin.marker ) {
             pin.marker.classList.add( 'is-hover' );
+            pin.richMarker.setPosition( new google.maps.LatLng(pin.lat || 0, pin.lng || 0) );
         }
 
         if ( pin.view ) {
@@ -95,6 +96,7 @@ export default class AbstractPinStrategy {
 
         if ( pin.marker ) {
             pin.marker.classList.remove( 'is-hover' );
+            pin.richMarker.setPosition( new google.maps.LatLng(pin.lat || 0, pin.lng || 0) );
         }
 
         if ( pin.view ) {
@@ -109,12 +111,14 @@ export default class AbstractPinStrategy {
     addActiveClass( pin ) {
         if ( pin && pin.marker ) {
             pin.marker.classList.add( 'is-active' );
+            pin.richMarker.setPosition( new google.maps.LatLng(pin.lat || 0, pin.lng || 0) );
         }
     }
 
     removeActiveClass( pin ) {
         if ( pin && pin.marker ) {
             pin.marker.classList.remove( 'is-active' );
+            pin.richMarker.setPosition( new google.maps.LatLng(pin.lat || 0, pin.lng || 0) );
         }
     }
 
