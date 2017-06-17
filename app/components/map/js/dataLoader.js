@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 
-export default class AjaxHandler {
+export default class DataLoader {
     constructor() {
 
     }

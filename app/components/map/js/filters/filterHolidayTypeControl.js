@@ -5,9 +5,9 @@ import LevelNames from '../enums/levelNames';
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
-export default class FilterAirport {
-    constructor() {
-        this._elem = document.querySelector( '.js-filter-airport' );
+export default class FilterHolidayTypeControl {
+    constructor(){
+        this._elem = document.querySelector( '.js-filter-holiday-type' );
         this._mediator = null;
 
         this.attachEvents();
@@ -16,28 +16,22 @@ export default class FilterAirport {
     attachEvents() {
         this._elem.addEventListener(
             'change',
-            event => this._onChangeHandler( event )
+            event => this._onChangeHandler(event)
         );
-    }
-
-    getValue() {
-        return this._elem.value;
-    }
-
-    setValue( value ) {
-        if ( this._elem.value !== value ) {
-            this._elem.value = value;
-        }
     }
 
     setMediator( mediator ) {
         this._mediator = mediator;
     }
 
+    getValue() {
+        return this._elem.value;
+    }
+
     _onChangeHandler( event ) {
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.filterPins;
-        mediatorEvent.airportId = event.target.value;
+        mediatorEvent.holidayType = event.target.value;
         config.mediator.stateChanged( mediatorEvent );
     }
 

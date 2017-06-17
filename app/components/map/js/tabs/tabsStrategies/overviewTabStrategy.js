@@ -75,6 +75,6 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
     }
 
     _generateLocationInfo () {
-        return config.pins.pinStrategies[PinNames.destination].generateLocationInfo();
+        return config.pins.strategies[PinNames.destination].generateLocationInfo();
     }
 }

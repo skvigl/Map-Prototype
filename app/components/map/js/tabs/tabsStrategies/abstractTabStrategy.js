@@ -30,7 +30,7 @@ export default class AbstractTabStrategy {
     generateDetailsCard( pin ) {
 
         if ( !pin.detailsView ) {
-            config.pins.pinStrategies[ pin.type ].generateDetailsContent( pin );
+            config.pins.strategies[ pin.type ].generateDetailsContent( pin );
         }
 
         return new TabContent( null, null , pin.detailsView );
@@ -44,7 +44,7 @@ export default class AbstractTabStrategy {
         let cards = [];
 
         this._pinStrategies.forEach( strategy => {
-            let newContent = config.pins.pinStrategies[ strategy ].generateMultipleContent( pins );
+            let newContent = config.pins.strategies[ strategy ].generateMultipleContent( pins );
 
             if ( newContent ) {
                 cards = cards.concat( newContent );

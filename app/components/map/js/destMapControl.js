@@ -8,28 +8,26 @@ import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
 import PinsHelper from 'helpers/pinsHelper';
 
-export default class Map {
+export default class DestMapControl {
     constructor() {
         this.init();
     }
 
     init() {
-        //TODO: Refactor config object structure
-        //Config.init( this );
-
         this.listeners = {};
         this.viewNode = document.querySelector( '.js-map' );
-        //this.gmap = {};
         this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
 
+        this._attachEvents();
+    }
+
+    initLevel() {
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
         mediatorEvent.levelName = LevelNames.world;
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.tabName = TabNames.overview;
         config.mediator.stateChanged( mediatorEvent );
-
-        this._attachEvents();
     }
 
     destroy() {
@@ -41,17 +39,17 @@ export default class Map {
         config.tabs.currentTab.getPinStrategies().forEach( strategy => {
             this._drawPinsByStrategy( strategy );
         } );
-        config.maps.map.updatePinsVisibility();
+        config.maps.destMapControl.updatePinsVisibility();
     }
 
     removeAllPins() {
-        config.pins.pinsArray.forEach( pin => {
-            config.maps.googleMap.removeMarker( pin );
+        config.pins.data.forEach( pin => {
+            config.maps.googleMapControl.removeMarker( pin );
         });
     }
 
     hideAllPins() {
-        config.pins.pinsArray.forEach( pin => {
+        config.pins.data.forEach( pin => {
             if ( pin.marker ) {
                 pin.marker.classList.remove( 'is-visible' );
             }
@@ -74,16 +72,16 @@ export default class Map {
     }
 
     _drawPinsByStrategy( strategy ) {
-        let currentPinStrategy = config.pins.pinStrategies[strategy],
+        let currentPinStrategy = config.pins.strategies[strategy],
         pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
-            config.maps.googleMap.addMarker( pin );
+            config.maps.googleMapControl.addMarker( pin );
         } );
     }
 
     _updatePinsVisibilityByStrategy( strategy ) {
-        let currentPinStrategy = config.pins.pinStrategies[strategy],
+        let currentPinStrategy = config.pins.strategies[strategy],
             pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
@@ -157,7 +155,7 @@ export default class Map {
             return false;
         }
 
-        config.pins.pinStrategies[pin.type].onPinClick( pin );
+        config.pins.strategies[pin.type].onPinClick( pin );
     }
 
     _onPinMouseoverHandler( event, cssClass ) {
@@ -167,7 +165,7 @@ export default class Map {
             return false;
         }
 
-        config.pins.pinStrategies[pin.type].onPinMouseover( pin );
+        config.pins.strategies[pin.type].onPinMouseover( pin );
     }
 
     _onPinMouseoutHandler( event, cssClass ) {
@@ -177,7 +175,7 @@ export default class Map {
             return false;
         }
 
-        config.pins.pinStrategies[pin.type].onPinMouseout( pin );
+        config.pins.strategies[pin.type].onPinMouseout( pin );
     }
 
     _onBtnLevelBackClickHandler( event, cssClass ) {
@@ -216,12 +214,12 @@ export default class Map {
             return false;
         }
 
-        config.maps.googleMap.setCenter({
+        config.maps.googleMapControl.setCenter({
             lat: pin.lat,
             lng: pin.lng
         });
         //TODO: remove active pin styles, stroe active pin
-        config.pins.pinStrategies[pin.type].addActiveClass( pin );
+        config.pins.strategies[pin.type].addActiveClass( pin );
     }
 
     _findNodeByCssClass( currentNode, rootClass, cssClass ) {

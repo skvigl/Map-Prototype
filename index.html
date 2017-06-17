@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
 </head>
 <body>
-<h1>Map prototype</h1>
 
 <div class="map js-map">
     <div class="map__gmap gmap js-gmap"></div>
@@ -20,16 +19,16 @@
                 <li class="tabs__li js-tab-nav" data-name="hotels">Hotels</li>
             </ul>
             <div class="tabs__content js-tab" data-name="overview">
-                <div data-container="content"></div>
+                <div class="tabs__cards" data-container="content"></div>
             </div>
             <div class="tabs__content js-tab" data-name="pois">
-                <div data-container="content"></div>
+                <div class="tabs__cards" data-container="content"></div>
                 <div class="tabs__loadmore" data-container="loadmore">
                     <button class="btn btn--base btn--wide js-loadmore" type="button">more POI</button>
                 </div>
             </div>
             <div class="tabs__content js-tab" data-name="hotels">
-                <div data-container="content"></div>
+                <div class="tabs__cards" data-container="content"></div>
                 <div class="tabs__loadmore" data-container="loadmore">
                     <button class="btn btn--base btn--wide js-loadmore" type="button">More hotels</button>
                 </div>
@@ -40,7 +39,10 @@
             </div>
         </div>
     </div>
-    <button class="map__back-to-level btn btn--base js-back-to-level is-hidden" type="button">Back to level</button>
+    <button class="map__back-to-level btn btn--base js-back-to-level is-hidden" type="button">
+        <i class="fa fa-reply" aria-hidden="true"></i>
+        <span>Back to level</span>
+    </button>
     <div class="map__controls">
         <select class="filter-select js-filter-airport">
             <option value="default" selected>Choose an Airport</option>

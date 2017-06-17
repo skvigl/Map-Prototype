@@ -3,7 +3,6 @@
 export default class GoogleMap {
     constructor(){
         this.map = null;
-        this.init();
     }
 
     init() {

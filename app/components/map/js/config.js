@@ -8,21 +8,21 @@ import HolidayTypeNames from './enums/holidayTypeNames';
 import LevelsFactory from './levelsStrategies/levelsFactory';
 import TabsFactory from './tabs/tabsStrategies/tabsFactory';
 import PinsFactory from './pinsStrategies/pinsFactory';
-import DestinationsMap from './destinationsMap';
+import DestMapControl from './destMapControl';
 import Mediator from './mediator';
-import TabSelect from './tabs/tabSelect';
-import FilterAirport from './filters/filterAirport';
-import FilterHolidayType from './filters/filterHolidayType';
-import AjaxHandler from './ajaxHandler';
-import GoogleMap from './gmap/googleMap';
+import TabsControl from './tabs/tabsControl';
+import FilterAirportControl from './filters/filterAirportControl';
+import FilterHolidayTypeControl from './filters/filterHolidayTypeControl';
+import DataLoader from './dataLoader';
+import GoogleMapControl from './gmap/googleMapControl';
 
 export class Config {
 
     constructor() {
         this._config = {
             maps: {
-                googleMap: null,
-                map: null,
+                destMapControl: null,
+                googleMapControl: null,
                 isMobile: false,
             },
             levels: {
@@ -37,25 +37,25 @@ export class Config {
                 ]
             },
             tabs: {
+                tabsControl: null,
                 currentTab: null,
-                tabSelect: null,
-                tabStrategies: null,
+                strategies: null,
                 tabStates: null
             },
             pins: {
                 activePin: null,
                 currentLocation: {},  //TODO Refactor first level logic
-                pinsArray: [],
-                pinStrategies: null,
-                ajaxHandler: null,
+                data: [],
+                strategies: null
             },
             filters: {
-                filterAirport: null,
-                filterHolidayType: null,
+                filterAirportControl: null,
+                filterHolidayTypeControl: null,
                 currentAirportId: 'default',
                 currentHolidayType: HolidayTypeNames.beach
             },
-            mediator: null
+            mediator: null,
+            dataLoader: null
         };
     }
 
@@ -68,11 +68,13 @@ export class Config {
 
     static init() {
         config.mediator = new Mediator();
-        config.tabs.tabSelect = new TabSelect();
-        config.filters.filterAirport = new FilterAirport();
-        config.filters.filterHolidayType = new FilterHolidayType();
-        config.pins.ajaxHandler = new AjaxHandler();
-        config.maps.googleMap = new GoogleMap();
+        config.dataLoader = new DataLoader();
+        config.tabs.tabsControl = new TabsControl();
+        config.filters.filterAirportControl = new FilterAirportControl();
+        config.filters.filterHolidayTypeControl = new FilterHolidayTypeControl();
+        config.maps.destMapControl = new DestMapControl();
+        config.maps.googleMapControl = new GoogleMapControl();
+
 
         //console.log(TabNames);
         // _.forEach(config.levelCollections, function( value, key ) {
@@ -117,14 +119,14 @@ export class Config {
         //     level.tabs = level.strategy.getTabs();
         // } );
 
-        config.tabs.tabStrategies = {
+        config.tabs.strategies = {
             [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
             [ TabNames.pois ]: TabsFactory.getTabStrategy( TabNames.pois ),
             [ TabNames.hotels ]: TabsFactory.getTabStrategy( TabNames.hotels ),
             [ TabNames.villas ]: TabsFactory.getTabStrategy( TabNames.villas )
         };
 
-        config.pins.pinStrategies = {
+        config.pins.strategies = {
             [ PinNames.airport ]: PinsFactory.getPinStrategy( PinNames.airport ),
             [ PinNames.destination ]: PinsFactory.getPinStrategy( PinNames.destination ),
             [ PinNames.childDestination ]: PinsFactory.getPinStrategy( PinNames.childDestination ),
@@ -132,24 +134,26 @@ export class Config {
             [ PinNames.hotel ]: PinsFactory.getPinStrategy( PinNames.hotel )
         };
 
-        config.tabs.tabSelect.setMediator( config.mediator );
-        config.filters.filterAirport.setMediator( config.mediator );
-        config.filters.filterHolidayType.setMediator( config.mediator );
+        config.tabs.tabsControl.setMediator( config.mediator );
+        config.filters.filterAirportControl.setMediator( config.mediator );
+        config.filters.filterHolidayTypeControl.setMediator( config.mediator );
 
-        config.filters.currentAirportId = config.filters.filterAirport.getValue();
-        config.filters.currentHolidayType = config.filters.filterHolidayType.getValue();
+        config.filters.currentAirportId = config.filters.filterAirportControl.getValue();
+        config.filters.currentHolidayType = config.filters.filterHolidayTypeControl.getValue();
 
-        config.maps.map = new DestinationsMap();
+
     }
 
     static clearFilters() {
         config.filters.currentAirportId = 'default';
-        config.filters.filterAirport.setValue('default');
+        config.filters.filterAirportControl.setValue('default');
     }
 }
 
 export let config = Config.instance;
+Config.init();
 
 window.initMap = function initMap() {
-    Config.init();
+    Config.instance.maps.googleMapControl.init();
+    Config.instance.maps.destMapControl.initLevel();
 };

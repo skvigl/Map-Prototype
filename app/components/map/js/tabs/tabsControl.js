@@ -3,7 +3,7 @@
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
-export default class TabSelect {
+export default class TabsControl {
     constructor() {
         this._elem = document.querySelector( '.js-tabs' );
         this._tabs = {};
@@ -16,7 +16,7 @@ export default class TabSelect {
 
     init() {
         let tabNodes = document.querySelectorAll( '.js-tabs-nav > .js-tab-nav' );
-
+        tabNodes = Array.prototype.slice.call(tabNodes);
         tabNodes.forEach( ( tabNavNode ) => {
             let tabName = tabNavNode.getAttribute( 'data-name' );
             let tabNode = this._elem.querySelector( '.js-tab[data-name=' + tabName + ']' );

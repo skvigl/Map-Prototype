@@ -1,7 +1,7 @@
 .map {
     position: relative;
     display: flex;
-    height: 70vh;
+    height: calc(100vh - 40px);
 
     &__gmap {
         width: 100%;
@@ -11,6 +11,7 @@
 
     &__aside {
         width: 300px;
+        flex-shrink: 0;
     }
 
     &__back-to-level,

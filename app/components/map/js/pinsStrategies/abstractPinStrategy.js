@@ -13,7 +13,7 @@ export default class AbstractPinStrategy {
         let pins = [];
 
         if ( pinsArray === undefined ) {
-            pinsArray = config.pins.pinsArray;
+            pinsArray = config.pins.data;
         }
 
         pinsArray.forEach( ( pin ) => {
@@ -30,7 +30,7 @@ export default class AbstractPinStrategy {
             view = null;
 
         if ( pinsArray === undefined ) {
-            pinsArray = config.pins.pinsArray;
+            pinsArray = config.pins.data;
         }
 
         pinsArray.forEach( ( pin ) => {
