@@ -1,6 +1,5 @@
 'use strict';
 
-
 import LevelNames from './enums/levelNames';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
@@ -8,12 +7,12 @@ import HolidayTypeNames from './enums/holidayTypeNames';
 import LevelsFactory from './levelsStrategies/levelsFactory';
 import TabsFactory from './tabs/tabsStrategies/tabsFactory';
 import PinsFactory from './pinsStrategies/pinsFactory';
-import DestMapControl from './destMapControl';
 import Mediator from './mediator';
+import DataLoader from './dataLoader';
 import TabsControl from './tabs/tabsControl';
 import FilterAirportControl from './filters/filterAirportControl';
 import FilterHolidayTypeControl from './filters/filterHolidayTypeControl';
-import DataLoader from './dataLoader';
+import DestMapControl from './destMapControl';
 import GoogleMapControl from './gmap/googleMapControl';
 
 export class Config {
@@ -75,23 +74,6 @@ export class Config {
         config.maps.destMapControl = new DestMapControl();
         config.maps.googleMapControl = new GoogleMapControl();
 
-
-        //console.log(TabNames);
-        // _.forEach(config.levelCollections, function( value, key ) {
-        //     value.strategy = LevelsFactory.getLevelStrategies( key );
-        //     value.tabs = value.strategy.getTabs();
-        // });
-        //
-        // for( let level in config.levelCollections ) {
-        //     config.levelCollections[level].strategy = LevelsFactory.getLevelStrategies( level );
-        //     console.log(config.levelCollections[level]);
-        //     config.levelCollections[level].tabs = config.levelCollections[level].strategy.getTabs();
-        // }
-        //
-        // console.log( config.levelCollections );
-        //
-        // return;
-
         config.levels.strategies = {
             [ LevelNames.world ]: {
                 id: 0
@@ -110,14 +92,9 @@ export class Config {
         for(let levelName in config.levels.strategies) {
             let level = config.levels.strategies[levelName];
 
-            level.strategy = LevelsFactory.getLevelStrategies( levelName );
+            level.strategy = LevelsFactory.getLevelStrategy( levelName );
             level.tabs = level.strategy.getTabs();
         }
-
-        // config.levels.strategies.forEach( ( level ) => {
-        //     level.strategy = LevelsFactory.getLevelStrategies( level.levelId );
-        //     level.tabs = level.strategy.getTabs();
-        // } );
 
         config.tabs.strategies = {
             [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
@@ -140,8 +117,6 @@ export class Config {
 
         config.filters.currentAirportId = config.filters.filterAirportControl.getValue();
         config.filters.currentHolidayType = config.filters.filterHolidayTypeControl.getValue();
-
-
     }
 
     static clearFilters() {

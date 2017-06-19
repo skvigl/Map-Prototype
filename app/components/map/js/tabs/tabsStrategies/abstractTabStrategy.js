@@ -13,47 +13,38 @@ export default class AbstractTabStrategy {
         return this._pinStrategies;
     }
 
-    getName() {
-        return this._name;
+    updatePinStrategies() {
     }
 
-    updatePinStrategies() {}
-
-    hasLoadMore(){
-        return true;
-    }
-
-    hasDetails(){
+    hasDetails() {
         return true;
     }
 
     generateDetailsCard( pin ) {
 
         if ( !pin.detailsView ) {
-            config.pins.strategies[ pin.type ].generateDetailsContent( pin );
+            config.pins.strategies[pin.type].generateDetailsContent( pin );
         }
 
-        return new TabContent( null, null , pin.detailsView );
+        return new TabContent( null, null, pin.detailsView );
     }
 
     getDetailsCard( pin ) {
-        return new TabContent( null, null , pin.detailsView );
+        return new TabContent( null, null, pin.detailsView );
     }
 
     _generateCards( pins ) {
         let cards = [];
 
         this._pinStrategies.forEach( strategy => {
-            let newContent = config.pins.strategies[ strategy ].generateMultipleContent( pins );
+            let newContent = config.pins.strategies[strategy].generateMultipleContent( pins );
 
             if ( newContent ) {
                 cards = cards.concat( newContent );
             }
 
-        });
+        } );
 
         return cards;
     }
-
-
 }

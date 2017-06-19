@@ -11,7 +11,7 @@ export default class LevelsFactory {
     constructor() {
     }
 
-    static getLevelStrategies( levelName ) {
+    static getLevelStrategy( levelName ) {
 
         if ( config.maps.isMobile ) {
             switch ( levelName ) {

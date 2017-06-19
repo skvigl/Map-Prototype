@@ -14,13 +14,9 @@ export default class VillaTabStrategy extends AbstractTabStrategy {
 
     generateContent( pins ) {
         switch ( config.levels.currentLevel.id ) {
-            case 0:
-                console.log( 'tab is hidden' );
-                break;
             case 1:
             case 2:
             case 3:
-                console.log( 'draw all hotel' );
                 return new TabContent( null , this._generateCards( pins ) );
                 break;
         }

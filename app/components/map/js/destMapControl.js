@@ -218,7 +218,7 @@ export default class DestMapControl {
             lat: pin.lat,
             lng: pin.lng
         });
-        //TODO: remove active pin styles, stroe active pin
+
         let activePin = config.pins.activePin;
 
         if ( activePin ) {

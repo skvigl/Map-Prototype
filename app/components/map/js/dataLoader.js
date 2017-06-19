@@ -2,14 +2,12 @@
 
 import axios from 'axios';
 
-
 export default class DataLoader {
     constructor() {
-
     }
 
     getConfig() {
-
+        //if we need to download special state from server
     }
 
     getPins( type, levelId ) {

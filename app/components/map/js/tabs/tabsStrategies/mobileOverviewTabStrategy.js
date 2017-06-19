@@ -14,8 +14,8 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
 
     updatePinStrategies() {
         let currentLevel = config.levels.currentLevel.id || 0,
-            currentHolidayType = config.currentHolidayType;
-        let allowedPinStrategies = [
+            currentHolidayType = config.currentHolidayType,
+            allowedPinStrategies = [
             PinNames.airport,
             PinNames.destination
         ];
@@ -33,14 +33,8 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
             case 1:
             case 2:
             case 3:
-                console.log( 'draw location info' );
                 return new TabContent( this._generateLocationInfo(), null );
-
         }
-    }
-
-    hasLoadMore(){
-        return false;
     }
 
     hasDetails(){

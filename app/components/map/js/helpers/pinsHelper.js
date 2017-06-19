@@ -4,7 +4,6 @@ import { config } from '../config';
 
 export default class PinsHelper {
     constructor() {
-
     }
 
     static findPin( id ) {

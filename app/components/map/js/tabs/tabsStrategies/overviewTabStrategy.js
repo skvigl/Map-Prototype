@@ -19,7 +19,7 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
         if ( currentLevel && currentLevel.id ) {
             levelId = currentLevel.id;
         }
-
+        //TODO: Refactor all tabs strategies to LevelNames
         switch ( levelId ) {
             case 0:
                 allowedPinStratagies = [
@@ -66,11 +66,7 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
         }
     }
 
-    hasLoadMore(){
-        return false;
-    }
-
-    hasDetails(){
+    hasDetails() {
         return false;
     }
 
