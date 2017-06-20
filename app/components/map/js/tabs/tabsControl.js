@@ -1,35 +1,43 @@
 "use strict";
 
+import BaseComponent from 'generic/baseComponent';
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
-export default class TabsControl {
+export default class TabsControl extends BaseComponent {
     constructor() {
-        this._elem = document.querySelector( '.js-tabs' );
+        super( 'map-tabs' );
+        this.prefix = 'mt';
+        //this._elem = document.querySelector( '.js-tabs' );
         this._tabs = {};
         this._currentTabName = '';
-        this._btnHideDetails = this._elem.querySelector( '.js-hide-details' );
+
         this._mediator = null;
 
+
         this.init();
+        console.log( this );
     }
 
     init() {
-        let tabNodes = document.querySelectorAll( '.js-tabs-nav > .js-tab-nav' );
-        tabNodes = Array.prototype.slice.call(tabNodes);
-        tabNodes.forEach( ( tabNavNode ) => {
-            let tabName = tabNavNode.getAttribute( 'data-name' );
-            let tabNode = this._elem.querySelector( '.js-tab[data-name=' + tabName + ']' );
+
+        let navItemNodes = this.rootNode.querySelectorAll( '[data-mt-elem=nav-list] > [data-mt-elem=nav-item]' );
+        navItemNodes = Array.prototype.slice.call( navItemNodes );
+
+        navItemNodes.forEach( ( navItemNode ) => {
+            let tabName = navItemNode.getAttribute( 'data-mt-name' ),
+                tabNode = this.rootNode.querySelector(' [data-mt-elem=tab-item][data-mt-name=' + tabName + ']');
+            //querySelector( '.js-tab[data-name=' + tabName + ']' );
 
             this._tabs[tabName] = {
-                tabNavNode: tabNavNode,
+                tabNavNode: navItemNode,
                 tabNode: tabNode,
-                contentNode: tabNode.querySelector( '[data-container=content]' ),
-                loadmoreNode: tabNode.querySelector( '[data-container=loadmore]' ),
-                detailsNode: this._elem.querySelector( '.js-details' )
+                contentNode: tabNode.querySelector( '[data-mt-elem=tab-container][data-mt-name=content]' ),
+                loadmoreNode: tabNode.querySelector( '[data-mt-elem=tab-container][data-mt-name=loadmore]' ),
+                detailsNode: this.rootNode.querySelector( '[data-mt-elem=tab-details]' )
             };
 
-            tabNavNode.addEventListener( 'click', event => this._clickHandler( event ) );
+            navItemNode.addEventListener( 'click', event => this._clickHandler( event ) );
 
             //TODO: refactoring this with delegate
             if ( this._tabs[tabName].loadmoreNode ) {
@@ -37,6 +45,7 @@ export default class TabsControl {
             }
 
         } );
+
 
         if ( this._btnHideDetails ) {
             this._btnHideDetails.addEventListener(
@@ -104,12 +113,6 @@ export default class TabsControl {
         }
     }
 
-    // updateContent() {
-    //     if ( this._tabs[ this._currentTabName ].currentPage === 0 ) {
-    //         this._updateTabContent();
-    //     }
-    // }
-
     clearTabsContent() {
         for ( let tab in this._tabs ) {
             if ( this._tabs.hasOwnProperty( tab ) ) {
@@ -134,16 +137,16 @@ export default class TabsControl {
         if ( tabContent.detailsCard ) {
             this._clearDetailsTab();
             currentTab.detailsNode.appendChild( tabContent.detailsCard );
-            this._elem.classList.add( 'is-details-visible' );
+            this.rootNode.classList.add( 'is-details-visible' );
             //currentTab.detailsNode.classList.add('is-active');
         } else {
             //currentTab.detailsNode.classList.remove('is-active');
-            this._elem.classList.remove( 'is-details-visible' );
+            this.rootNode.classList.remove( 'is-details-visible' );
         }
     }
 
     _clickHandler( event ) {
-        let tabName = event.target.getAttribute( 'data-name' );
+        let tabName = event.target.getAttribute( 'data-mt-name' );
         this.setActiveTab( tabName );
 
         let mediatorEvent = new MediatorEventModel();
@@ -156,7 +159,7 @@ export default class TabsControl {
     }
 
     _onClickBtnHideDetailsHandler() {
-        this._elem.classList.remove( 'is-details-visible' );
+        this.rootNode.classList.remove( 'is-details-visible' );
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.hideDetails;
@@ -164,7 +167,7 @@ export default class TabsControl {
     }
 
     _onClickLoadmoreHandler() {
-        console.log('click');
+        console.log( 'click' );
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.loadmorePinsDetails;
         this._mediator.stateChanged( mediatorEvent );
@@ -174,31 +177,10 @@ export default class TabsControl {
 
         //TODO: think about code style for IF operator
         if ( isVisible ) {
-            this._tabs[this._currentTabName].loadmoreNode.classList.add('is-visible');
+            this._tabs[this._currentTabName].loadmoreNode.classList.add( 'is-visible' );
         } else {
-            this._tabs[this._currentTabName].loadmoreNode.classList.remove('is-visible');
+            this._tabs[this._currentTabName].loadmoreNode.classList.remove( 'is-visible' );
         }
-    }
-
-    // _updateTabNavigation() {
-    //     let currentLevel = config.currentLevel;
-    //
-    //     for( let tab in this._tabs ) {
-    //
-    //         if ( this._tabs.hasOwnProperty(tab) ) {
-    //
-    //             if ( currentLevel.tabs.indexOf(tab) === -1 ) {
-    //                 this._tabs[tab].tabNode.classList.add('is-hidden');
-    //             } else {
-    //                 this._tabs[tab].tabNode.classList.remove('is-hidden');
-    //             }
-    //         }
-    //     }
-    // }
-
-
-    _drawContent() {
-
     }
 
     get getCurrentTab() {

@@ -12,46 +12,51 @@
 <div class="map js-map">
     <div class="map__gmap gmap js-gmap"></div>
     <div class="map__aside">
-        <div class="tabs js-tabs">
-            <ul class="tabs__nav js-tabs-nav">
-                <li class="tabs__li js-tab-nav" data-name="overview">Overview</li>
-                <li class="tabs__li js-tab-nav" data-name="pois">Poi</li>
-                <li class="tabs__li js-tab-nav" data-name="hotels">Hotels</li>
+        <div class="tabs js-tabs" data-component="map-tabs">
+            <ul class="tabs__nav js-tabs-nav" data-mt-elem="nav-list">
+                <li class="tabs__li js-tab-nav" data-mt-elem="nav-item" data-mt-name="overview">Overview</li>
+                <li class="tabs__li js-tab-nav" data-mt-elem="nav-item" data-mt-name="pois">Poi</li>
+                <li class="tabs__li js-tab-nav" data-mt-elem="nav-item" data-mt-name="hotels">Hotels</li>
+                <!--<li class="tabs__li js-tab-nav" data-name="hotels">Hotels</li>-->
+                <!--<li class="tabs__li js-tab-nav" data-mt-elem="nav-item" data-mt-name="hotels">Hotels</li>-->
+                <!--<li class="tabs__li js-tab-nav" data-mt-info='"elem":nav-item","name":"hotels"'>Hotels</li>-->
             </ul>
-            <div class="tabs__content js-tab" data-name="overview">
-                <div class="tabs__cards" data-container="content"></div>
+            <div class="tabs__content js-tab" data-mt-elem="tab-item" data-mt-name="overview">
+                <div class="tabs__cards" data-mt-elem="tab-container" data-mt-name="content"></div>
             </div>
-            <div class="tabs__content js-tab" data-name="pois">
-                <div class="tabs__cards" data-container="content"></div>
-                <div class="tabs__loadmore" data-container="loadmore">
-                    <button class="btn btn--base btn--wide js-loadmore" type="button">more POI</button>
+            <div class="tabs__content js-tab" data-mt-elem="tab-item" data-mt-name="pois">
+                <div class="tabs__cards" data-mt-elem="tab-container" data-mt-name="content"></div>
+                <div class="tabs__loadmore" data-mt-elem="tab-container" data-mt-name="loadmore">
+                    <button class="btn btn--base btn--wide js-loadmore" type="button" data-mt-elem="lodmore">More POI</button>
                 </div>
             </div>
-            <div class="tabs__content js-tab" data-name="hotels">
-                <div class="tabs__cards" data-container="content"></div>
-                <div class="tabs__loadmore" data-container="loadmore">
-                    <button class="btn btn--base btn--wide js-loadmore" type="button">More hotels</button>
+            <div class="tabs__content js-tab" data-mt-elem="tab-item" data-mt-name="hotels">
+                <div class="tabs__cards" data-mt-elem="tab-container" data-mt-name="content"></div>
+                <div class="tabs__loadmore" data-mt-elem="tab-container" data-mt-name="loadmore">
+                    <button class="btn btn--base btn--wide js-loadmore" type="button" data-mt-elem="lodmore">More hotels</button>
                 </div>
             </div>
             <div class="tabs__details">
-                <div class="js-details"></div>
-                <button class="tabs__hide-details btn btn--base js-hide-details" type="button">Back</button>
+                <div class="js-details" data-mt-elem="tab-details"></div>
+                <button class="tabs__hide-details btn btn--base js-hide-details" type="button" data-mt-elem="hide-details">Back</button>
             </div>
         </div>
     </div>
-    <button class="map__back-to-level btn btn--base js-back-to-level is-hidden" type="button">
+
+    <button class="map__back-to-level btn btn--base js-back-to-level is-hidden" type="button" data-mt-elem="back-to-level">
         <i class="fa fa-reply" aria-hidden="true"></i>
         <span>Back to level</span>
     </button>
+
     <div class="map__controls">
-        <select class="filter-select js-filter-airport">
+        <select class="filter-select" data-component='filter-airport'>
             <option value="default" selected>Choose an Airport</option>
             <option value="a1">London</option>
             <option value="a2">Leeds</option>
             <option value="a3">Bristol</option>
             <option value="a4">Manchester</option>
         </select>
-        <select class="filter-select js-filter-holiday-type">
+        <select class="filter-select" data-component='filter-holiday-type'>
             <option value="beachHoliday" selected>Beach Holdiay</option>
             <option value="cityBreak">City Break</option>
             <option value="villas">Villas</option>

@@ -1,31 +1,23 @@
 'use strict';
 
 import { config } from '../config';
-import LevelNames from '../enums/levelNames';
+import BaseComponent from 'generic/baseComponent';
 import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
-export default class FilterHolidayTypeControl {
-    constructor(){
-        this._elem = document.querySelector( '.js-filter-holiday-type' );
+export default class FilterHolidayTypeControl extends BaseComponent {
+    constructor() {
+        super('filter-holiday-type');
         this._mediator = null;
 
-        this.attachEvents();
+        this.addListeners();
     }
 
-    attachEvents() {
-        this._elem.addEventListener(
+    addListeners() {
+        this.rootNode.addEventListener(
             'change',
-            event => this._onChangeHandler(event)
+            this.listeners.onChangeHandler = ( event ) => this._onChangeHandler(event)
         );
-    }
-
-    setMediator( mediator ) {
-        this._mediator = mediator;
-    }
-
-    getValue() {
-        return this._elem.value;
     }
 
     _onChangeHandler( event ) {
@@ -35,11 +27,22 @@ export default class FilterHolidayTypeControl {
         config.mediator.stateChanged( mediatorEvent );
     }
 
-    updateVisibility( levelName ) {
-        if ( levelName !== LevelNames.world ) {
-            this._elem.classList.remove('is-visible');
-        } else {
-            this._elem.classList.add('is-visible');
-        }
+    setMediator( mediator ) {
+        this._mediator = mediator;
+    }
+
+    getValue() {
+        return this.rootNode.value;
+    }
+
+    updateVisibility( shouldVisible ) {
+
+        this.rootNode.classList[ shouldVisible ? 'add' : 'remove' ]('is-visible');
+
+        // if ( shouldVisible ) {
+        //     this.rootNode.classList.add( 'is-visible' );
+        // } else {
+        //     this.rootNode.classList.remove( 'is-visible' );
+        // }
     }
 }

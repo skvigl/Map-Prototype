@@ -1,13 +1,13 @@
 'use strict';
 
-import { Config, config } from './config';
+import {Config, config} from './config';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import HolidayTypeNames from './enums/holidayTypeNames';
 import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
-import PinsHelper from 'helpers/pinsHelper';
-import TabState from 'tabs/tabState';
+import PinsHelper from './helpers/pinsHelper';
+import TabState from './tabs/tabState';
 
 export default class Mediator {
     constructor() {
@@ -23,8 +23,8 @@ export default class Mediator {
                 }
 
                 Config.clearFilters();
-                config.filters.filterAirportControl.updateVisibility( eventModel.levelName );
-                config.filters.filterHolidayTypeControl.updateVisibility( eventModel.levelName );
+                config.maps.destMapControl.updateFiltersVisibility( eventModel.levelName );
+                config.maps.destMapControl.updateBtnBackToLevelVisibility( config.levels.locationsHistory.length );
 
                 let getPinsRequest = config.dataLoader.getPins(
                     eventModel.pinType,
@@ -42,15 +42,15 @@ export default class Mediator {
 
                     let mapOptions = response.data.mapOptions;
 
-                    config.maps.googleMapControl.setOptions({
+                    config.maps.googleMapControl.setOptions( {
                         center: {
                             'lat': mapOptions.lat,
                             'lng': mapOptions.lng,
                         },
                         zoom: mapOptions.zoom
-                    });
+                    } );
 
-                    config.levels.currentLevel = config.levels.strategies[ eventModel.levelName ];
+                    config.levels.currentLevel = config.levels.strategies[eventModel.levelName];
                     config.pins.data = response.data.pins;
 
                     let tabName = eventModel.tabName ? eventModel.tabName : TabNames.overview,
@@ -75,7 +75,7 @@ export default class Mediator {
 
                     let content = currentTab.generateContent();
                     config.tabs.tabsControl.updateTabContent( content );
-                    config.maps.destMapControl.updateBtnBackToLevelVisibility( config.levels.locationsHistory.length );
+
 
                     config.maps.destMapControl.drawAllPins();
                 } );
@@ -87,7 +87,7 @@ export default class Mediator {
                 let currentTabName = config.tabs.tabsControl.getCurrentTabName();
                 let currentTabStrategy = config.tabs.strategies[currentTabName];
                 config.tabs.currentTab = currentTabStrategy;
-                let pinType = this.getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
+                let pinType = this._getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
 
                 let currentTabState = config.tabs.tabStates[currentTabName];
                 config.maps.destMapControl.hideAllPins();
@@ -237,7 +237,7 @@ export default class Mediator {
 
                 let currentTabName = config.tabs.tabsControl.getCurrentTabName();
                 let currentTabState = config.tabs.tabStates[currentTabName];
-                let pinType = this.getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
+                let pinType = this._getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
 
                 let getPinsByPageRequest = config.dataLoader.getPinsByPage( pinType, currentTabState.currentPage + 1 );
 
@@ -260,13 +260,17 @@ export default class Mediator {
         }
     }
 
-    getTargetPinType( pinTypes, tabName ) {
+    _getTargetPinType( pinTypes, tabName ) {
 
         if ( tabName === TabNames.overview ) {
             return PinNames.destination;
         }
 
         for ( let pinType in pinTypes ) {
+
+            if ( !pinTypes.hasOwnProperty( pinType ) ) {
+                continue;
+            }
 
             if ( pinTypes[pinType] !== PinNames.childDestination && pinTypes[pinType] !== PinNames.airport ) {
                 return pinTypes[pinType];

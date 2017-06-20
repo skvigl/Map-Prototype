@@ -6,7 +6,7 @@ import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
 import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
-import PinsHelper from 'helpers/pinsHelper';
+import PinsHelper from './helpers/pinsHelper';
 
 export default class DestMapControl {
     constructor() {
@@ -68,6 +68,16 @@ export default class DestMapControl {
             this.btnBackToLevel.classList.remove('is-hidden');
         } else {
             this.btnBackToLevel.classList.add('is-hidden');
+        }
+    }
+
+    updateFiltersVisibility( levelName ) {
+
+            config.filters.filterAirportControl.updateVisibility( true );
+            config.filters.filterHolidayTypeControl.updateVisibility( true );
+        } else {
+            config.filters.filterAirportControl.updateVisibility( false );
+            config.filters.filterHolidayTypeControl.updateVisibility( false );
         }
     }
 

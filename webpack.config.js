@@ -42,20 +42,6 @@ module.exports = {
     resolve: {
         modulesDirectories: [
             "app/components",
-            "app/generic",
-            "app/generic/js",
-            "app/generic/less",
-            "js",
-            "js/app",
-            "js/lib",
-            "js/app/modules",
-            "js/lib",
-            "js/plugins",
-            "css",
-            "less",
-            "svg/icons",
-            "fonts",
-            "templates",
             "node_modules"
         ],
         alias: {
