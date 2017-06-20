@@ -73,6 +73,7 @@ export default class DestMapControl {
 
     updateFiltersVisibility( levelName ) {
 
+        if ( levelName === LevelNames.world ) {
             config.filters.filterAirportControl.updateVisibility( true );
             config.filters.filterHolidayTypeControl.updateVisibility( true );
         } else {

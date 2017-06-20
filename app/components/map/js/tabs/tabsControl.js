@@ -46,6 +46,7 @@ export default class TabsControl extends BaseComponent {
 
         } );
 
+        this._btnHideDetails = this.rootNode.querySelector( '[data-mt-elem=hide-details]' );
 
         if ( this._btnHideDetails ) {
             this._btnHideDetails.addEventListener(
