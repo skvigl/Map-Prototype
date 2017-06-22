@@ -9,8 +9,8 @@
 </head>
 <body>
 
-<div class="map js-map">
-    <div class="map__gmap gmap js-gmap"></div>
+<div class="map" data-component="dest-map">
+    <div class="map__gmap" data-component="gmap"></div>
     <div class="map__aside">
         <div class="tabs" data-component="map-tabs">
             <ul class="tabs__nav" data-mt-elem="nav-list">
@@ -34,13 +34,13 @@
                 </div>
             </div>
             <div class="tabs__details">
-                <div class="js-details" data-mt-elem="tab-details"></div>
+                <div data-mt-elem="tab-details"></div>
                 <button class="tabs__hide-details btn btn--base" type="button" data-mt-elem="hide-details">Back</button>
             </div>
         </div>
     </div>
 
-    <button class="map__back-to-level btn btn--base js-back-to-level is-hidden" type="button" data-mt-elem="back-to-level">
+    <button class="map__back-to-level btn btn--base is-hidden" type="button" data-dm-elem="back-to-level">
         <i class="fa fa-reply" aria-hidden="true"></i>
         <span>Back to level</span>
     </button>

@@ -28,9 +28,6 @@ export default class BaseComponent {
     }
 
     //private methods =/ ??
-    findElements( selector ) {
-        return Array.prototype.slice.call( this.rootNode.querySelectorAll('data-' + this.prefix + '-elem=' + name ) );
-    }
 
     _findElemNode( currentNode, rootNode, elemName ) {
 

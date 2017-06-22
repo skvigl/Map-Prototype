@@ -1,6 +1,7 @@
 'use strict';
 
-import { config } from './config';
+import BaseComponent from 'generic/baseComponent';
+import {config} from './config';
 import LevelNames from './enums/levelNames';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
@@ -8,17 +9,17 @@ import MediatorEvents from './enums/mediatorEvents';
 import MediatorEventModel from './models/mediatorEventModel';
 import PinsHelper from './helpers/pinsHelper';
 
-export default class DestMapControl {
+export default class DestMapControl extends BaseComponent {
     constructor() {
+        super( 'dest-map' );
+        this.prefix = 'dm';
         this.init();
     }
 
     init() {
-        this.listeners = {};
-        this.viewNode = document.querySelector( '.js-map' );
-        this.btnBackToLevel = this.viewNode.querySelector('.js-back-to-level');
+        this.btnBackToLevel = this.rootNode.querySelector( '[data-dm-elem=back-to-level]' );
 
-        this._attachEvents();
+        this.addListeners();
     }
 
     initLevel() {
@@ -31,7 +32,7 @@ export default class DestMapControl {
     }
 
     destroy() {
-        this._detachEvents();
+        this.removeListeners();
         console.log( this );
     }
 
@@ -45,7 +46,7 @@ export default class DestMapControl {
     removeAllPins() {
         config.pins.data.forEach( pin => {
             config.maps.googleMapControl.removeMarker( pin );
-        });
+        } );
     }
 
     hideAllPins() {
@@ -53,7 +54,7 @@ export default class DestMapControl {
             if ( pin.marker ) {
                 pin.marker.classList.remove( 'is-visible' );
             }
-        });
+        } );
     }
 
     updatePinsVisibility() {
@@ -65,9 +66,9 @@ export default class DestMapControl {
     updateBtnBackToLevelVisibility( isVisible ) {
 
         if ( isVisible ) {
-            this.btnBackToLevel.classList.remove('is-hidden');
+            this.btnBackToLevel.classList.remove( 'is-hidden' );
         } else {
-            this.btnBackToLevel.classList.add('is-hidden');
+            this.btnBackToLevel.classList.add( 'is-hidden' );
         }
     }
 
@@ -84,7 +85,7 @@ export default class DestMapControl {
 
     _drawPinsByStrategy( strategy ) {
         let currentPinStrategy = config.pins.strategies[strategy],
-        pins = currentPinStrategy.generateMultiplePins();
+            pins = currentPinStrategy.generateMultiplePins();
 
         pins.forEach( pin => {
             config.maps.googleMapControl.addMarker( pin );
@@ -98,14 +99,14 @@ export default class DestMapControl {
         pins.forEach( pin => {
 
             if ( currentPinStrategy.checkPinVisibility( pin ) ) {
-                pin.marker.classList.add('is-visible');
+                pin.marker.classList.add( 'is-visible' );
 
                 if ( pin.view ) {
-                    pin.view.classList.add('is-visible');
+                    pin.view.classList.add( 'is-visible' );
                 }
 
             } else {
-                pin.marker.classList.remove('is-visible');
+                pin.marker.classList.remove( 'is-visible' );
 
                 if ( pin.view ) {
                     pin.view.classList.remove( 'is-visible' );
@@ -114,53 +115,50 @@ export default class DestMapControl {
         } );
     }
 
-    _attachEvents() {
-        this.viewNode.addEventListener(
+    addListeners() {
+        this.rootNode.addEventListener(
             'click',
-            this.listeners.onPinClickHandler = event => this._onPinClickHandler( event, 'js-marker' )
+            this.listeners.onClickMarkerHandler = event => this._onClickPinHandler( event, 'marker' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'click',
-            this.listeners.onPinClickHandler = event => this._onPinClickHandler( event, 'js-view' )
+            this.listeners.onClickCardHandler = event => this._onClickPinHandler( event, 'card' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'mouseover',
-            ( event, cssClass ) => this._onPinMouseoverHandler( event, 'js-marker' )
+            this.listeners.onMouseoverMarkerHandler = ( event, elemName ) => this._onMouseoverPinHandler( event, 'marker' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'mouseover',
-            ( event, cssClass ) => this._onPinMouseoverHandler( event, 'js-view' )
+            this.listeners.onMouseoverCardHandler = ( event, elemName ) => this._onMouseoverPinHandler( event, 'card' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'mouseout',
-            ( event, cssClass ) => this._onPinMouseoutHandler( event, 'js-marker' )
+            this.listeners.onMouseoutMarkerHandler = ( event, elemName ) => this._onMouseoutPinHandler( event, 'marker' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'mouseout',
-            ( event, cssClass ) => this._onPinMouseoutHandler( event, 'js-view' )
+            this.listeners.onMouseoutCardHandler = ( event, elemName ) => this._onMouseoutPinHandler( event, 'card' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'click',
-            this.listeners.onBtnLevelBackClickHandler = event => this._onBtnLevelBackClickHandler( event, 'js-back-to-level' )
+            this.listeners.onClickBtnLevelBackHandler = event => this._onClickBtnLevelBackHandler( event, 'back-to-level' )
         );
-        this.viewNode.addEventListener(
+
+        this.rootNode.addEventListener(
             'click',
-            this.listeners.onClickBtnViewOnMapHandler = event => this._onClickBtnViewOnMapHandler( event, 'js-view-on-map')
+            this.listeners.onClickBtnViewOnMapHandler = event => this._onClickBtnViewOnMapHandler( event, 'view-on-map' )
         );
     }
 
-    _detachEvents() {
-        this.viewNode.removeEventListener(
-            'click',
-            this.listeners.onPinClickHandler
-        );
-        // config.map.removeEventListener('click', event => this._onPinClickHandler(event) );
-        // config.map.removeEventListener('mouseover', event => this._onPinMouseOverHandler(event) );
-        this.listeners = null;
-    }
-
-    _onPinClickHandler( event, cssClass ) {
-        let pin = this._getEventTargetPin( event, cssClass );
+    _onClickPinHandler( event, elemName ) {
+        let pin = this._getEventTargetPin( event, elemName );
 
         if ( !pin ) {
             return false;
@@ -169,8 +167,8 @@ export default class DestMapControl {
         config.pins.strategies[pin.type].onPinClick( pin );
     }
 
-    _onPinMouseoverHandler( event, cssClass ) {
-        let pin = this._getEventTargetPin( event, cssClass );
+    _onMouseoverPinHandler( event, elemName ) {
+        let pin = this._getEventTargetPin( event, elemName );
 
         if ( !pin ) {
             return false;
@@ -179,8 +177,8 @@ export default class DestMapControl {
         config.pins.strategies[pin.type].onPinMouseover( pin );
     }
 
-    _onPinMouseoutHandler( event, cssClass ) {
-        let pin = this._getEventTargetPin( event, cssClass );
+    _onMouseoutPinHandler( event, elemName ) {
+        let pin = this._getEventTargetPin( event, elemName );
 
         if ( !pin ) {
             return false;
@@ -189,8 +187,8 @@ export default class DestMapControl {
         config.pins.strategies[pin.type].onPinMouseout( pin );
     }
 
-    _onBtnLevelBackClickHandler( event, cssClass ) {
-        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
+    _onClickBtnLevelBackHandler( event, elemName ) {
+        let target = this._findElemNode( event.target, this.rootNode, elemName );
 
         if ( !target ) {
             return false;
@@ -204,62 +202,48 @@ export default class DestMapControl {
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
-        mediatorEvent.levelName = config.levels.order[ targetLocation.id ];
+        mediatorEvent.levelName = config.levels.order[targetLocation.id];
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.targetPin = targetLocation;
         config.mediator.stateChanged( mediatorEvent );
     }
 
-    _onClickBtnViewOnMapHandler( event, cssClass ){
-        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
+    _onClickBtnViewOnMapHandler( event, elemName ) {
+        let target = this._findElemNode( event.target, this.rootNode, elemName );
 
         if ( !target ) {
             return false;
         }
 
-        console.log('view on map handler');
-
-        let pin = this._getEventTargetPin( event, cssClass );
+        let pin = this._getEventTargetPin( event, elemName );
 
         if ( !pin ) {
             return false;
         }
 
-        config.maps.googleMapControl.setCenter({
+        config.maps.googleMapControl.setCenter( {
             lat: pin.lat,
             lng: pin.lng
-        });
+        } );
 
         let activePin = config.pins.activePin;
 
         if ( activePin ) {
-            config.pins.strategies[activePin.type].removeActiveClass(activePin);
+            config.pins.strategies[activePin.type].removeActiveClass( activePin );
         }
 
         config.pins.activePin = pin;
         config.pins.strategies[pin.type].addActiveClass( pin );
     }
 
-    _findNodeByCssClass( currentNode, rootClass, cssClass ) {
-
-        while ( currentNode && !currentNode.classList.contains( rootClass ) ) {
-            if ( currentNode.classList.contains( cssClass ) ) {
-                return currentNode;
-            }
-            currentNode = currentNode.parentNode;
-        }
-
-        return null;
-    }
-
-    _getEventTargetPin( event, cssClass ) {
-        let target = this._findNodeByCssClass( event.target, 'js-map', cssClass );
+    _getEventTargetPin( event, elemName ) {
+        let target = this._findElemNode( event.target, this.rootNode, elemName );
 
         if ( !target ) {
             return null;
         }
 
-        let id = target.getAttribute( 'data-id' );
+        let id = target.getAttribute( 'data-dm-pin-id' );
 
         return PinsHelper.findPin( id );
     }

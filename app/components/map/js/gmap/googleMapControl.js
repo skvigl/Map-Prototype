@@ -1,12 +1,16 @@
 'use strict';
 
-export default class GoogleMap {
-    constructor(){
+import BaseComponent from 'generic/baseComponent';
+
+export default class GoogleMap extends BaseComponent {
+    constructor() {
+        super( 'gmap' );
         this.map = null;
     }
 
     init() {
-        this.map = new google.maps.Map( document.querySelector('.js-gmap'), {
+
+        this.map = new google.maps.Map( this.rootNode, {
             center: {
                 lat: 47.7,
                 lng: 5.4
@@ -14,26 +18,29 @@ export default class GoogleMap {
             zoom: 4,
             disableDefaultUI: true,
             zoomControl: true
-        });
+        } );
 
-    }
-
-    setOptions( options ) {
-        this.map.setOptions(options);
     }
 
     addMarker( pin ) {
-        pin.richMarker = new RichMarker({
+        pin.richMarker = new RichMarker( {
             map: this.map,
-            position: new google.maps.LatLng(pin.lat || 0, pin.lng || 0),
+            position: new google.maps.LatLng( pin.lat || 0, pin.lng || 0 ),
             content: pin.marker,
             flat: true,
             anchor: RichMarkerPosition.MIDDLE
-        });
+        } );
     }
 
     removeMarker( pin ) {
+
+        if ( !pin.richMarker ) return;
+
         pin.richMarker.setMap( null );
+    }
+
+    setOptions( options ) {
+        this.map.setOptions( options );
     }
 
     setCenter( position ) {

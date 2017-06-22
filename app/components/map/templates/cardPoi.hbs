@@ -1,4 +1,4 @@
-<div class="card card--poi {{ modifierMarkerList}}" data-id="{{ id }}">
+<div class="card card--poi {{ modifierMarkerList}}" data-dm-pin-id="{{ id }}">
     <div class="card__figure">
         <img class="image-cover" src="{{imgURL}}" alt="">
     </div>
@@ -7,7 +7,7 @@
         <div class="card__summary">{{{ summary }}}</div>
     </div>
     <div class="card__footer">
-        <a class="card__btn js-view-on-map" data-id="{{ id }}">View on map</a>
+        <a class="card__btn" data-dm-elem="view-on-map" data-dm-pin-id="{{ id }}">View on map</a>
         <a class="card__btn" href="/to-poi-page" target="_blank">Show more</a>
     </div>
 </div>
