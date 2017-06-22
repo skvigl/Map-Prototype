@@ -8,54 +8,100 @@ export default class TabsControl extends BaseComponent {
     constructor() {
         super( 'map-tabs' );
         this.prefix = 'mt';
-        //this._elem = document.querySelector( '.js-tabs' );
+
         this._tabs = {};
+        this._detailsNode = null;
+        this._btnHideDetails = null;
+        this._mediator = null;
         this._currentTabName = '';
 
-        this._mediator = null;
-
-
         this.init();
-        console.log( this );
     }
 
     init() {
-
         let navItemNodes = this.rootNode.querySelectorAll( '[data-mt-elem=nav-list] > [data-mt-elem=nav-item]' );
         navItemNodes = Array.prototype.slice.call( navItemNodes );
 
         navItemNodes.forEach( ( navItemNode ) => {
             let tabName = navItemNode.getAttribute( 'data-mt-name' ),
-                tabNode = this.rootNode.querySelector(' [data-mt-elem=tab-item][data-mt-name=' + tabName + ']');
-            //querySelector( '.js-tab[data-name=' + tabName + ']' );
+                tabNode = this.rootNode.querySelector( ' [data-mt-elem=tab-item][data-mt-name=' + tabName + ']' );
 
             this._tabs[tabName] = {
                 tabNavNode: navItemNode,
                 tabNode: tabNode,
                 contentNode: tabNode.querySelector( '[data-mt-elem=tab-container][data-mt-name=content]' ),
-                loadmoreNode: tabNode.querySelector( '[data-mt-elem=tab-container][data-mt-name=loadmore]' ),
-                detailsNode: this.rootNode.querySelector( '[data-mt-elem=tab-details]' )
+                loadmoreNode: tabNode.querySelector( '[data-mt-elem=tab-container][data-mt-name=loadmore]' )
             };
-
-            navItemNode.addEventListener( 'click', event => this._clickHandler( event ) );
-
-            //TODO: refactoring this with delegate
-            if ( this._tabs[tabName].loadmoreNode ) {
-                this._tabs[tabName].loadmoreNode.addEventListener( 'click', event => this._onClickLoadmoreHandler( event ) );
-            }
-
         } );
 
+        this._detailsNode = this.rootNode.querySelector( '[data-mt-elem=tab-details]' );
         this._btnHideDetails = this.rootNode.querySelector( '[data-mt-elem=hide-details]' );
 
-        if ( this._btnHideDetails ) {
-            this._btnHideDetails.addEventListener(
-                'click',
-                event => this._onClickBtnHideDetailsHandler( event )
-            );
+        this.addListeners();
+    }
+
+    addListeners() {
+
+        this.rootNode.addEventListener(
+            'click',
+            this.listeners.onClickNavItemHandler = event => this._onClickNavItemHandler( event, 'nav-item' )
+        );
+
+        this.rootNode.addEventListener(
+            'click',
+            this.listeners.onClickBtnLoadmoreHandler = event => this._onClickBtnLoadmoreHandler( event, 'loadmore' )
+        );
+
+        this.rootNode.addEventListener(
+            'click',
+            this.listeners.onClickBtnHideDetailsHandler = event => this._onClickBtnHideDetailsHandler( event, 'hide-details' )
+        );
+    }
+
+    _onClickNavItemHandler( event, elemName ) {
+        let target = this._findElemNode( event.target, this.rootNode, elemName );
+
+        if ( !target ) {
+            return false;
         }
 
-        //console.log( this );
+        let tabName = target.getAttribute( 'data-' + this.prefix + '-name' );
+
+        if ( this._currentTabName === tabName ) {
+            return false;
+        }
+
+        this.setActiveTab( tabName );
+
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.tabChanged;
+        this._mediator.stateChanged( mediatorEvent );
+    }
+
+    _onClickBtnLoadmoreHandler( event, elemName ) {
+        let target = this._findElemNode( event.target, this.rootNode, elemName );
+
+        if ( !target ) {
+            return false;
+        }
+
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.loadmorePinsDetails;
+        this._mediator.stateChanged( mediatorEvent );
+    }
+
+    _onClickBtnHideDetailsHandler( event, elemName ) {
+        let target = this._findElemNode( event.target, this.rootNode, elemName );
+
+        if ( !target ) {
+            return false;
+        }
+
+        this.rootNode.classList.remove( 'is-details-visible' );
+
+        let mediatorEvent = new MediatorEventModel();
+        mediatorEvent.eventType = MediatorEvents.hideDetails;
+        this._mediator.stateChanged( mediatorEvent );
     }
 
     getCurrentTabName() {
@@ -65,20 +111,6 @@ export default class TabsControl extends BaseComponent {
     setMediator( mediator ) {
         this._mediator = mediator;
     }
-
-
-    // clear( tabName ) {
-    //     let clearingTab = this._tabs[tabName];
-    //     clearingTab.contentElem.innerHTML = '';
-    // }
-
-    // update() {
-    //     this._currentTabName = config.currentTab.getName();
-    //     this._updateTabNavigation();
-    //     this._clearTabsContent();
-    //     this._setActiveTab();
-    //     this._updateTabContent();
-    // }
 
     setActiveTab( tabName ) {
         let oldTab = this._tabs[this._currentTabName];
@@ -137,54 +169,28 @@ export default class TabsControl extends BaseComponent {
 
         if ( tabContent.detailsCard ) {
             this._clearDetailsTab();
-            currentTab.detailsNode.appendChild( tabContent.detailsCard );
+            this._detailsNode.appendChild( tabContent.detailsCard );
             this.rootNode.classList.add( 'is-details-visible' );
-            //currentTab.detailsNode.classList.add('is-active');
         } else {
-            //currentTab.detailsNode.classList.remove('is-active');
             this.rootNode.classList.remove( 'is-details-visible' );
         }
     }
 
-    _clickHandler( event ) {
-        let tabName = event.target.getAttribute( 'data-mt-name' );
-        this.setActiveTab( tabName );
-
-        let mediatorEvent = new MediatorEventModel();
-        mediatorEvent.eventType = MediatorEvents.tabChanged;
-        this._mediator.stateChanged( mediatorEvent );
-    }
-
     _clearDetailsTab() {
-        this._tabs[this._currentTabName].detailsNode.innerHTML = '';
-    }
-
-    _onClickBtnHideDetailsHandler() {
-        this.rootNode.classList.remove( 'is-details-visible' );
-
-        let mediatorEvent = new MediatorEventModel();
-        mediatorEvent.eventType = MediatorEvents.hideDetails;
-        this._mediator.stateChanged( mediatorEvent );
-    }
-
-    _onClickLoadmoreHandler() {
-        console.log( 'click' );
-        let mediatorEvent = new MediatorEventModel();
-        mediatorEvent.eventType = MediatorEvents.loadmorePinsDetails;
-        this._mediator.stateChanged( mediatorEvent );
+        this._detailsNode.innerHTML = '';
     }
 
     setLoadmoreVisibility( isVisible ) {
+        let currentTab = this._tabs[this._currentTabName];
 
-        //TODO: think about code style for IF operator
         if ( isVisible ) {
-            this._tabs[this._currentTabName].loadmoreNode.classList.add( 'is-visible' );
+            currentTab.loadmoreNode.classList.add( 'is-visible' );
         } else {
-            this._tabs[this._currentTabName].loadmoreNode.classList.remove( 'is-visible' );
+            currentTab.loadmoreNode.classList.remove( 'is-visible' );
         }
     }
 
-    get getCurrentTab() {
+    static get getCurrentTab() {
         return this._tabs[this._currentTabName];
     }
 }
