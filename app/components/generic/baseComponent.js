@@ -31,4 +31,18 @@ export default class BaseComponent {
     findElements( selector ) {
         return Array.prototype.slice.call( this.rootNode.querySelectorAll('data-' + this.prefix + '-elem=' + name ) );
     }
+
+    _findElemNode( currentNode, rootNode, elemName ) {
+
+        while ( currentNode && currentNode !== rootNode ) {
+
+            if ( currentNode.getAttribute('data-' + this.prefix + '-elem' ) === elemName ) {
+                return currentNode;
+            }
+
+            currentNode = currentNode.parentNode;
+        }
+
+        return null;
+    }
 }

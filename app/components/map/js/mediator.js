@@ -79,7 +79,7 @@ export default class Mediator {
 
                     config.maps.destMapControl.drawAllPins();
                 } );
-                console.log( config );
+
                 break;
             }
             case MediatorEvents.tabChanged: {
