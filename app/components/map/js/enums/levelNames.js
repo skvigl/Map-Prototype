@@ -6,18 +6,18 @@ export default class LevelNames {
     }
 
     static get world() {
-        return 'world';
+        return 'World';
     }
 
     static get country() {
-        return 'country';
+        return 'Country';
     }
 
     static get district() {
-        return 'district';
+        return 'District';
     }
 
     static get resort() {
-        return 'resort';
+        return 'Resort';
     }
 }

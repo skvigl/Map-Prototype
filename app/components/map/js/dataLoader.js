@@ -10,16 +10,16 @@ export default class DataLoader {
         //if we need to download special state from server
     }
 
-    getPins( type, levelId ) {
+    getPins( type, levelName ) {
 
         //just for example purpose
-        let url = '/app/data/getPins' + type + levelId + '.json';
+        let url = '/app/data/getPins' + type + levelName + '.json';
 
         return axios( {
             url,
             data: {
                 type,
-                levelId
+                levelName
             }
         });
     }

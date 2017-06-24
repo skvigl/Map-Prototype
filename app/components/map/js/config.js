@@ -43,7 +43,7 @@ export class Config {
             },
             pins: {
                 activePin: null,
-                currentLocation: {},  //TODO Refactor first level logic
+                currentLocation: null,
                 data: [],
                 strategies: null
             },
@@ -76,20 +76,20 @@ export class Config {
 
         config.levels.strategies = {
             [ LevelNames.world ]: {
-                id: 0
+                name: LevelNames.world
             },
             [ LevelNames.country ]: {
-                id: 1
+                name: LevelNames.country
             },
             [ LevelNames.district ]: {
-                id: 2
+                name: LevelNames.district
             },
             [ LevelNames.resort ]: {
-                id: 3
+                name: LevelNames.resort
             }
         };
 
-        for(let levelName in config.levels.strategies) {
+        for ( let levelName in config.levels.strategies ) {
             let level = config.levels.strategies[levelName];
 
             level.strategy = LevelsFactory.getLevelStrategy( levelName );
@@ -121,7 +121,7 @@ export class Config {
 
     static clearFilters() {
         config.filters.currentAirportId = 'default';
-        config.filters.filterAirportControl.setValue('default');
+        config.filters.filterAirportControl.setValue( 'default' );
     }
 }
 

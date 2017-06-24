@@ -193,7 +193,7 @@ export default class DestMapControl extends BaseComponent {
         if ( !target ) {
             return false;
         }
-
+        console.log(config.levels.locationsHistory);
         let targetLocation = config.levels.locationsHistory.pop();
 
         if ( !targetLocation ) {
@@ -202,7 +202,7 @@ export default class DestMapControl extends BaseComponent {
 
         let mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
-        mediatorEvent.levelName = config.levels.order[targetLocation.id];
+        mediatorEvent.levelName = targetLocation.levelName;
         mediatorEvent.pinType = PinNames.destination;
         mediatorEvent.targetPin = targetLocation;
         config.mediator.stateChanged( mediatorEvent );

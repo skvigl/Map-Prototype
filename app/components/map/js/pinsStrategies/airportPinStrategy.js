@@ -2,6 +2,7 @@
 
 import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
+import LevelNames from '../enums/levelNames';
 import PinNames from '../enums/pinNames';
 import MarkerTemplate from '../../templates/marker.hbs';
 import GenerateContentModel from '../models/generateContentModel';
@@ -23,7 +24,7 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
 
     onPinClick( pin ) {
 
-        if ( config.levels.currentLevel.id === 0 ) {
+        if ( config.levels.currentLevel.name === LevelNames.world ) {
 
             let activePin = config.pins.activePin;
 

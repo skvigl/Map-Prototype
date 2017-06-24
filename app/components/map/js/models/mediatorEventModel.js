@@ -4,7 +4,7 @@ export default class MediatorEventModel {
     constructor() {
         this.eventType = '';
         this.targetPin = null;
-        this.level = null;
+        this.levelName = '';
         this.pinType = '';
         this.tabName = '';
     }

@@ -2,51 +2,48 @@
 
 import { config } from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
+import LevelNames from '../../enums/levelNames';
 import PinNames from '../../enums/pinNames';
 import TabContent from '../tabContent';
 
 export default class OverviewTabStrategy extends AbstractTabStrategy {
     constructor( name ) {
         super( [], name );
-        this.updatePinStrategies();
     }
 
     updatePinStrategies() {
-        let allowedPinStratagies = null,
-            currentLevel = config.levels.currentLevel,
-            levelId = 0;
+        let allowedPinStratagies = [];
 
-        if ( currentLevel && currentLevel.id ) {
-            levelId = currentLevel.id;
-        }
-        //TODO: Refactor all tabs strategies to LevelNames
-        switch ( levelId ) {
-            case 0:
+        switch ( config.levels.currentLevel.name ) {
+            case LevelNames.world:
                 allowedPinStratagies = [
                     PinNames.airport,
                     PinNames.destination,
                 ];
                 break;
-            case 1:
+            case LevelNames.country:
                 allowedPinStratagies = [
                     PinNames.airport,
                     PinNames.destination,
                     PinNames.childDestination,
                 ];
                 break;
-            case 2:
+            case LevelNames.district:
                 allowedPinStratagies = [
                     PinNames.airport,
                     PinNames.destination,
                 ];
                 break;
-            case 3:
+            case LevelNames.resort:
                 allowedPinStratagies = [
                     PinNames.airport,
                     PinNames.poi,
                     PinNames.hotel
                 ];
                 break;
+            default: {
+                console.log( 'Unknown level name: ' + levelName );
+            }
         }
 
         this._pinStrategies = allowedPinStratagies;
@@ -54,14 +51,14 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
 
     generateContent() {
 
-        switch ( config.levels.currentLevel.id ) {
-            case 0:
+        switch ( config.levels.currentLevel.name ) {
+            case LevelNames.world:
                 return new TabContent( null, this._generateCards() );
-            case 1:
+            case LevelNames.country:
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
-            case 2:
+            case LevelNames.district:
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
-            case 3:
+            case LevelNames.resort:
                 return new TabContent( this._generateLocationInfo(), null );
         }
     }

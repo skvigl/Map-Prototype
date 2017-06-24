@@ -28,7 +28,7 @@ export default class Mediator {
 
                 let getPinsRequest = config.dataLoader.getPins(
                     eventModel.pinType,
-                    config.levels.strategies[eventModel.levelName].id
+                    eventModel.levelName
                 );
 
                 getPinsRequest.then( function ( response ) {
@@ -83,7 +83,7 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.tabChanged: {
-                let currentLevelId = config.levels.currentLevel.id;
+                let currentLevelName = config.levels.currentLevel.name;
                 let currentTabName = config.tabs.tabsControl.getCurrentTabName();
                 let currentTabStrategy = config.tabs.strategies[currentTabName];
                 config.tabs.currentTab = currentTabStrategy;
@@ -97,7 +97,7 @@ export default class Mediator {
                     return;
                 }
 
-                let getPinsRequest = config.dataLoader.getPins( pinType, currentLevelId );
+                let getPinsRequest = config.dataLoader.getPins( pinType, currentLevelName );
 
                 getPinsRequest.then( ( response ) => {
 
@@ -133,22 +133,28 @@ export default class Mediator {
                 break;
             }
             case MediatorEvents.destinationPinClicked: {
-                let currentLevelId = config.levels.currentLevel.id;
+                let currentLevel = config.levels.currentLevel,
+                    currentLevelOrder = config.levels.order.indexOf( currentLevel.name );
 
-                config.pins.currentLocation.id = currentLevelId;
+                if ( !config.pins.currentLocation ) {
+                    config.pins.currentLocation = {};
+                }
+
+                config.pins.currentLocation.levelName = currentLevel.name;
                 config.levels.locationsHistory.push( config.pins.currentLocation );
+                config.pins.currentLocation = Object.assign( {}, eventModel.targetPin );
                 config.pins.currentLocation = Object.assign( {}, eventModel.targetPin );
                 config.pins.currentLocation.view = null;
 
                 if ( eventModel.targetPin.holidayType === HolidayTypeNames.city ) {
-                    currentLevelId = 3;
+                    currentLevelOrder = 3;
                 } else {
-                    currentLevelId += eventModel.targetPin.type === PinNames.childDestination ? 2 : 1;
+                    currentLevelOrder += eventModel.targetPin.type === PinNames.childDestination ? 2 : 1;
                 }
 
                 let mediatorEvent = new MediatorEventModel();
                 mediatorEvent.eventType = MediatorEvents.levelChanged;
-                mediatorEvent.levelName = config.levels.order[currentLevelId];
+                mediatorEvent.levelName = config.levels.order[currentLevelOrder];
                 mediatorEvent.pinType = PinNames.destination;
                 this.stateChanged( mediatorEvent );
                 break;
@@ -234,10 +240,9 @@ export default class Mediator {
             }
 
             case MediatorEvents.loadmorePinsDetails: {
-
-                let currentTabName = config.tabs.tabsControl.getCurrentTabName();
-                let currentTabState = config.tabs.tabStates[currentTabName];
-                let pinType = this._getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
+                let currentTabName = config.tabs.tabsControl.getCurrentTabName(),
+                    currentTabState = config.tabs.tabStates[currentTabName],
+                    pinType = this._getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
 
                 let getPinsByPageRequest = config.dataLoader.getPinsByPage( pinType, currentTabState.currentPage + 1 );
 
@@ -308,8 +313,8 @@ export default class Mediator {
     }
 
     _updateTabState( response ) {
-        let currentTabName = config.tabs.tabsControl.getCurrentTabName();
-        let currentTabState = config.tabs.tabStates[currentTabName];
+        let currentTabName = config.tabs.tabsControl.getCurrentTabName(),
+            currentTabState = config.tabs.tabStates[currentTabName];
 
         currentTabState.currentPage = response.data.currentPage;
         currentTabState.totalPages = response.data.totalPages;

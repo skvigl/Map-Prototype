@@ -1,7 +1,8 @@
 "use strict";
 
-import { config } from '../../config';
+import {config} from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
+import LevelNames from '../../enums/levelNames';
 import PinNames from '../../enums/pinNames';
 import HolidayTypeNames from '../../enums/holidayTypeNames';
 import TabContent from '../tabContent';
@@ -9,18 +10,17 @@ import TabContent from '../tabContent';
 export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     constructor( name ) {
         super( [], name );
-        this.updatePinStrategies();
     }
 
     updatePinStrategies() {
-        let currentLevel = config.levels.currentLevel.id || 0,
+        let currentLevel = config.levels.currentLevel,
             currentHolidayType = config.currentHolidayType,
             allowedPinStrategies = [
-            PinNames.airport,
-            PinNames.destination
-        ];
+                PinNames.airport,
+                PinNames.destination
+            ];
 
-        if ( ( currentHolidayType === HolidayTypeNames.city && currentLevel === 2 ) || currentLevel === 3 ) {
+        if ( ( currentHolidayType === HolidayTypeNames.city && currentLevel.name === LevelNames.country ) || currentLevel.name === LevelNames.district ) {
             allowedPinStrategies.push( PinNames.poi, PinNames.hotel );
         }
 
@@ -28,16 +28,16 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     }
 
     generateContent() {
-        switch ( config.levels.currentLevel.id ) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+        switch ( config.levels.currentLevel.name ) {
+            case LevelNames.world:
+            case LevelNames.country:
+            case LevelNames.district:
+            case LevelNames.resort:
                 return new TabContent( this._generateLocationInfo(), null );
         }
     }
 
-    hasDetails(){
+    hasDetails() {
         return false;
     }
 }
