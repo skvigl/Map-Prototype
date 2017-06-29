@@ -78,6 +78,7 @@ export default class Mediator {
 
 
                     config.maps.destMapControl.drawAllPins();
+                    config.maps.destMapControl.removeLoadingClass();
                 } );
 
                 break;
@@ -96,6 +97,8 @@ export default class Mediator {
                     config.maps.destMapControl.drawAllPins();
                     return;
                 }
+
+                config.maps.destMapControl.addLoadingClass();
 
                 let getPinsRequest = config.dataLoader.getPins( pinType, currentLevelName );
 
@@ -127,6 +130,7 @@ export default class Mediator {
                 let pinsDetailsCallback = function pinsCallback( getPinsResponse, getPinsByPageResponse ) {
                     this._drawPinsDetails( getPinsByPageResponse );
                     this._updateTabState( getPinsByPageResponse );
+                    config.maps.destMapControl.removeLoadingClass();
                 };
 
                 config.dataLoader.getPinsMultithread( [getPinsRequest, getPinsByPageRequest], pinsDetailsCallback.bind( this ) );
@@ -135,6 +139,8 @@ export default class Mediator {
             case MediatorEvents.destinationPinClicked: {
                 let currentLevel = config.levels.currentLevel,
                     currentLevelOrder = config.levels.order.indexOf( currentLevel.name );
+
+                config.maps.destMapControl.addLoadingClass();
 
                 if ( !config.pins.currentLocation ) {
                     config.pins.currentLocation = {};
@@ -170,6 +176,8 @@ export default class Mediator {
 
                     tabsControl.updateTabContent( content );
                 } else {
+                    config.maps.destMapControl.addLoadingClass();
+
                     let getPinDetailsRequest = config.dataLoader.getPinDetails( [activePin.id], activePin.type );
 
                     getPinDetailsRequest.then( response => {
@@ -183,8 +191,8 @@ export default class Mediator {
                         let content = config.tabs.currentTab.generateDetailsCard( activePin );
 
                         tabsControl.updateTabContent( content );
+                        config.maps.destMapControl.removeLoadingClass();
                     } );
-
                 }
                 break;
             }
@@ -244,6 +252,8 @@ export default class Mediator {
                     currentTabState = config.tabs.tabStates[currentTabName],
                     pinType = this._getTargetPinType( config.tabs.currentTab.getPinStrategies(), currentTabName );
 
+                config.maps.destMapControl.addLoadingClass();
+
                 let getPinsByPageRequest = config.dataLoader.getPinsByPage( pinType, currentTabState.currentPage + 1 );
 
                 getPinsByPageRequest.then( ( response ) => {
@@ -255,6 +265,7 @@ export default class Mediator {
                     this._updatePins( response.data.pins );
                     this._drawPinsDetails( response );
                     this._updateTabState( response );
+                    config.maps.destMapControl.removeLoadingClass();
                 } );
                 break;
             }

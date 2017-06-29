@@ -28,7 +28,7 @@
         bottom: 0;
         display: inline-block;
         padding: 5px 10px;
-        background-color: white;
+        background-color: $color-white;
         border: 2px solid;
         font-weight: 500;
     }
@@ -44,32 +44,32 @@
     &.is-hover {
 
         #{$block}__heading {
-            color: white;
+            color: $color-white;
         }
     }
 
     &--beach {
-        background-color: lighten(dodgerblue, 10%);
+        background-color: lighten($color-beach, 10%);
 
         #{$block}__heading {
-            border-color: dodgerblue;
-            color: dodgerblue;
+            border-color: $color-beach;
+            color: $color-beach;
         }
     }
 
     &--beach.is-hover {
 
         #{$block}__heading {
-            background-color: dodgerblue;
+            background-color: $color-beach;
         }
     }
 
     &--city {
-        background-color: lighten(crimson, 10%);
+        background-color: lighten($color-city, 10%);
 
         #{$block}__heading {
-            border-color: crimson;
-            color: crimson;
+            border-color: $color-city;
+            color: $color-city;
 
             //It is doesn't work
             //#{$block}--city.is-hover & {
@@ -81,23 +81,23 @@
     &--city.is-hover {
 
         #{$block}__heading {
-            background-color: crimson;
+            background-color: $color-city;
         }
     }
 
     &--villas {
-        background-color: lighten(rebeccapurple, 10%);
+        background-color: lighten($color-villa, 10%);
 
         #{$block}__heading {
-            border-color: rebeccapurple;
-            color: rebeccapurple;
+            border-color: $color-villa;
+            color: $color-villa;
         }
     }
 
     &--villas.is-hover {
 
         #{$block}__heading {
-            background-color: rebeccapurple;
+            background-color: $color-villa;
         }
     }
 }
@@ -105,7 +105,7 @@
 .card {
     $this: &;
     display: none;
-    background-color: whitesmoke;
+    background-color: $color-whitesmoke;
 
     &__figure {
         position: relative;
@@ -160,40 +160,40 @@
     &--poi {
 
         #{$this}__figure {
-            background-color: cornflowerblue;
+            background-color: $color-poi;
         }
 
         #{$this}__heading {
-            color: cornflowerblue;
+            color: $color-poi;
         }
 
         #{$this}__footer {
-            border-color: cornflowerblue;
+            border-color: $color-poi;
         }
 
         #{$this}__btn {
-            color: darken(cornflowerblue, 5%);
+            color: darken($color-poi, 5%);
 
             &:hover,
             &:focus {
-                background-color: cornflowerblue;
-                color: white;
+                background-color: $color-poi;
+                color: $color-white;
             }
 
             &:active {
-                background-color: lighten(cornflowerblue, 5%);
+                background-color: lighten($color-poi, 5%);
             }
         }
 
         &__btn:first-child {
-            border-color: cornflowerblue;
+            border-color: $color-poi;
         }
     }
 
     &--hotel {
 
         #{$this}__figure {
-            background-color: goldenrod;
+            background-color: $color-hotel;
 
             &:after {
                 content: '';
@@ -216,28 +216,28 @@
         }
 
         #{$this}__heading {
-            color: goldenrod;
+            color: $color-hotel;
         }
 
         #{$this}__footer {
-            border-color: goldenrod;
+            border-color: $color-hotel;
         }
 
         #{$this}__btn {
-            color: darken(goldenrod, 5%);
+            color: darken($color-hotel, 5%);
 
             &:hover,
             &:focus {
-                background-color: goldenrod;
-                color: white;
+                background-color: $color-hotel;
+                color: $color-white;
             }
             &:active {
-                background-color: lighten(goldenrod, 5%);
+                background-color: lighten($color-hotel, 5%);
             }
         }
 
         &__btn:first-child {
-            border-color: goldenrod;
+            border-color: $color-hotel;
         }
     }
 
@@ -254,7 +254,7 @@
         border-bottom: 2px solid;
         font-size: 1.5rem;
         font-weight: 700;
-        color: cornflowerblue;
+        color: $color-poi;
         text-transform: uppercase;
     }
 
@@ -269,14 +269,14 @@
     &__more {
         display: block;
         padding: 10px 10px;
-        background-color: cornflowerblue;
-        color: white;
+        background-color: $color-poi;
+        color: $color-white;
         text-align: center;
         text-decoration: none;
         text-transform: uppercase;
 
         &:hover {
-            background-color: darken(cornflowerblue, 5%);
+            background-color: darken($color-poi, 5%);
         }
     }
 

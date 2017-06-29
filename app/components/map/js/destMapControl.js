@@ -33,7 +33,6 @@ export default class DestMapControl extends BaseComponent {
 
     destroy() {
         this.removeListeners();
-        console.log( this );
     }
 
     drawAllPins() {
@@ -81,6 +80,14 @@ export default class DestMapControl extends BaseComponent {
             config.filters.filterAirportControl.updateVisibility( false );
             config.filters.filterHolidayTypeControl.updateVisibility( false );
         }
+    }
+
+    addLoadingClass() {
+        this.rootNode.classList.add('is-loading');
+    }
+
+    removeLoadingClass() {
+        this.rootNode.classList.remove('is-loading');
     }
 
     _drawPinsByStrategy( strategy ) {
@@ -193,7 +200,7 @@ export default class DestMapControl extends BaseComponent {
         if ( !target ) {
             return false;
         }
-        console.log(config.levels.locationsHistory);
+
         let targetLocation = config.levels.locationsHistory.pop();
 
         if ( !targetLocation ) {
