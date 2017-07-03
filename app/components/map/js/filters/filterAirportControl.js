@@ -48,7 +48,7 @@ export default class FilterAirportControl extends BaseComponent {
 
     updateVisibility( shouldVisible ) {
 
-        this.rootNode.classList[ shouldVisible ? 'add' : 'remove' ]('is-visible');
+        //this.rootNode.classList[ shouldVisible ? 'add' : 'remove' ]('is-visible');
 
         if ( shouldVisible ) {
             this.rootNode.classList.add( 'is-visible' );
