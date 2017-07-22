@@ -1,5 +1,3 @@
-'use strict';
-
 import { config } from '../config';
 import LevelNames from '../enums/levelNames';
 import MobileZeroLevelStrategy from './mobileZeroLevelStrategy';
@@ -8,11 +6,7 @@ import ZeroLevelStrategy from './ZeroLevelStrategy';
 import NestedLevelStrategy from './NestedLevelStrategy';
 
 export default class LevelsFactory {
-    constructor() {
-    }
-
     static getLevelStrategy( levelName ) {
-
         if ( config.maps.isMobile ) {
             switch ( levelName ) {
                 case LevelNames.world:
@@ -21,6 +15,8 @@ export default class LevelsFactory {
                 case LevelNames.district:
                 case LevelNames.resort:
                     return new MobileNestedLevelStrategy();
+                default:
+                    throw new Error(`Unsupported level name: ${levelName}`);
             }
         } else {
             switch ( levelName ) {
@@ -30,6 +26,8 @@ export default class LevelsFactory {
                 case LevelNames.district:
                 case LevelNames.resort:
                     return new NestedLevelStrategy();
+                default:
+                    throw new Error(`Unsupported level name: ${levelName}`);
             }
         }
     }

@@ -1,4 +1,5 @@
-"use strict";
+/* globals google */
+/* eslint-disable no-unused-vars */
 
 import { config } from '../config';
 import MediatorEvents from '../enums/mediatorEvents';
@@ -6,11 +7,8 @@ import MediatorEventModel from '../models/mediatorEventModel';
 
 
 export default class AbstractPinStrategy {
-    constructor() {
-    }
-
     generateMultiplePins( pinsArray, pinType, holidayType ) {
-        let pins = [];
+        const pins = [];
 
         if ( pinsArray === undefined ) {
             pinsArray = config.pins.data;
@@ -26,8 +24,7 @@ export default class AbstractPinStrategy {
     }
 
     generateMultipleContent( pinsArray, pinType ) {
-        let views = [],
-            view = null;
+        const views = [];
 
         if ( pinsArray === undefined ) {
             pinsArray = config.pins.data;
@@ -36,7 +33,7 @@ export default class AbstractPinStrategy {
         pinsArray.forEach( ( pin ) => {
             if ( pin.type === pinType ) {
                 if ( pin.view === undefined ) {
-                    view = this._generateView( pin );
+                    this._generateView( pin );
 
                     if ( pin.view !== null ) {
                         views.push( pin.view );
@@ -55,7 +52,7 @@ export default class AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
-        let activePin = config.pins.activePin;
+        const activePin = config.pins.activePin;
 
         if ( activePin && activePin.marker ) {
             activePin.marker.classList.remove( 'is-active' );
@@ -65,7 +62,7 @@ export default class AbstractPinStrategy {
             pin.marker.classList.add( 'is-active' );
         }
 
-        let mediatorEvent = new MediatorEventModel();
+        const mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.pinClicked;
         mediatorEvent.targetPin = pin;
 
@@ -73,10 +70,7 @@ export default class AbstractPinStrategy {
     }
 
     onPinMouseover( pin ) {
-
-        if ( !pin ) {
-            return false;
-        }
+        if ( !pin ) return;
 
         if ( pin.marker ) {
             pin.marker.classList.add( 'is-hover' );
@@ -89,10 +83,7 @@ export default class AbstractPinStrategy {
     }
 
     onPinMouseout( pin ) {
-
-        if ( !pin ) {
-            return false;
-        }
+        if ( !pin ) return;
 
         if ( pin.marker ) {
             pin.marker.classList.remove( 'is-hover' );
@@ -123,7 +114,6 @@ export default class AbstractPinStrategy {
     }
 
     _generateContent( params ) {
-
         if ( !params.pin[params.key] ) {
             params.pin[params.key] = this._html2dom( params.template( params.pin ) );
         }
@@ -141,7 +131,7 @@ export default class AbstractPinStrategy {
     }
 
     _html2dom( html ) {
-        let container = document.createElement( 'div' );
+        const container = document.createElement( 'div' );
         container.innerHTML = html;
         return container.firstChild;
     }

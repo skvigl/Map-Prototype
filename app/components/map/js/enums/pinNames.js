@@ -1,10 +1,4 @@
-'use strict';
-
 export default class PinNames {
-
-    constructor() {
-    }
-
     static get airport() {
         return 'Airport';
     }

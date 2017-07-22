@@ -1,5 +1,3 @@
-'use strict';
-
 import PinNames from '../enums/pinNames';
 import DestinationPinStrategy from './destinationPinStrategy';
 import ChildDestinationPinStrategy from './childDestinationPinStrategy';
@@ -8,10 +6,7 @@ import PoiPinStrategy from './PoiPinStrategy';
 import HotelPinStrategy from './HotelPinStrategy';
 
 export default class PinFactory {
-    constructor() {
-    }
-
-    static getPinStrategy( pinType, holidayType ) {
+    static getPinStrategy( pinType ) {
         switch ( pinType ) {
             case PinNames.airport:
                 return new AirportPinStrategy();
@@ -23,18 +18,8 @@ export default class PinFactory {
                 return new PoiPinStrategy();
             case PinNames.hotel:
                 return new HotelPinStrategy();
+            default:
+                throw new Error( `Unsupported pin type: ${pinType}` );
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,3 @@
-"use strict";
-
 import {config} from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import LevelNames from '../../enums/levelNames';
@@ -13,18 +11,20 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
     }
 
     updatePinStrategies() {
-        let currentLevel = config.levels.currentLevel,
+        const currentLevel = config.levels.currentLevel,
             currentHolidayType = config.currentHolidayType,
             allowedPinStrategies = [
                 PinNames.airport,
                 PinNames.destination
             ];
 
-        if ( ( currentHolidayType === HolidayTypeNames.city && currentLevel.name === LevelNames.country ) || currentLevel.name === LevelNames.district ) {
+        if ( ( currentHolidayType === HolidayTypeNames.city &&
+                currentLevel.name === LevelNames.country ) ||
+                currentLevel.name === LevelNames.district ) {
             allowedPinStrategies.push( PinNames.poi, PinNames.hotel );
         }
 
-        this._pinStrategies = allowedPinStratagies;
+        this._pinStrategies = allowedPinStrategies;
     }
 
     generateContent() {
@@ -34,6 +34,8 @@ export default class MobileOverviewTabStrategy extends AbstractTabStrategy {
             case LevelNames.district:
             case LevelNames.resort:
                 return new TabContent( this._generateLocationInfo(), null );
+            default:
+                throw new Error(`Unsupported level name: ${config.levels.currentLevel.name}`);
         }
     }
 

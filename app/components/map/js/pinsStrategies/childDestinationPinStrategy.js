@@ -1,5 +1,3 @@
-"use strict";
-
 import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
@@ -26,18 +24,18 @@ export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
         };
     }
 
-    generateMultiplePins( pinsArray, holidayType = HolidayTypeNames.beach  ) {
+    generateMultiplePins( pinsArray, holidayType = HolidayTypeNames.beach ) {
         return super.generateMultiplePins( pinsArray, PinNames.childDestination, holidayType );
     }
 
-    generateMultipleContent( pinsArray ) {
+    generateMultipleContent() {
         return null;
     }
 
     _generatePin( pin ) {
         pin.markerModifiers = this.markerModifiers[pin.holidayType];
 
-        let params = new GenerateContentModel();
+        const params = new GenerateContentModel();
         params.pin = pin;
         params.key = 'marker';
         params.template = MarkerChildDestTemplate;
@@ -47,15 +45,15 @@ export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
     }
 
     onPinClick( pin ) {
-        let mediatorEvent = new MediatorEventModel();
+        const mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.destinationPinClicked;
         mediatorEvent.targetPin = pin;
         config.mediator.stateChanged( mediatorEvent );
     }
 
     checkPinVisibility( pin ) {
-        let pinVisiblity = true,
-            holidayType = config.filters.currentHolidayType;
+        let pinVisiblity = true;
+        const holidayType = config.filters.currentHolidayType;
 
         if ( holidayType !== undefined ) {
             if ( pinVisiblity && pin.holidayType !== holidayType ) {
@@ -63,6 +61,6 @@ export default class ChildDestinationPinStrategy extends AbstractPinStrategy {
             }
         }
 
-        return pinVisiblity
+        return pinVisiblity;
     }
 }

@@ -1,5 +1,3 @@
-"use strict";
-
 import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import PinNames from '../enums/pinNames';
@@ -37,13 +35,13 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
     }
 
     generateLocationInfo() {
-        let locationPin = config.pins.currentLocation;
+        const locationPin = config.pins.currentLocation;
 
         if ( locationPin.view ) {
             return locationPin.view;
         }
 
-        let params = new GenerateContentModel();
+        const params = new GenerateContentModel();
         params.pin = locationPin;
         params.key = 'view';
         params.template = LocOverviewTemplate;
@@ -55,7 +53,7 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
     _generatePin( pin ) {
         pin.markerModifiers = this.markerModifiers[pin.holidayType];
 
-        let params = new GenerateContentModel();
+        const params = new GenerateContentModel();
         params.pin = pin;
         params.key = 'marker';
         params.template = MarkerDestTemplate;
@@ -67,29 +65,30 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
     _generateView( pin ) {
         pin.viewModifiers = this.viewModifiers[pin.holidayType];
 
-        let params = new GenerateContentModel();
+        const params = new GenerateContentModel();
         params.pin = pin;
         params.key = 'view';
         params.template = CardDestTemplate;
 
         super._generateContent( params );
-        return pin;
     }
 
     onPinClick( pin ) {
-        let mediatorEvent = new MediatorEventModel();
+        const mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.destinationPinClicked;
         mediatorEvent.targetPin = pin;
         config.mediator.stateChanged( mediatorEvent );
     }
 
     checkPinVisibility( pin ) {
-        let pinVisiblity = true,
-            airportId = config.filters.currentAirportId,
+        let pinVisiblity = true;
+        const airportId = config.filters.currentAirportId,
             holidayType = config.filters.currentHolidayType;
 
         if ( airportId !== undefined && airportId !== 'default' ) {
-            if ( pinVisiblity && pin.allowedAirportIds && pin.allowedAirportIds.indexOf( airportId ) === -1 ) {
+            if ( pinVisiblity &&
+                pin.allowedAirportIds &&
+                pin.allowedAirportIds.indexOf( airportId ) === -1 ) {
                 pinVisiblity = false;
             }
         }
@@ -100,6 +99,6 @@ export default class DestinationPinStrategy extends AbstractPinStrategy {
             }
         }
 
-        return pinVisiblity
+        return pinVisiblity;
     }
 }

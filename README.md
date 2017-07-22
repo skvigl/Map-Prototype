@@ -1,6 +1,6 @@
 # Map-Prototype
 
-##Steps
+## Steps
 * clone perository
 * npm install
 * npm start

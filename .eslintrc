@@ -1,0 +1,52 @@
+{
+    "env": {
+        "es6": true,
+        "browser": true
+    },
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-console": "warn",
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "indent": ["error", 4, {
+            "SwitchCase": 1,
+            "VariableDeclarator": 1,
+            "outerIIFEBody": 1,
+            // MemberExpression: null,
+            // CallExpression: {
+            // parameters: null,
+            // },
+            "FunctionDeclaration": {
+                "parameters": 1,
+                "body": 1
+            },
+            "FunctionExpression": {
+                "parameters": 1,
+                "body": 1
+            }
+        }],
+        "comma-dangle": "off",
+        "space-in-parens": "off",
+        "object-curly-spacing": "off",
+        "array-bracket-spacing": "off",
+        "computed-property-spacing": "off",
+        "no-underscore-dangle": "off",
+        "one-var": "off",
+        "no-plusplus": "off",
+        "no-shadow": "off",
+        // how to imporve it
+        "class-methods-use-this": "off",
+        "no-param-reassign": "off",
+        "max-len": "warn",
+        //need to dig deeper
+        "import/no-extraneous-dependencies": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "import/first": "off"
+    }
+}

@@ -1,5 +1,3 @@
-"use strict";
-
 import { config } from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import LevelNames from '../../enums/levelNames';
@@ -41,16 +39,14 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
                     PinNames.hotel
                 ];
                 break;
-            default: {
-                console.log( 'Unknown level name: ' + levelName );
-            }
+            default:
+                throw new Error(`Unsupported level name: ${config.levels.currentLevel.name}`);
         }
 
         this._pinStrategies = allowedPinStratagies;
     }
 
     generateContent() {
-
         switch ( config.levels.currentLevel.name ) {
             case LevelNames.world:
                 return new TabContent( null, this._generateCards() );
@@ -60,6 +56,8 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
                 return new TabContent( this._generateLocationInfo(), this._generateCards() );
             case LevelNames.resort:
                 return new TabContent( this._generateLocationInfo(), null );
+            default:
+                throw new Error(`Unsupported level name: ${config.levels.currentLevel.name}`);
         }
     }
 
@@ -67,7 +65,7 @@ export default class OverviewTabStrategy extends AbstractTabStrategy {
         return false;
     }
 
-    _generateLocationInfo () {
+    _generateLocationInfo() {
         return config.pins.strategies[PinNames.destination].generateLocationInfo();
     }
 }

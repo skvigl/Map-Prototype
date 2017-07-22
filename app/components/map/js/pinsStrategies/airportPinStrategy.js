@@ -1,5 +1,3 @@
-"use strict";
-
 import { config } from '../config';
 import AbstractPinStrategy from './abstractPinStrategy';
 import LevelNames from '../enums/levelNames';
@@ -10,23 +8,17 @@ import MediatorEvents from '../enums/mediatorEvents';
 import MediatorEventModel from '../models/mediatorEventModel';
 
 export default class AirportPinStrategy extends AbstractPinStrategy {
-    constructor() {
-        super();
-    }
-
     generateMultiplePins( pinsArray ) {
         return super.generateMultiplePins( pinsArray, PinNames.airport );
     }
 
-    generateMultipleContent( pinsArray ) {
+    generateMultipleContent() {
         return null;
     }
 
     onPinClick( pin ) {
-
         if ( config.levels.currentLevel.name === LevelNames.world ) {
-
-            let activePin = config.pins.activePin;
+            const activePin = config.pins.activePin;
 
             if ( activePin && activePin.marker ) {
                 activePin.marker.classList.remove( 'is-active' );
@@ -36,7 +28,7 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
                 pin.marker.classList.add( 'is-active' );
             }
 
-            let mediatorEvent = new MediatorEventModel();
+            const mediatorEvent = new MediatorEventModel();
             mediatorEvent.eventType = MediatorEvents.filterPins;
             mediatorEvent.airportId = pin.id;
             mediatorEvent.targetPin = pin;
@@ -44,10 +36,10 @@ export default class AirportPinStrategy extends AbstractPinStrategy {
         }
     }
 
-    _generatePin ( pin ) {
+    _generatePin( pin ) {
         pin.markerModifiers = 'marker--airport';
 
-        let params = new GenerateContentModel();
+        const params = new GenerateContentModel();
         params.pin = pin;
         params.key = 'marker';
         params.template = MarkerTemplate;

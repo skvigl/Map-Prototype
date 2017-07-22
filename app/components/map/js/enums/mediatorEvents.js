@@ -1,9 +1,4 @@
-"use strict";
-
 export default class MediatorEvents {
-    constructor() {
-    }
-
     static get levelChanged() {
         return 'LEVEL_CHANGED';
     }

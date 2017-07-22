@@ -1,9 +1,7 @@
-'use strict';
-
 export default class BaseComponent {
     constructor( name ) {
         this.name = name;
-        this.rootNode = document.querySelector('[data-component=' + this.name + ']');
+        this.rootNode = document.querySelector(`[data-component=${this.name}]`);
         this.prefix = '';
         this.settings = {};
         this.listeners = {};
@@ -27,13 +25,9 @@ export default class BaseComponent {
     removeListeners() {
     }
 
-    //private methods =/ ??
-
     _findElemNode( currentNode, rootNode, elemName ) {
-
         while ( currentNode && currentNode !== rootNode ) {
-
-            if ( currentNode.getAttribute('data-' + this.prefix + '-elem' ) === elemName ) {
+            if ( currentNode.getAttribute(`data-${this.prefix}-elem`) === elemName ) {
                 return currentNode;
             }
 

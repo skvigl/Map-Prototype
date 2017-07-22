@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "development": "webpack --dev --watch",
-    "production": "webpack --live"
+    "production": "webpack --live",
+    "lint": "eslint app"
   },
   "author": "Random User",
   "license": "ISC",
@@ -22,6 +23,9 @@
     "css-loader": "^0.26.1",
     "css-mqpacker": "^5.0.1",
     "cssnano": "^3.9.1",
+    "eslint": "^4.2.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
     "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "^1.0.1",

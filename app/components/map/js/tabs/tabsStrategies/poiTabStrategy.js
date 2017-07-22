@@ -1,5 +1,3 @@
-"use strict";
-
 import { config } from '../../config';
 import AbstractTabStrategy from './abstractTabStrategy';
 import LevelNames from '../../enums/levelNames';
@@ -8,7 +6,7 @@ import TabContent from '../tabContent';
 
 export default class PoiTabStrategy extends AbstractTabStrategy {
     constructor( name ) {
-        let allowedPinTypes = [
+        const allowedPinTypes = [
             PinNames.poi
         ];
         super( allowedPinTypes, name );
@@ -19,7 +17,9 @@ export default class PoiTabStrategy extends AbstractTabStrategy {
             case LevelNames.country:
             case LevelNames.district:
             case LevelNames.resort:
-                return new TabContent( null , this._generateCards( pins ) );
+                return new TabContent( null, this._generateCards( pins ) );
+            default:
+                throw new Error(`Unsupported level name: ${config.levels.currentLevel.name}`);
         }
     }
 }

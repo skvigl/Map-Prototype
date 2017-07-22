@@ -1,10 +1,4 @@
-'use strict';
-
 export default class TabNames {
-
-    constructor() {
-    }
-
     static get overview() {
         return 'overview';
     }

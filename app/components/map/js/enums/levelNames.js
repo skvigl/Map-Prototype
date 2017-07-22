@@ -1,10 +1,4 @@
-'use strict';
-
 export default class LevelNames {
-
-    constructor() {
-    }
-
     static get world() {
         return 'World';
     }

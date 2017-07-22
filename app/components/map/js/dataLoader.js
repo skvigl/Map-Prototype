@@ -1,19 +1,13 @@
-"use strict";
-
 import axios from 'axios';
 
 export default class DataLoader {
-    constructor() {
-    }
-
     getConfig() {
-        //if we need to download special state from server
+        //  if we need to download special state from server
     }
 
     getPins( type, levelName ) {
-
-        //just for example purpose
-        let url = '/app/data/getPins' + type + levelName + '.json';
+        //  just for example purpose
+        const url = `/app/data/getPins${type}${levelName}.json`;
 
         return axios( {
             url,
@@ -21,13 +15,12 @@ export default class DataLoader {
                 type,
                 levelName
             }
-        });
+        } );
     }
 
     getPinsByPage( type, page ) {
-
-        //just for example purpose
-        let url = '/app/data/getPinsByPage' + type + page + '.json';
+        //  just for example purpose
+        const url = `/app/data/getPinsByPage${type}${page}.json`;
 
         return axios( {
             url,
@@ -35,13 +28,12 @@ export default class DataLoader {
                 type,
                 page
             }
-        });
+        } );
     }
 
     getPinDetails( idList, type ) {
-
-        //just for example purpose
-        let url = '/app/data/getPinDetails' + type + '.json';
+        //  just for example purpose
+        const url = `/app/data/getPinDetails${type}.json`;
 
         return axios( {
             url,
@@ -49,10 +41,10 @@ export default class DataLoader {
                 idList,
                 type
             }
-        });
+        } );
     }
 
-    getPinsMultithread( requests, callback ){
-        axios.all(requests).then(axios.spread(callback));
+    getPinsMultithread( requests, callback ) {
+        axios.all( requests ).then( axios.spread( callback ) );
     }
 }

@@ -1,7 +1,5 @@
-'use strict';
-
 import BaseComponent from 'generic/baseComponent';
-import {config} from './config';
+import { config } from './config';
 import LevelNames from './enums/levelNames';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
@@ -23,7 +21,7 @@ export default class DestMapControl extends BaseComponent {
     }
 
     initLevel() {
-        let mediatorEvent = new MediatorEventModel();
+        const mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
         mediatorEvent.levelName = LevelNames.world;
         mediatorEvent.pinType = PinNames.destination;
@@ -36,20 +34,20 @@ export default class DestMapControl extends BaseComponent {
     }
 
     drawAllPins() {
-        config.tabs.currentTab.getPinStrategies().forEach( strategy => {
+        config.tabs.currentTab.getPinStrategies().forEach( ( strategy ) => {
             this._drawPinsByStrategy( strategy );
         } );
         config.maps.destMapControl.updatePinsVisibility();
     }
 
     removeAllPins() {
-        config.pins.data.forEach( pin => {
+        config.pins.data.forEach( ( pin ) => {
             config.maps.googleMapControl.removeMarker( pin );
         } );
     }
 
     hideAllPins() {
-        config.pins.data.forEach( pin => {
+        config.pins.data.forEach( ( pin ) => {
             if ( pin.marker ) {
                 pin.marker.classList.remove( 'is-visible' );
             }
@@ -57,13 +55,12 @@ export default class DestMapControl extends BaseComponent {
     }
 
     updatePinsVisibility() {
-        config.tabs.currentTab.getPinStrategies().forEach( strategy => {
+        config.tabs.currentTab.getPinStrategies().forEach( ( strategy ) => {
             this._updatePinsVisibilityByStrategy( strategy );
         } );
     }
 
     updateBtnBackToLevelVisibility( isVisible ) {
-
         if ( isVisible ) {
             this.btnBackToLevel.classList.remove( 'is-hidden' );
         } else {
@@ -72,7 +69,6 @@ export default class DestMapControl extends BaseComponent {
     }
 
     updateFiltersVisibility( levelName ) {
-
         if ( levelName === LevelNames.world ) {
             config.filters.filterAirportControl.updateVisibility( true );
             config.filters.filterHolidayTypeControl.updateVisibility( true );
@@ -83,35 +79,33 @@ export default class DestMapControl extends BaseComponent {
     }
 
     addLoadingClass() {
-        this.rootNode.classList.add('is-loading');
+        this.rootNode.classList.add( 'is-loading' );
     }
 
     removeLoadingClass() {
-        this.rootNode.classList.remove('is-loading');
+        this.rootNode.classList.remove( 'is-loading' );
     }
 
     _drawPinsByStrategy( strategy ) {
-        let currentPinStrategy = config.pins.strategies[strategy],
+        const currentPinStrategy = config.pins.strategies[strategy],
             pins = currentPinStrategy.generateMultiplePins();
 
-        pins.forEach( pin => {
+        pins.forEach( ( pin ) => {
             config.maps.googleMapControl.addMarker( pin );
         } );
     }
 
     _updatePinsVisibilityByStrategy( strategy ) {
-        let currentPinStrategy = config.pins.strategies[strategy],
+        const currentPinStrategy = config.pins.strategies[strategy],
             pins = currentPinStrategy.generateMultiplePins();
 
-        pins.forEach( pin => {
-
+        pins.forEach( ( pin ) => {
             if ( currentPinStrategy.checkPinVisibility( pin ) ) {
                 pin.marker.classList.add( 'is-visible' );
 
                 if ( pin.view ) {
                     pin.view.classList.add( 'is-visible' );
                 }
-
             } else {
                 pin.marker.classList.remove( 'is-visible' );
 
@@ -125,89 +119,79 @@ export default class DestMapControl extends BaseComponent {
     addListeners() {
         this.rootNode.addEventListener(
             'click',
-            this.listeners.onClickMarkerHandler = event => this._onClickPinHandler( event, 'marker' )
+            this.listeners.onClickMarkerHandler = () => this._onClickPinHandler( event, 'marker' )
         );
 
         this.rootNode.addEventListener(
             'click',
-            this.listeners.onClickCardHandler = event => this._onClickPinHandler( event, 'card' )
+            this.listeners.onClickCardHandler = () => this._onClickPinHandler( event, 'card' )
         );
 
         this.rootNode.addEventListener(
             'mouseover',
-            this.listeners.onMouseoverMarkerHandler = ( event, elemName ) => this._onMouseoverPinHandler( event, 'marker' )
+            this.listeners.onMouseoverMarkerHandler = () => this._onMouseoverPinHandler( event, 'marker' )
         );
 
         this.rootNode.addEventListener(
             'mouseover',
-            this.listeners.onMouseoverCardHandler = ( event, elemName ) => this._onMouseoverPinHandler( event, 'card' )
+            this.listeners.onMouseoverCardHandler = () => this._onMouseoverPinHandler( event, 'card' )
         );
 
         this.rootNode.addEventListener(
             'mouseout',
-            this.listeners.onMouseoutMarkerHandler = ( event, elemName ) => this._onMouseoutPinHandler( event, 'marker' )
+            this.listeners.onMouseoutMarkerHandler = () => this._onMouseoutPinHandler( event, 'marker' )
         );
 
         this.rootNode.addEventListener(
             'mouseout',
-            this.listeners.onMouseoutCardHandler = ( event, elemName ) => this._onMouseoutPinHandler( event, 'card' )
+            this.listeners.onMouseoutCardHandler = () => this._onMouseoutPinHandler( event, 'card' )
         );
 
         this.rootNode.addEventListener(
             'click',
-            this.listeners.onClickBtnLevelBackHandler = event => this._onClickBtnLevelBackHandler( event, 'back-to-level' )
+            this.listeners.onClickBtnLevelBackHandler = () => this._onClickBtnLevelBackHandler( event, 'back-to-level' )
         );
 
         this.rootNode.addEventListener(
             'click',
-            this.listeners.onClickBtnViewOnMapHandler = event => this._onClickBtnViewOnMapHandler( event, 'view-on-map' )
+            this.listeners.onClickBtnViewOnMapHandler = () => this._onClickBtnViewOnMapHandler( event, 'view-on-map' )
         );
     }
 
     _onClickPinHandler( event, elemName ) {
-        let pin = this._getEventTargetPin( event, elemName );
+        const pin = this._getEventTargetPin( event, elemName );
 
-        if ( !pin ) {
-            return false;
-        }
+        if ( !pin ) return;
 
         config.pins.strategies[pin.type].onPinClick( pin );
     }
 
     _onMouseoverPinHandler( event, elemName ) {
-        let pin = this._getEventTargetPin( event, elemName );
+        const pin = this._getEventTargetPin( event, elemName );
 
-        if ( !pin ) {
-            return false;
-        }
+        if ( !pin ) return;
 
         config.pins.strategies[pin.type].onPinMouseover( pin );
     }
 
     _onMouseoutPinHandler( event, elemName ) {
-        let pin = this._getEventTargetPin( event, elemName );
+        const pin = this._getEventTargetPin( event, elemName );
 
-        if ( !pin ) {
-            return false;
-        }
+        if ( !pin ) return;
 
         config.pins.strategies[pin.type].onPinMouseout( pin );
     }
 
     _onClickBtnLevelBackHandler( event, elemName ) {
-        let target = this._findElemNode( event.target, this.rootNode, elemName );
+        const target = this._findElemNode( event.target, this.rootNode, elemName );
 
-        if ( !target ) {
-            return false;
-        }
+        if ( !target ) return;
 
-        let targetLocation = config.levels.locationsHistory.pop();
+        const targetLocation = config.levels.locationsHistory.pop();
 
-        if ( !targetLocation ) {
-            return false;
-        }
+        if ( !targetLocation ) return;
 
-        let mediatorEvent = new MediatorEventModel();
+        const mediatorEvent = new MediatorEventModel();
         mediatorEvent.eventType = MediatorEvents.levelChanged;
         mediatorEvent.levelName = targetLocation.levelName;
         mediatorEvent.pinType = PinNames.destination;
@@ -216,24 +200,20 @@ export default class DestMapControl extends BaseComponent {
     }
 
     _onClickBtnViewOnMapHandler( event, elemName ) {
-        let target = this._findElemNode( event.target, this.rootNode, elemName );
+        const target = this._findElemNode( event.target, this.rootNode, elemName );
 
-        if ( !target ) {
-            return false;
-        }
+        if ( !target ) return;
 
-        let pin = this._getEventTargetPin( event, elemName );
+        const pin = this._getEventTargetPin( event, elemName );
 
-        if ( !pin ) {
-            return false;
-        }
+        if ( !pin ) return;
 
         config.maps.googleMapControl.setCenter( {
             lat: pin.lat,
             lng: pin.lng
         } );
 
-        let activePin = config.pins.activePin;
+        const activePin = config.pins.activePin;
 
         if ( activePin ) {
             config.pins.strategies[activePin.type].removeActiveClass( activePin );
@@ -244,17 +224,12 @@ export default class DestMapControl extends BaseComponent {
     }
 
     _getEventTargetPin( event, elemName ) {
-        let target = this._findElemNode( event.target, this.rootNode, elemName );
+        const target = this._findElemNode( event.target, this.rootNode, elemName );
 
-        if ( !target ) {
-            return null;
-        }
+        if ( !target ) return null;
 
-        let id = target.getAttribute( 'data-dm-pin-id' );
+        const id = target.getAttribute( 'data-dm-pin-id' );
 
         return PinsHelper.findPin( id );
     }
 }
-
-
-

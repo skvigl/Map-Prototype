@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint-disable no-use-before-define */
 import LevelNames from './enums/levelNames';
 import PinNames from './enums/pinNames';
 import TabNames from './enums/tabNames';
@@ -16,7 +15,6 @@ import DestMapControl from './destMapControl';
 import GoogleMapControl from './gmap/googleMapControl';
 
 export class Config {
-
     constructor() {
         this._config = {
             maps: {
@@ -89,12 +87,12 @@ export class Config {
             }
         };
 
-        for ( let levelName in config.levels.strategies ) {
-            let level = config.levels.strategies[levelName];
+        Object.keys( config.levels.strategies ).forEach( ( levelName ) => {
+            const level = config.levels.strategies[levelName];
 
             level.strategy = LevelsFactory.getLevelStrategy( levelName );
             level.tabs = level.strategy.getTabs();
-        }
+        } );
 
         config.tabs.strategies = {
             [ TabNames.overview ]: TabsFactory.getTabStrategy( TabNames.overview ),
@@ -125,7 +123,7 @@ export class Config {
     }
 }
 
-export let config = Config.instance;
+export const config = Config.instance;
 Config.init();
 
 window.initMap = function initMap() {
