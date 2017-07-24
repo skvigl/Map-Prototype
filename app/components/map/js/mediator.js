@@ -119,7 +119,10 @@ export default class Mediator {
                     this._updatePins( response.data.pins );
                 } );
 
-                const pinsDetailsCallback = function pinsCallback( getPinsResponse, getPinsByPageResponse ) {
+                const pinsDetailsCallback = function pinsCallback(
+                    getPinsResponse,
+                    getPinsByPageResponse
+                ) {
                     this._drawPinsDetails( getPinsByPageResponse );
                     this._updateTabState( getPinsByPageResponse );
                     config.maps.destMapControl.removeLoadingClass();
@@ -133,6 +136,7 @@ export default class Mediator {
             }
             case MediatorEvents.destinationPinClicked: {
                 const currentLevel = config.levels.currentLevel;
+                const targetPin = eventModel.targetPin;
                 let currentLevelOrder = config.levels.order.indexOf( currentLevel.name );
 
                 config.maps.destMapControl.addLoadingClass();
@@ -143,14 +147,13 @@ export default class Mediator {
 
                 config.pins.currentLocation.levelName = currentLevel.name;
                 config.levels.locationsHistory.push( config.pins.currentLocation );
-                config.pins.currentLocation = Object.assign( {}, eventModel.targetPin );
-                config.pins.currentLocation = Object.assign( {}, eventModel.targetPin );
+                config.pins.currentLocation = Object.assign( {}, targetPin );
                 config.pins.currentLocation.view = null;
 
-                if ( eventModel.targetPin.holidayType === HolidayTypeNames.city ) {
+                if ( targetPin.holidayType === HolidayTypeNames.city ) {
                     currentLevelOrder = 3;
                 } else {
-                    currentLevelOrder += eventModel.targetPin.type === PinNames.childDestination ? 2 : 1;
+                    currentLevelOrder += targetPin.type === PinNames.childDestination ? 2 : 1;
                 }
 
                 const mediatorEvent = new MediatorEventModel();
@@ -248,11 +251,15 @@ export default class Mediator {
                     currentTabState = config.tabs.tabStates[currentTabName],
                     pinType = this._getTargetPinType(
                         config.tabs.currentTab.getPinStrategies(),
-                        currentTabName );
+                        currentTabName
+                    );
 
                 config.maps.destMapControl.addLoadingClass();
 
-                const getPinsByPageRequest = config.dataLoader.getPinsByPage( pinType, currentTabState.currentPage + 1 );
+                const getPinsByPageRequest = config.dataLoader.getPinsByPage(
+                    pinType,
+                    currentTabState.currentPage + 1
+                );
 
                 getPinsByPageRequest.then( ( response ) => {
                     if ( !response.data ) return;
@@ -266,7 +273,9 @@ export default class Mediator {
             }
 
             default: {
-                console.log( eventModel.eventType, ' hasn\'t been handled.' );
+                if ( console in window ) {
+                    console.log( eventModel.eventType, ' hasn\'t been handled.' );
+                }
             }
         }
     }
@@ -275,20 +284,6 @@ export default class Mediator {
         if ( tabName === TabNames.overview ) return PinNames.destination;
 
         const filteredPinTypes = [];
-
-        // console.log( pinTypes);
-
-        // for ( let pinType in pinTypes ) {
-        //     if ( !pinTypes.hasOwnProperty( pinType ) ) {
-        //         continue;
-        //     }
-        //
-        //     if ( pinTypes[pinType] !== PinNames.childDestination && pinTypes[pinType] !== PinNames.airport ) {
-        //         return pinTypes[pinType];
-        //     }
-        // }
-
-        // chto blyat zdes proishodit??
 
         pinTypes.forEach( ( pinType ) => {
             if ( pinType !== PinNames.childDestination &&

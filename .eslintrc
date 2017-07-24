@@ -17,10 +17,6 @@
             "SwitchCase": 1,
             "VariableDeclarator": 1,
             "outerIIFEBody": 1,
-            // MemberExpression: null,
-            // CallExpression: {
-            // parameters: null,
-            // },
             "FunctionDeclaration": {
                 "parameters": 1,
                 "body": 1
@@ -30,16 +26,16 @@
                 "body": 1
             }
         }],
-        "comma-dangle": "off",
         "space-in-parens": "off",
         "object-curly-spacing": "off",
         "array-bracket-spacing": "off",
         "computed-property-spacing": "off",
-        "no-underscore-dangle": "off",
+        "comma-dangle": "off",
         "one-var": "off",
         "no-plusplus": "off",
         "no-shadow": "off",
         // how to imporve it
+        "no-underscore-dangle": "off",
         "class-methods-use-this": "off",
         "no-param-reassign": "off",
         "max-len": "warn",
