@@ -1,188 +1,137 @@
-﻿var argv = require( 'yargs' ).argv;
+// const path = require( 'path' );
+// const webpack = require('webpack');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
+// //const nodeEnv = process.env.NODE_ENV || 'production';
+//
+// //console.log( nodeEnv );
+//
+// const config = {
+//     entry: {
+//         styles: './app/styles.js',
+//         app: './app/app.js'
+//     },
+//     output: {
+//         filename: '[name].js',
+//         path: path.resolve( __dirname, 'dist' ),
+//         sourceMapFilename: '[name].map'
+//     },
+//     //devtool: 'cheap-eval-source-map',
+//     devServer: {
+//         headers: {
+//             "Access-Control-Allow-Origin": "*",
+//             "Access-Control-Allow-Credentials": 'true'
+//         },
+//         hot: true,
+//     },
+//     module: {
+//         rules: [
+//             {
+//                 test: /\.js$/,
+//                 exclude: /node_modules/,
+//                 loader: "babel-loader"
+//             },
+//             {
+//                 test: /\.scss$/,
+//                 use: [
+//                     'style-loader',
+//                     'css-loader',
+//                     'sass-loader'
+//                 ]
+//             },
+//             {
+//                 test: /\.hbs$/,
+//                 use: ["handlebars-loader"]
+//             },
+//             {
+//                 test: /\.(png|svg|jpg|gif)$/,
+//                 use: [
+//                     {
+//                         loader: 'url-loader',
+//                         options: {
+//                             limit: 2048,
+//                             name: 'images/[name].[ext]'
+//                         }
+//                     }
+//                 ]
+//             },
+//             {
+//                 test: /\.(woff|woff2|eot|ttf|otf)$/,
+//                 use: [
+//                     {
+//                         loader: 'url-loader',
+//                         options: {
+//                             name: 'fonts/[name].[ext]'
+//                         }
+//                     }
+//                 ]
+//             },
+//             // font-awesome export
+//             {
+//                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+//                 use: [
+//                     {
+//                         loader: 'url-loader',
+//                         options: {
+//                             limit: 10000,
+//                             mimetype: 'application/font-woff',
+//                             name: 'fonts/[name].[ext]'
+//                         }
+//                     }
+//                 ]
+//             },
+//         ]
+//     },
+//     resolve: {
+//         modules: [
+//             "node_modules",
+//             "app/components"
+//         ]
+//     },
+//     plugins: [
+//         new CleanWebpackPlugin(['dist']),
+//         new webpack.HotModuleReplacementPlugin()
+//     ]
+//     // module: {
+//     //     loaders: {
+//     //         test: /\.js$/,
+//     //         exclude: 'node_modules',
+//     //         loader: 'babel',
+//     //         query: {
+//     //             presets: ['env'],
+//     //             plugins: [
+//     //                 'transform-object-assign'
+//     //             ]
+//     //         }
+//     //     }
+//     // },
+//     // plugins: [
+//     //
+//     // ]
+// };
+//
+// module.exports = config;
 
-var isDev = !argv.live;
-var isDevServer = process.argv[1].indexOf( 'webpack-dev-server' ) >= 0;
 
-console.log( isDev ? '\n*** running development ***\n' : '\n*** running production ***\n' );
+var path = require('path');
+var merge = require('webpack-merge');
 
-var webpack = require( 'webpack' ),
-    path = require( 'path' ),
-    ExtractTextPlugin = require( 'extract-text-webpack-plugin' ),
-    //SvgStore = require('webpack-svgstore-plugin'),
-    Clean = require( 'clean-webpack-plugin' ),
-
-    //postcss plugins
-    postcssFlexbugsFixes = require( 'postcss-flexbugs-fixes' ),
-    autoprefixer = require( 'autoprefixer' ),
-    cssnano = require( 'cssnano' ),
-    mqpacker = require( "css-mqpacker" );
-
-module.exports = {
-    entry: (function () {
-        var entry = {
-            'app': ["babel-polyfill", "./app/app"]//,
-            //'spritesJs': ["spritesJs"]
-        };
-
-        if ( isDevServer ) {
-            for ( var entryName in entry )
-                entry[entryName].unshift( 'webpack-dev-server/client?http://localhost:8080', 'webpack/hot/dev-server' );
-        }
-
-        return entry;
-    })(),
-
-    output: {
-        path: path.resolve( __dirname + "/dist/" ),
-        publicPath: '/assets/dist/',
-        filename: '[name].js'//,
-        //chunkFilename: isDev ? "[name].result.js" : "[name].[hash].js"
-    },
-
-    resolve: {
-        modulesDirectories: [
-            "app/components",
-            "node_modules"
-        ],
-        alias: {
-            handlebars: 'handlebars/dist/handlebars.min.js'
-//		 	'jquery': 'jquery-3.0.0',
-//		 	'jqueryviewport': 'jquery.viewport'
-        },
-        extensions: ["", ".min.js", ".custom.js", ".jquery.js", ".js"]
-    },
-
-    devtool: 'source-map',
-
-    module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel',
-                query: {
-                    presets: ['env'],
-                    plugins: [
-                        'transform-object-assign'
-                    ]
-                }
-            },
-            // {
-            //     test: /\.css/,
-            //     loader: isDevServer ? 'style!css!postcss' : ExtractTextPlugin.extract( 'style', 'css!postcss' )
-            // },
-            {
-                test: /\.scss$/,
-                loader: isDevServer ? 'style!css!sass!postcss' : ExtractTextPlugin.extract( 'style', 'css!sass-loader!postcss' )
-            },
-            {
-                test: /\.(svg|png|jpg|jpeg|eot|ttf|woff|woff2|gif)$/i,
-                loaders: [
-                    'url-loader?limit=10000'
-                ]
-            },
-            {
-                test: /\.(hbs|handlebars)/,
-                loader: "handlebars-loader"
-            },
-            {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&minetype=application/font-woff"
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file-loader"
-            }
-        ]
-    },
-
-    postcss: function () {
-        var postPlugins = [
-            postcssFlexbugsFixes,
-            autoprefixer( {browsers: ["last 3 versions", "ie 9"]} )
-        ];
-
-        if ( !isDev ) {
-            postPlugins.push(
-                mqpacker(),
-                cssnano( {
-                    safe: true,
-                    zindex: false,
-                    autoprefixer: {
-                        remove: false,
-                        browsers: ["last 3 versions", "ie 9"]
-                    },
-                    discardComments: {
-                        removeAll: true
-                    },
-                    convertValues: {
-                        length: false
-                    }
-                } )
-            );
-        }
-
-        return postPlugins;
-    },
-
-    plugins: (function () {
-        var plugins = isDevServer ? [new webpack.HotModuleReplacementPlugin()] : [new Clean( [path.join( __dirname, 'dist' )] )];
-
-        // plugins.push(
-        //     new SvgStore(
-        //         path.resolve("assets/svg/icons/**/*.svg"),"",
-        //         {
-        //             name: isDev ? 'sprite.svg' : "[hash].sprite.svg",
-        //             prefix: 'icon-',
-        //             chunk: 'head',
-        //             svgoOptions: {
-        //                 plugins: [
-        //                     {
-        //                         'removeAttrs': {
-        //                             attrs: 'path:fill'
-        //                         }
-        //                     }
-        //                 ]
-        //             }
-        //         }),
-        //     new webpack.NoErrorsPlugin()
-        // );
-
-        if ( !isDevServer ) {
-            plugins.push(
-                new ExtractTextPlugin( '[name].css', {allChunks: true, disable: process.env.NODE_ENV == "development"} )
-            );
-        }
-
-        // if (!isDev) {
-        //     plugins.push(
-        //         new webpack.optimize.UglifyJsPlugin({
-        //             output: {
-        //                 comments: false
-        //             },
-        //             compress: {
-        //                 warnings: false
-        //             }
-        //         }),
-        //         new webpack.optimize.OccurenceOrderPlugin()
-        //     );
-        // }
-
-        return plugins;
-    })(),
-
-    stats: {
-        children: false
-    },
-
-    devServer: {
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": 'true'
-        },
-        hot: true,
-        // stats: {
-        //   children: false
-        // }
-    }
+const configs = {
+    base: require('./webpack_configs/webpack.base'),
+    dev: require('./webpack_configs/webpack.dev'),
+    prod: require('./webpack_configs/webpack.prod'),
+    serve: require('./webpack_configs/webpack.serve')
 };
+
+var TARGET = process.env.npm_lifecycle_event;
+
+if (TARGET === 'dev') {
+    module.exports = merge( configs.base, configs.dev );
+}
+
+if (TARGET === 'prod') {
+    module.exports = merge( configs.base, configs.prod );
+}
+
+if (TARGET === 'serve') {
+    module.exports = merge( configs.base, configs.serve );
+}

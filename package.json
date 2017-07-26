@@ -1,48 +1,42 @@
 {
-  "name": "patterns",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "start": "webpack-dev-server",
-    "development": "webpack --dev --watch",
-    "production": "webpack --live",
-    "lint": "eslint app"
-  },
-  "author": "Random User",
-  "license": "ISC",
-  "dependencies": {
-    "autoprefixer": "^6.6.0",
-    "axios": "^0.15.3",
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "babel-plugin-transform-object-assign": "^6.8.0",
-    "babel-polyfill": "^6.20.0",
-    "babel-preset-env": "^1.1.4",
-    "clean-webpack-plugin": "^0.1.14",
-    "css-loader": "^0.26.1",
-    "css-mqpacker": "^5.0.1",
-    "cssnano": "^3.9.1",
-    "eslint": "^4.2.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.7.0",
-    "exports-loader": "^0.6.3",
-    "expose-loader": "^0.7.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.9.0",
-    "handlebars": "^4.0.6",
-    "handlebars-loader": "^1.4.0",
-    "imports-loader": "^0.7.0",
-    "lodash": "^4.17.4",
-    "node-sass": "^4.5.0",
-    "postcss-flexbugs-fixes": "^2.1.0",
-    "postcss-loader": "^1.2.1",
-    "sass-loader": "^6.0.2",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webfontloader": "^1.6.27",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2",
-    "yargs": "^6.5.0"
-  }
+    "name": "map-prototype",
+    "version": "1.0.0",
+    "description": "How to use design patterns to build map",
+    "main": "webpack.config.js",
+    "dependencies": {
+        "axios": "^0.16.2"
+    },
+    "devDependencies": {
+        "babel-core": "^6.25.0",
+        "babel-loader": "^7.1.1",
+        "babel-preset-env": "^1.6.0",
+        "clean-webpack-plugin": "^0.1.16",
+        "css-loader": "^0.28.4",
+        "file-loader": "^0.11.2",
+        "handlebars": "^4.0.10",
+        "handlebars-loader": "^1.5.0",
+        "node-sass": "^4.5.3",
+        "sass-loader": "^6.0.6",
+        "style-loader": "^0.18.2",
+        "url-loader": "^0.5.9",
+        "webpack": "^3.3.0",
+        "webpack-dev-server": "^2.6.1",
+        "webpack-merge": "^4.1.0"
+    },
+    "scripts": {
+        "dev": "webpack",
+        "prod": "webpack",
+        "serve": "webpack-dev-server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/skvigl/Map-Prototype.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/skvigl/Map-Prototype/issues"
+    },
+    "homepage": "https://github.com/skvigl/Map-Prototype#readme"
 }
